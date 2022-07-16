@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "src"
+		},
+		{
+			"path": "."
+		},
+	],
+	"settings": {
+		"files.trimTrailingWhitespace": true,
+		"files.insertFinalNewline": true,
+		"typescript.tsc.autoDetect": "off",
+		"typescript.tsdk": "node_modules/typescript/lib",
+		"eslint.lintTask.enable": true,
+	}
+}
