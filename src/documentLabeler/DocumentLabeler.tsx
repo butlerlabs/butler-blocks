@@ -1,41 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { DocumentLabelerProvider } from 'documentLabeler/DocumentLabelerProvider';
+import { DocumentLabelerData } from 'documentLabeler/state/DocumentLabelerState';
 
 type Props = {
-  docLabelerInfo: {
-    clickCount: number;
-    name: string;
-  };
-  onSaveCallback: (docInfo: object) => void;
+  data: DocumentLabelerData;
+  // TODO: define documentLabelerOutput type
+  onSaveCallback: (documentLabelerOutput: object) => void;
 };
 
 /**
  * Will be in DocumentLabeler.tsx, exported as we do in our
  * regular codebase
  */
-export const DocumentLabeler: React.FC<Props> = ({docLabelerInfo, onSaveCallback}) => {
-
-  const [state, setState] = useState(docLabelerInfo);
-
-  const onCountClick = () => {
-    setState({
-      ...state,
-      clickCount: state.clickCount + 1,
-    });
-  };
-  
-  const onSaveClick = () => {
-    onSaveCallback(state);
-  }
+export const DocumentLabeler: React.FC<Props> = ({data, onSaveCallback}) => {
    return (
-    <div>
+    <DocumentLabelerProvider data={data}>
       <div>
-        Name: {state.name}
-        <br/>
-        Click Count: {state.clickCount}
+        Document Labeler will go here!
       </div>
-      <button onClick={onCountClick}>Click!</button>
-      <button onClick={onSaveClick}>Save!</button>
-    </div>
+    </DocumentLabelerProvider>
   )
  }
- 

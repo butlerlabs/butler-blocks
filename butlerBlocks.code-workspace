@@ -1,11 +1,11 @@
 {
 	"folders": [
 		{
-			"path": "src"
-		},
-		{
 			"path": "."
 		},
+		{
+			"path": "../butler"
+		}
 	],
 	"settings": {
 		"files.trimTrailingWhitespace": true,

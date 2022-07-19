@@ -16,8 +16,8 @@ const onSaveCallback = (docInfo) => {
 };
 
 const initializeDocLabeler = (docId) => {
-  // in finalized version, our customer would add an API call to our 
-  // EUI endpoint here which would fetch the Document Labeler's data, 
+  // in finalized version, our customer would add an API call to our
+  // EUI endpoint here which would fetch the Document Labeler's data,
   // and then pass it to the following call instead of the stub data.
 
   butlerBlocks.createDocLabeler("ButlerDocumentLabeler", stubData, onSaveCallback);
