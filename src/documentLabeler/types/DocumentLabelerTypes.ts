@@ -127,7 +127,7 @@ export type CellLabelDto = {
    * @type {string}
    * @memberof CellLabelDto
    */
-  column_id: string;
+  columnId: string;
   /**
   * Extraction Confidence for the cell label
   * @type {Confidence}

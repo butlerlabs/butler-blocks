@@ -1,5 +1,5 @@
-import { TypesafeUnreachableError } from "common/util/error";
-import { DocumentLabelerInternalState } from "documentLabeler/state/DocumentLabelerState";
+import { TypesafeUnreachableError } from 'common/util/error';
+import { DocumentLabelerInternalState } from 'documentLabeler/state/DocumentLabelerState';
 
 type DocumentLabelerDispatchAction =
   {

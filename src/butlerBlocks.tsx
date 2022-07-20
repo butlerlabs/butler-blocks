@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { DocumentLabeler } from "documentLabeler/DocumentLabeler";
-import { DocumentLabelerData } from "documentLabeler/state/DocumentLabelerState";
+import { DocumentLabeler } from 'documentLabeler/DocumentLabeler';
+import { DocumentLabelerData } from 'documentLabeler/state/DocumentLabelerState';
 
 /**
  * Will be in butlerBlocks.js, exported by our package and imported
  * via a require statement in our customer's js file
  */
- const createDocLabeler = (id: string, data: DocumentLabelerData, onSaveCallback: () => void) => {
+ const createDocLabeler = (id: string, data: DocumentLabelerData, onSaveCallback: (data: object) => void) => {
   const docLabelerContainer = document.getElementById(id);
 
   if (!docLabelerContainer) {

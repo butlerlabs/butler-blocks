@@ -1,4 +1,4 @@
-import { BlockDto, LabelDto } from "documentLabeler/types/DocumentLabelerTypes";
+import { BlockDto, LabelDto } from 'documentLabeler/types/DocumentLabelerTypes';
 
 // Initial data passed in from external api calls to generate Internal State.
 export type DocumentLabelerData = {

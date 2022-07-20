@@ -1,6 +1,6 @@
-import { createContext, useContext, useReducer } from "react";
-import { DocumentLabelerDispatch, documentLabelerReducer } from "documentLabeler/state/DocumentLabelerReducer";
-import { DocumentLabelerData, DocumentLabelerInternalState, DocumentLabelerState } from "documentLabeler/state/DocumentLabelerState";
+import { createContext, useContext, useReducer } from 'react';
+import { DocumentLabelerDispatch, documentLabelerReducer } from 'documentLabeler/state/DocumentLabelerReducer';
+import { DocumentLabelerData, DocumentLabelerInternalState, DocumentLabelerState } from 'documentLabeler/state/DocumentLabelerState';
 
 const DocumentLabelerStateContext = createContext<DocumentLabelerInternalState | null>(null);
 
