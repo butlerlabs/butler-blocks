@@ -5,7 +5,7 @@
 		},
 		{
 			"path": "src"
-		}
+		},
 	],
 	"settings": {
 		"files.trimTrailingWhitespace": true,
