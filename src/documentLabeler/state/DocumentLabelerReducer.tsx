@@ -1,16 +1,19 @@
 import { TypesafeUnreachableError } from 'common/util/error';
 import { DocumentLabelerInternalState } from 'documentLabeler/state/DocumentLabelerState';
+import { FieldType } from 'documentLabeler/types/DocumentLabelerTypes';
 
 type DocumentLabelerDispatchAction =
   {
-    type: 'openAddBlockDialog';
-    payload: {
-      blockId: string;
-    };
-  } | {
-    type: 'addBlockToField';
+    type: 'setActiveField';
     payload: {
       fieldId: string;
+      fieldType: FieldType;
+    };
+  } |
+  {
+    type: 'addBlockToActiveField';
+    payload: {
+      blockId: string;
     };
   } | {
     type: 'removeBlockFromField';
@@ -31,9 +34,9 @@ type DocumentLabelerDispatchAction =
   action: DocumentLabelerDispatchAction,
  ): DocumentLabelerInternalState => {
   switch (action.type) {
-    case 'openAddBlockDialog':
+    case 'setActiveField':
       return state;
-    case 'addBlockToField':
+    case 'addBlockToActiveField':
       return state;
     case 'removeBlockFromField':
       return state;

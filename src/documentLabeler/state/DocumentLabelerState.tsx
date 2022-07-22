@@ -1,4 +1,4 @@
-import { BlockDto, LabelDto } from 'documentLabeler/types/DocumentLabelerTypes';
+import { BlockDto, FieldType, LabelDto } from 'documentLabeler/types/DocumentLabelerTypes';
 
 // Initial data passed in from external api calls to generate Internal State.
 export type DocumentLabelerData = {
@@ -11,25 +11,22 @@ export type DocumentLabelerData = {
   labels: LabelDto;
 };
 
-export enum DocumentLabelerStateOptions {
-  ViewBlocks = 'ViewBlocks',
-  AddBlockToField = 'AddBlockToField',
-  LabelTable = 'LabelTable',
-}
-
-// Possible local state configurations for the Document Labeler
-export type DocumentLabelerLocalState = {
-  type: DocumentLabelerStateOptions.ViewBlocks;
+type ActiveField = {
+  id: string;
+  type: FieldType.Text | FieldType.Checkbox | FieldType.Signature;
 } | {
-  type: DocumentLabelerStateOptions.AddBlockToField;
-  blockId: string;
-} | {
-  type: DocumentLabelerStateOptions.LabelTable;
-  tableId: string;
+  id: string;
+  type: FieldType.Table;
   activeCell?: {
     columnId: string;
     rowId: string;
   };
+}
+
+
+// Possible local state configurations for the Document Labeler
+export type DocumentLabelerLocalState = {
+  activeField?: ActiveField;
 };
 
 // Internal State, used to maintain local state within the Document Labeler
@@ -45,7 +42,7 @@ const generateInitialState = (
   return {
     docInfo: data,
     localState: {
-      type: DocumentLabelerStateOptions.ViewBlocks,
+      activeField: undefined,
     },
   };
 };
