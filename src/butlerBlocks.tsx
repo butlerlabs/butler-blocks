@@ -1,23 +1,24 @@
-import { DocumentLabeler } from "./documentLabeler/DocumentLabeler";
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { DocumentLabeler } from 'documentLabeler/DocumentLabeler';
+import { DocumentLabelerData } from 'documentLabeler/state/DocumentLabelerState';
 
 /**
- * Will be in butlerBlocks.js, exported by our package and imported 
+ * Will be in butlerBlocks.js, exported by our package and imported
  * via a require statement in our customer's js file
  */
- const createDocLabeler = (docLabelerId: string, docLabelerInfo: {clickCount: number, name: string}, onSaveCallback: () => void) => {
-  const docLabelerContainer = document.getElementById(docLabelerId);
+ const createDocLabeler = (id: string, data: DocumentLabelerData, onSaveCallback: (data: object) => void) => {
+  const docLabelerContainer = document.getElementById(id);
 
   if (!docLabelerContainer) {
-    throw new Error(`Could not find container element with id ${docLabelerId}`)
+    throw new Error(`Could not find container element with id ${id}`)
   }
 
   const docLabelerRoot = ReactDOM.createRoot(docLabelerContainer);
 
   docLabelerRoot.render(
     <React.StrictMode>
-      <DocumentLabeler docLabelerInfo={docLabelerInfo} onSaveCallback={onSaveCallback} />
+      <DocumentLabeler data={data} onSaveCallback={onSaveCallback} />
     </React.StrictMode>
   );
 };

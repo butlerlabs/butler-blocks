@@ -1,11 +1,11 @@
 {
 	"folders": [
 		{
-			"path": "src"
-		},
-		{
 			"path": "."
 		},
+		{
+			"path": "src"
+		}
 	],
 	"settings": {
 		"files.trimTrailingWhitespace": true,
