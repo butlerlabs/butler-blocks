@@ -1,17 +1,17 @@
-import { BlockDto, FieldType, LabelDto } from 'documentLabeler/types/DocumentLabelerTypes';
+import { BlockDto, FieldType, LabelDto, MimeType } from 'documentLabeler/types/DocumentLabelerTypes';
 
 // Initial data passed in from external api calls to generate Internal State.
 export type DocumentLabelerData = {
   modelId: string;
   docId: string;
   fileName: string;
-  mimeType: string;
+  mimeType: MimeType;
   docUrl: string;
   wordBlocks: Array<BlockDto>;
   labels: LabelDto;
 };
 
-type ActiveField = {
+export type ActiveField = {
   id: string;
   type: FieldType.Text | FieldType.Checkbox | FieldType.Signature;
 } | {
@@ -33,17 +33,20 @@ export type DocumentLabelerLocalState = {
 export type DocumentLabelerInternalState = {
   docInfo: DocumentLabelerData;
   localState: DocumentLabelerLocalState;
+  onSaveCallback: (outputData: object) => void;
 };
 
 /** Generates initial state from initializer data */
 const generateInitialState = (
  data: DocumentLabelerData,
+ onSaveCallback: (outputData: object) => void,
 ): DocumentLabelerInternalState => {
   return {
     docInfo: data,
     localState: {
       activeField: undefined,
     },
+    onSaveCallback: onSaveCallback,
   };
 };
 

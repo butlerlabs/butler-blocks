@@ -2,12 +2,13 @@ import { createContext, useContext, useReducer } from 'react';
 import { DocumentLabelerDispatch, documentLabelerReducer } from 'documentLabeler/state/DocumentLabelerReducer';
 import { DocumentLabelerData, DocumentLabelerInternalState, DocumentLabelerState } from 'documentLabeler/state/DocumentLabelerState';
 
-const DocumentLabelerStateContext = createContext<DocumentLabelerInternalState | null>(null);
+export const DocumentLabelerStateContext = createContext<DocumentLabelerInternalState | null>(null);
 
-const DocumentLabelerDispatchContext = createContext<DocumentLabelerDispatch | null>(null);
+export const DocumentLabelerDispatchContext = createContext<DocumentLabelerDispatch | null>(null);
 
   type Props = {
    data: DocumentLabelerData;
+   onSaveCallback: (outputData: object) => void;
    children: React.ReactNode;
   };
 
@@ -19,11 +20,12 @@ const DocumentLabelerDispatchContext = createContext<DocumentLabelerDispatch | n
   */
   export const DocumentLabelerProvider: React.FC<Props> = ({
    data,
+   onSaveCallback,
    children,
   }) => {
    const [state, dispatch] = useReducer(
      documentLabelerReducer,
-     DocumentLabelerState.generateInitialState(data),
+     DocumentLabelerState.generateInitialState(data, onSaveCallback),
    );
 
    return (

@@ -16,6 +16,12 @@ export enum Confidence {
   UserReviewed = 'UserReviewed',
 }
 
+export enum MimeType {
+  Pdf = 'application/pdf',
+  Png = 'image/png',
+  Jpg = 'image/jpeg',
+}
+
 export type BoundingBoxDto = {
   /**
    * Relative width of this bounding box to page width
