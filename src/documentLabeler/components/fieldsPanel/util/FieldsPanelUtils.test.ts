@@ -3,18 +3,6 @@ import { FieldsPanelUtils } from "documentLabeler/components/fieldsPanel/util/Fi
 import { MockDocumentLabelerData } from "documentLabeler/MockDocumentLabelerData.stories";
 import { FieldLabelDto, TableLabelDto } from "documentLabeler/types/DocumentLabelerTypes";
 
-describe('getAllColoredFields', () => {
-  it('should correctly map colors for both fields and tables', () => {
-    const expectedFieldColors = ButlerColorSet.slice(0, 4);
-    const expectedTableColors = ButlerColorSet.slice(4, 5);
-    const { fields, tables } = FieldsPanelUtils.getAllColoredFields(MockDocumentLabelerData.documentLabelerData);
-    const outputFieldColors = fields.map((field) => field.color);
-    expect(outputFieldColors).toMatchObject(expectedFieldColors);
-    const outputTableColors = tables.map((table) => table.color);
-    expect(outputTableColors).toMatchObject(expectedTableColors);
-  })
-})
-
 const textField = MockDocumentLabelerData.labels.fields[0];
 const checkboxField = MockDocumentLabelerData.labels.fields[2];
 const signatureField = MockDocumentLabelerData.labels.fields[3];

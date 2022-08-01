@@ -3,6 +3,7 @@ import { DocumentLabelerProvider } from 'documentLabeler/DocumentLabelerProvider
 import { DocumentLabelerData } from 'documentLabeler/state/DocumentLabelerState';
 import { Box, makeStyles, Theme } from '@material-ui/core';
 import { FieldsPanel } from 'documentLabeler/components/fieldsPanel/FieldsPanel';
+import { DocumentPanel } from 'documentLabeler/components/documentPanel/DocumentPanel';
 
 type Props = {
   data: DocumentLabelerData;
@@ -14,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   Root: {
     backgroundColor: theme.palette.background.default,
     display: 'flex',
-    flex: 1,
+    height: '100%',
   },
   FieldsPanelContainer: {
     width: theme.spacing(45),
@@ -37,7 +38,7 @@ export const DocumentLabeler: React.FC<Props> = ({data, onSaveCallback}) => {
     <DocumentLabelerProvider data={data} onSaveCallback={onSaveCallback}>
       <Box className={classes.Root}>
         <Box className={classes.DocumentDisplayerContainer}>
-          Document will go here
+          <DocumentPanel />
         </Box>
         <Box className={classes.FieldsPanelContainer}>
           <FieldsPanel />

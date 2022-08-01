@@ -11,22 +11,29 @@ export type DocumentLabelerData = {
   labels: LabelDto;
 };
 
+export type ActiveCell = {
+  columnId: string;
+  rowId: string;
+}
+
 export type ActiveField = {
   id: string;
   type: FieldType.Text | FieldType.Checkbox | FieldType.Signature;
 } | {
   id: string;
   type: FieldType.Table;
-  activeCell?: {
-    columnId: string;
-    rowId: string;
-  };
-}
+  activeCell?: ActiveCell;
+};
 
+export enum LabelingSelectionType {
+  Block = 'Block',
+  Region = 'Region',
+}
 
 // Possible local state configurations for the Document Labeler
 export type DocumentLabelerLocalState = {
   activeField?: ActiveField;
+  selectionType: LabelingSelectionType;
 };
 
 // Internal State, used to maintain local state within the Document Labeler
@@ -45,6 +52,7 @@ const generateInitialState = (
     docInfo: data,
     localState: {
       activeField: undefined,
+      selectionType: LabelingSelectionType.Block,
     },
     onSaveCallback: onSaveCallback,
   };
