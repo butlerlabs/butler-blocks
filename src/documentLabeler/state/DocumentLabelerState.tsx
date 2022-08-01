@@ -16,14 +16,16 @@ export type ActiveCell = {
   rowId: string;
 }
 
-export type ActiveField = {
-  id: string;
-  type: FieldType.Text | FieldType.Checkbox | FieldType.Signature;
-} | {
+export type ActiveTable = {
   id: string;
   type: FieldType.Table;
   activeCell?: ActiveCell;
 };
+
+export type ActiveField = {
+  id: string;
+  type: FieldType.Text | FieldType.Checkbox | FieldType.Signature;
+} | ActiveTable;
 
 export enum LabelingSelectionType {
   Block = 'Block',

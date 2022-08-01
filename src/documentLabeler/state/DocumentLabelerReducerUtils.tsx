@@ -28,20 +28,64 @@ const getFieldFromState = (
   }
 }
 
+/**
+ * Helper function to look up table information for a specified 
+ * table Id in the document labeler state.  
+ * @param state 
+ * @param fieldId 
+ * @returns the table information and its index in the tables list
+ */
+ const getTableFromState = (
+  state: DocumentLabelerInternalState, 
+  fieldId: string
+): { 
+  table: TableLabelDto, 
+  idx: number,
+} => {
+  const { tables } = state.docInfo.labels;
+  const idx = tables.findIndex((table) => table.id === fieldId);
+  if (idx === -1) {
+    throw new Error(`Did not find unique field info in document labels when looking up field id ${fieldId}`)
+  }
+  return {
+    table: tables[idx],
+    idx: idx,
+  }
+}
+
 const updateStateWithNewField = (
   state: DocumentLabelerInternalState,
   updatedField: FieldLabelDto,
   fieldIdx: number,
 ): DocumentLabelerInternalState => {
-  const { fields, tables } = state.docInfo.labels;
+  const { fields } = state.docInfo.labels;
   const updatedFields = ListUtil.replaceElementAtIndex(updatedField, fieldIdx, fields);
   return {
     ...state,
     docInfo: {
       ...state.docInfo,
       labels: {
+        ...state.docInfo.labels,
         fields: updatedFields,
-        tables: tables,
+      },
+    },
+  };
+}
+
+const updateStateWithNewTable = (
+  state: DocumentLabelerInternalState,
+  updatedTable: TableLabelDto,
+  fieldIdx: number,
+): DocumentLabelerInternalState => {
+  const { tables } = state.docInfo.labels;
+  const updatedTables = ListUtil.replaceElementAtIndex(updatedTable, fieldIdx, tables);
+  return {
+    ...state,
+    docInfo: {
+      ...state.docInfo,
+      labels: {
+        ...state.docInfo.labels,
+        tables: updatedTables,
       },
     },
   };
@@ -123,35 +167,55 @@ const getAllColoredFields = (
 const getCellInfoFromTable = (
   table: TableLabelDto,
   activeCell: ActiveCell,
-): { rowIdx: number; cellIdx: number; cell: CellLabelDto } => {
+): { rowIdx: number; columnIdx: number; cell: CellLabelDto } => {
   const rowIdx = table.rows.findIndex((row) => row.id === activeCell.rowId);
   if (rowIdx === -1) {
     throw new Error('No row found when looking up cell in table');
   }
   const rows = table.rows;
   const row = rows[rowIdx];
-  const cellIdx = row.cells.findIndex(
+  const columnIdx = row.cells.findIndex(
     (cell) => cell.columnId === activeCell.columnId,
   );
-  if (cellIdx === -1) {
+  if (columnIdx === -1) {
     throw new Error('No cell found when looking up cell in table');
   }
   const cells = row.cells;
-  const cell = cells[cellIdx];
+  const cell = cells[columnIdx];
 
   return {
     rowIdx,
-    cellIdx,
+    columnIdx,
     cell,
   };
 };
 
+const updateTableWithNewCell = (
+  table: TableLabelDto,
+  cell: CellLabelDto,
+  rowIdx: number,
+  columnIdx: number,
+): TableLabelDto => {
+  const row = table.rows[rowIdx];
+  const updatedRow = {
+    ...row, 
+    cells: ListUtil.replaceElementAtIndex(cell, columnIdx, row.cells),
+  }
+  return {
+    ...table,
+    rows: ListUtil.replaceElementAtIndex(updatedRow, rowIdx, table.rows),
+  }
+}
+
 
 export const DocumentLabelerReducerUtils = {
   getFieldFromState,
+  getTableFromState,
   getAllColoredFields,
   getColorFromFieldId,
   getCellInfoFromTable,
   getSelectedTable,
   updateStateWithNewField,
+  updateStateWithNewTable,
+  updateTableWithNewCell,
 };

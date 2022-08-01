@@ -1,15 +1,29 @@
 import { DocumentLabelerReducerUtils } from "documentLabeler/state/DocumentLabelerReducerUtils";
 import { DocumentLabelerInternalState } from "documentLabeler/state/DocumentLabelerState";
-import { FieldLabelDto } from "documentLabeler/types/DocumentLabelerTypes";
+import { FieldLabelDto, FieldType, TableLabelDto } from "documentLabeler/types/DocumentLabelerTypes";
 
 export type RemoveAllBlocksFromFieldAction = {
   type: 'removeAllBlocksFromField';
   payload: {
     fieldId: string;
+    fieldType: FieldType;
   };
 };
 
-const removeAllBlocksFromField = (
+const removeAllBlocksFromTable = (
+  state: DocumentLabelerInternalState,
+  action: RemoveAllBlocksFromFieldAction,
+): DocumentLabelerInternalState => {
+  const { fieldId } = action.payload;
+  const { table, idx } = DocumentLabelerReducerUtils.getTableFromState(state, fieldId);
+  const updatedTable: TableLabelDto = {
+    ...table,
+    rows: [],
+  };
+  return DocumentLabelerReducerUtils.updateStateWithNewTable(state, updatedTable, idx);
+}
+
+const removeAllBlocksFromFormField = (
   state: DocumentLabelerInternalState,
   action: RemoveAllBlocksFromFieldAction,
 ): DocumentLabelerInternalState => {
@@ -22,6 +36,18 @@ const removeAllBlocksFromField = (
     textOverride: undefined,
   };
   return DocumentLabelerReducerUtils.updateStateWithNewField(state, updatedField, idx);
+}
+
+const removeAllBlocksFromField = (
+  state: DocumentLabelerInternalState,
+  action: RemoveAllBlocksFromFieldAction,
+): DocumentLabelerInternalState => {
+  const { fieldType } = action.payload;
+  if (fieldType === FieldType.Table) {
+    return removeAllBlocksFromTable(state, action);
+  } else {
+    return removeAllBlocksFromFormField(state, action);
+  }
 }
 
 export type SetTextFieldOverrideAction = {
