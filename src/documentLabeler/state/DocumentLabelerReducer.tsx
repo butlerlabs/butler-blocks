@@ -1,15 +1,10 @@
 import { TypesafeUnreachableError } from 'common/util/error';
+import { ActiveFieldReducerUtils, SetActiveFieldAction } from 'documentLabeler/state/ActiveFieldReducerUtils';
 import { DocumentLabelerInternalState } from 'documentLabeler/state/DocumentLabelerState';
-import { FieldType } from 'documentLabeler/types/DocumentLabelerTypes';
+import { FieldReducerUtils, RemoveAllBlocksFromFieldAction, SetTextFieldOverrideAction } from 'documentLabeler/state/FieldReducerUtils';
 
 type DocumentLabelerDispatchAction =
-  {
-    type: 'setActiveField';
-    payload: {
-      fieldId: string;
-      fieldType: FieldType;
-    };
-  } |
+  SetActiveFieldAction |
   {
     type: 'addBlockToActiveField';
     payload: {
@@ -21,7 +16,8 @@ type DocumentLabelerDispatchAction =
       blockId: string;
       fieldId: string;
     };
-  }
+  } | RemoveAllBlocksFromFieldAction 
+    | SetTextFieldOverrideAction;
 
  export type DocumentLabelerDispatch = (action: DocumentLabelerDispatchAction) => void;
 
@@ -35,11 +31,15 @@ type DocumentLabelerDispatchAction =
  ): DocumentLabelerInternalState => {
   switch (action.type) {
     case 'setActiveField':
-      return state;
+      return ActiveFieldReducerUtils.setActiveField(state, action);
     case 'addBlockToActiveField':
       return state;
     case 'removeBlockFromField':
       return state;
+    case 'removeAllBlocksFromField':
+      return FieldReducerUtils.removeAllBlocksFromField(state, action);
+    case 'setFieldTextOverride':
+      return FieldReducerUtils.setTextFieldOverride(state, action);
     default:
       throw new TypesafeUnreachableError(action);
   }

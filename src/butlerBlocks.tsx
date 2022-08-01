@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { DocumentLabeler } from 'documentLabeler/DocumentLabeler';
 import { DocumentLabelerData } from 'documentLabeler/state/DocumentLabelerState';
+import { ButlerProvider } from 'common/theme/ButlerProvider';
 
 /**
  * Will be in butlerBlocks.js, exported by our package and imported
@@ -18,7 +19,9 @@ import { DocumentLabelerData } from 'documentLabeler/state/DocumentLabelerState'
 
   docLabelerRoot.render(
     <React.StrictMode>
-      <DocumentLabeler data={data} onSaveCallback={onSaveCallback} />
+      <ButlerProvider>
+        <DocumentLabeler data={data} onSaveCallback={onSaveCallback} />
+      </ButlerProvider>
     </React.StrictMode>
   );
 };

@@ -31,10 +31,21 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.(woff|woff2)$/,
+        type: 'asset/resource',
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader',
+        ],
+      },
     ]
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: ['.tsx', '.ts', '.jsx', '.js'],
     modules: [path.resolve(__dirname, 'src'), 'node_modules']
   },
   plugins:[
