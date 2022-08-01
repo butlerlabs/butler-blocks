@@ -83,7 +83,7 @@ const blockCell1: BlockDto = {
   },
 };
 
-const blockCell2:BlockDto = {
+const blockCell2: BlockDto = {
   id: 'blockCell2',
   blockType:  BlockType.Word,
   text: '1 x individual - per user monthly plan',
