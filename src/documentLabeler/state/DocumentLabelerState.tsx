@@ -36,6 +36,7 @@ export enum LabelingSelectionType {
 export type DocumentLabelerLocalState = {
   activeField?: ActiveField;
   selectionType: LabelingSelectionType;
+  rootRef: HTMLDivElement | null,
 };
 
 // Internal State, used to maintain local state within the Document Labeler
@@ -49,12 +50,14 @@ export type DocumentLabelerInternalState = {
 const generateInitialState = (
  data: DocumentLabelerData,
  onSaveCallback: (outputData: object) => void,
+ rootRef: HTMLDivElement | null,
 ): DocumentLabelerInternalState => {
   return {
     docInfo: data,
     localState: {
       activeField: undefined,
       selectionType: LabelingSelectionType.Block,
+      rootRef: rootRef,
     },
     onSaveCallback: onSaveCallback,
   };

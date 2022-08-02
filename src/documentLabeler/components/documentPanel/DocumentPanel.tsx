@@ -86,6 +86,7 @@ const useExternalStyles = makeStyles((theme: Theme) => ({
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing(2),
     overflow: 'scroll',
+    maxHeight: '100%',
   },
 }));
 

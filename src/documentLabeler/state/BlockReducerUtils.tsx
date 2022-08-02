@@ -18,19 +18,19 @@ const addBlockToActiveTable = (
   if (!activeTable.activeCell) {
     throw new Error('Cannot add blocks to active table if no cell is selected');
   }
-  const { table, idx } = 
+  const { table, idx } =
     DocumentLabelerReducerUtils.getTableFromState(
-      state, 
+      state,
       activeTable.id
     );
-  const { cell, rowIdx, columnIdx } = 
+  const { cell, rowIdx, columnIdx } =
     DocumentLabelerReducerUtils.getCellInfoFromTable(
-      table, 
+      table,
       activeTable.activeCell
     );
   // filter out any possible duplicate blocks
-  const blocksToAdd = 
-    action.payload.blocks.filter((block) => 
+  const blocksToAdd =
+    action.payload.blocks.filter((block) =>
       !cell.blocks.some((activeBlock) => activeBlock.id === block.id)
     );
   const updatedCell: CellLabelDto = {
@@ -38,43 +38,41 @@ const addBlockToActiveTable = (
     region: undefined,
     blocks: [...cell.blocks, ...blocksToAdd],
   }
-  const updatedTable = 
-    DocumentLabelerReducerUtils.updateTableWithNewCell(
-      table, 
-      updatedCell, 
-      rowIdx, 
-      columnIdx,
-    );
   const updatedFields = state.docInfo.labels.fields.map((field) => {
     // filter out blocks that were stolen from other fields
     return {
       ...field,
-      blocks: field.blocks.filter((block) => 
+      blocks: field.blocks.filter((block) =>
         !blocksToAdd.some((blockToAdd) => blockToAdd.id === block.id)
       ),
     }
   });
   // filter out blocks that were stolen from other tables
-  const updatedTables = state.docInfo.labels.tables.map((table) => ({
+  const updatedTables = state.docInfo.labels.tables.map((table, tblIdx) => ({
     ...table,
-    rows: table.rows.map((row) => ({
+    rows: table.rows.map((row, rIdx) => ({
       ...row,
-      cells: row.cells.map((cell) => ({
-        ...cell,
-        blocks: cell.blocks.filter((block) => 
-        !blocksToAdd.some((blockToAdd) => blockToAdd.id === block.id)
-      ),
-      }))
+      cells: row.cells.map((cell, colIdx) => {
+        if (colIdx === columnIdx && rIdx === rowIdx && tblIdx === idx) {
+          return updatedCell;
+        } else {
+          return {
+            ...cell,
+            blocks: cell.blocks.filter((block) =>
+              !blocksToAdd.some((blockToAdd) => blockToAdd.id === block.id)
+            ),
+          }
+        }
+      }),
     }))
   }));
-
   return {
     ...state,
     docInfo: {
       ...state.docInfo,
       labels: {
         ...state.docInfo.labels,
-        tables: ListUtil.replaceElementAtIndex(updatedTable, idx, updatedTables),
+        tables: updatedTables,
         fields: updatedFields,
       }
     }
@@ -86,14 +84,14 @@ const addBlockToActiveFormField = (
   action: AddBlockToActiveFieldAction,
   activeField: ActiveField,
 ): DocumentLabelerInternalState => {
-  const { field } = 
+  const { field } =
     DocumentLabelerReducerUtils.getFieldFromState(
-      state, 
+      state,
       activeField.id
     );
   // filter out any possible duplicate blocks
-  const blocksToAdd = 
-    action.payload.blocks.filter((block) => 
+  const blocksToAdd =
+    action.payload.blocks.filter((block) =>
       !field.blocks.some((activeBlock) => activeBlock.id === block.id)
     );
   const updatedField: FieldLabelDto = {
@@ -108,7 +106,7 @@ const addBlockToActiveFormField = (
     // filter out blocks that were stolen from other fields
     return {
       ...field,
-      blocks: field.blocks.filter((block) => 
+      blocks: field.blocks.filter((block) =>
         !blocksToAdd.some((blockToAdd) => blockToAdd.id === block.id)
       ),
     }
@@ -120,7 +118,7 @@ const addBlockToActiveFormField = (
       ...row,
       cells: row.cells.map((cell) => ({
         ...cell,
-        blocks: cell.blocks.filter((block) => 
+        blocks: cell.blocks.filter((block) =>
         !blocksToAdd.some((blockToAdd) => blockToAdd.id === block.id)
       ),
       }))
@@ -171,25 +169,25 @@ const removeBlockFromTableCell = (
   if (field.type !== FieldType.Table || !field.activeCell) {
     throw new Error('Cannot remove block from table cell if field is not a table with an active cell');
   }
-  const { table, idx } = 
+  const { table, idx } =
     DocumentLabelerReducerUtils.getTableFromState(
-      state, 
+      state,
       field.id
     );
-  const { cell, rowIdx, columnIdx } = 
+  const { cell, rowIdx, columnIdx } =
     DocumentLabelerReducerUtils.getCellInfoFromTable(
-      table, 
+      table,
       field.activeCell
     );
   const updatedCell = {
     ...cell,
     blocks: cell.blocks.filter((block) => block.id !== blockId),
   }
-  const updatedTable = 
+  const updatedTable =
     DocumentLabelerReducerUtils.updateTableWithNewCell(
-      table, 
-      updatedCell, 
-      rowIdx, 
+      table,
+      updatedCell,
+      rowIdx,
       columnIdx
     );
   return DocumentLabelerReducerUtils.updateStateWithNewTable(state, updatedTable, idx);
@@ -201,7 +199,7 @@ const removeBlockFromFormField = (
 ): DocumentLabelerInternalState => {
   const { blockId } = action.payload;
   const { field, idx } = DocumentLabelerReducerUtils.getFieldFromState(
-    state, 
+    state,
     action.payload.field.id
   );
   const updatedField = {

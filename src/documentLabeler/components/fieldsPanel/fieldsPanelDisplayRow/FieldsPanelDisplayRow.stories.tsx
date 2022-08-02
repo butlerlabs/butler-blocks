@@ -3,7 +3,7 @@ import { ButlerColorPalette } from 'common/theme/color';
 import { FieldsPanelDisplayRow } from 'documentLabeler/components/fieldsPanel/fieldsPanelDisplayRow/FieldsPanelDisplayRow';
 import { MockDocumentLabelerData } from 'documentLabeler/MockDocumentLabelerData.stories';
 import { MockDocumentLabelerProvider } from 'documentLabeler/MockDocumentLabelerProvider.stories';
-import { DocumentLabelerInternalState } from 'documentLabeler/state/DocumentLabelerState';
+import { DocumentLabelerInternalState, LabelingSelectionType } from 'documentLabeler/state/DocumentLabelerState';
 import { FieldType } from 'documentLabeler/types/DocumentLabelerTypes';
 import React from 'react';
 
@@ -44,7 +44,9 @@ const selectedState: DocumentLabelerInternalState = {
     activeField: {
       id: 'fieldId',
       type: FieldType.Text,
-    }
+    },
+    selectionType: LabelingSelectionType.Block,
+    rootRef: null,
   },
   onSaveCallback: (outputData: object) => null,
 }
