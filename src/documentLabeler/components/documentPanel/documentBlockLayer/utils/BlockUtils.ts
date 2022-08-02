@@ -83,7 +83,7 @@ const getRegionFromRectangle = (
   };
 };
 
-const getRegionsToDisplay = (
+const getColoredRegions = (
   state: DocumentLabelerInternalState,
 ): Array<RegionColoredBlock> => {
   const { fields, tables } = DocumentLabelerReducerUtils.getAllColoredFields(state.docInfo);
@@ -137,6 +137,72 @@ const getRegionsToDisplay = (
 
   return simpleRegionsToDisplay.concat(tableRegionsToDisplay);
 };
+
+const getColoredRegionsToDisplay = (
+  state: DocumentLabelerInternalState,
+  regions: Array<RegionColoredBlock>,
+): Array<RegionColoredBlock> => {
+  return regions.filter((region) => {
+    if (state.localState.activeField) {
+      return region.sourceFieldId === state.localState.activeField.id;
+    } else {
+      return true;
+    }
+  });
+}
+
+const getColoredBlocks = (
+  state: DocumentLabelerInternalState,
+): Array<ColoredBlockType> => {
+  const { fields, tables } = DocumentLabelerReducerUtils.getAllColoredFields(state.docInfo);
+
+  const fieldColoredBlocks: Array<ColoredBlockType> = fields.flatMap(
+    (field) =>
+      field.info.blocks.map((block) => ({
+        color: field.color,
+        block,
+        sourceFieldId: field.info.id,
+        sourceFieldType: field.info.type,
+      })),
+  );
+
+  const tableCellColoredBlocks: Array<ColoredBlockType> = tables.flatMap(
+    (table) =>
+      table.info.rows.flatMap((row) =>
+        row.cells.flatMap((cell) =>
+          cell.blocks.map((block) => ({
+            color: table.color,
+            block,
+            tableId: table.info.id,
+            rowId: row.id,
+            columnId: cell.columnId,
+            sourceFieldType: FieldType.Table,
+          })),
+        ),
+      ),
+  );
+
+  return fieldColoredBlocks.concat(tableCellColoredBlocks);
+}
+
+const getColoredBlocksToDisplay = (
+  state: DocumentLabelerInternalState,
+  coloredBlocks: Array<ColoredBlockType>,
+): Array<ColoredBlockType> => {
+  return coloredBlocks.filter((block) => {
+    if (state.localState.activeField) {
+      if (BlockUtils.isTextOrCheckBoxBlock(block)) {
+        return block.sourceFieldId === state.localState.activeField.id;
+      } else if (BlockUtils.isCellLabel(block)) {
+        return block.tableId === state.localState.activeField.id;
+      } else {
+        return false;
+      }
+    } else {
+      return true;
+    }
+  });
+}
 
 const getFilteredUnhighlightedBlocks = (
   selectedField: ActiveField | undefined,
@@ -205,8 +271,8 @@ const isActiveCellBlock = (
   selectedField?: ActiveField,
 ): boolean => {
   if (
-    selectedField && 
-    selectedField.type === FieldType.Table && 
+    selectedField &&
+    selectedField.type === FieldType.Table &&
     selectedField.activeCell
   ) {
     return (
@@ -276,6 +342,28 @@ const sortBlocks = (blocks: Array<BlockDto>): Array<BlockDto> => {
   });
 };
 
+const getActiveRegion = (
+  state: DocumentLabelerInternalState,
+  regionsToDisplay: Array<RegionColoredBlock>,
+): BoundingBoxDto | undefined => {
+  if (!state.localState.activeField) return undefined;
+  if (state.localState.activeField.type === FieldType.Table) {
+    // cannot label a table region with no active cell
+    if (!state.localState.activeField.activeCell) return undefined;
+
+    const { cell } = DocumentLabelerReducerUtils.getCellInfoFromTable(
+      DocumentLabelerReducerUtils.getSelectedTable(state),
+      state.localState.activeField.activeCell,
+    );
+    if (!cell) {
+      throw new Error('Cannot find active cell');
+    }
+    return cell.region;
+  } else {
+    return regionsToDisplay[0]?.region;
+  }
+}
+
 export const BlockUtils = {
   isTextOrCheckBoxBlock,
   isCellLabel,
@@ -283,6 +371,10 @@ export const BlockUtils = {
   getColoredBlockOpacity,
   sortBlocks,
   getRegionFromRectangle,
-  getRegionsToDisplay,
+  getColoredRegions,
+  getColoredRegionsToDisplay,
+  getColoredBlocks,
+  getColoredBlocksToDisplay,
   getFilteredUnhighlightedBlocks,
+  getActiveRegion,
 };
