@@ -2,7 +2,7 @@ import React from 'react';
 import { Document } from 'react-pdf';
 
 import { Box, makeStyles } from '@material-ui/core';
-import { MimeType } from 'documentLabeler/types/DocumentLabelerTypes';
+import { MimeType } from 'common/types/DocumentLabelerTypes';
 
 // State Properties
 type Props = {

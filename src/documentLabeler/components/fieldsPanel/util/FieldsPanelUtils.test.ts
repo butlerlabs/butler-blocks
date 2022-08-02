@@ -1,7 +1,7 @@
 import { ButlerColorSet } from "documentLabeler/color/ColorUtils"
 import { FieldsPanelUtils } from "documentLabeler/components/fieldsPanel/util/FieldsPanelUtils";
 import { MockDocumentLabelerData } from "documentLabeler/MockDocumentLabelerData.stories";
-import { FieldLabelDto, TableLabelDto } from "documentLabeler/types/DocumentLabelerTypes";
+import { FieldLabelDto, TableLabelDto } from "common/types/DocumentLabelerTypes";
 
 const textField = MockDocumentLabelerData.labels.fields[0];
 const checkboxField = MockDocumentLabelerData.labels.fields[2];

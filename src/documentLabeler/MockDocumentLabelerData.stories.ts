@@ -4,7 +4,7 @@
  */
 
 import { DocumentLabelerData } from "documentLabeler/state/DocumentLabelerState";
-import { BlockDto, BlockType, Confidence, FieldLabelDto, FieldType, LabelDto, MimeType, TableLabelDto } from "documentLabeler/types/DocumentLabelerTypes";
+import { BlockDto, BlockType, Confidence, FieldLabelDto, FieldType, LabelDto, MimeType, TableLabelDto } from "common/types/DocumentLabelerTypes";
 
 const modelId = 'modelId';
 

@@ -1,4 +1,4 @@
-import { MimeType } from 'documentLabeler/types/DocumentLabelerTypes';
+import { MimeType } from 'common/types/DocumentLabelerTypes';
 import React, { useEffect } from 'react';
 import { Page, pdfjs } from 'react-pdf';
 

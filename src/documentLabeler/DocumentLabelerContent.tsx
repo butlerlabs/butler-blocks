@@ -3,7 +3,7 @@ import { useDocumentLabeler } from 'documentLabeler/DocumentLabelerProvider';
 import { Box, makeStyles, Theme } from '@material-ui/core';
 import { FieldsPanel } from 'documentLabeler/components/fieldsPanel/FieldsPanel';
 import { DocumentPanel } from 'documentLabeler/components/documentPanel/DocumentPanel';
-import { FieldType } from 'documentLabeler/types/DocumentLabelerTypes';
+import { FieldType } from 'common/types/DocumentLabelerTypes';
 import { TableLabeler } from 'documentLabeler/components/tableLabeler/TableLabeler';
 
 const useStyles = makeStyles((theme: Theme) => ({

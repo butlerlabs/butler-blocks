@@ -1,7 +1,7 @@
 import { CheckboxUtil } from "common/checkbox/CheckboxUtil";
 import { TypesafeUnreachableError } from "common/util/error";
 import { DocumentLabelerConstants } from "documentLabeler/constants/DocumentLabelerConstants";
-import { BlockType, FieldLabelDto, FieldType, TableLabelDto } from "documentLabeler/types/DocumentLabelerTypes";
+import { BlockType, CellLabelDto, FieldLabelDto, FieldType, TableLabelDto } from "common/types/DocumentLabelerTypes";
 import pluralize from "pluralize";
 
 const getCheckboxFieldDisplay = (field: FieldLabelDto) => {
@@ -41,8 +41,8 @@ const getTextValueFromField = (field: FieldLabelDto): string => {
     case FieldType.Checkbox:
       return getCheckboxFieldDisplay(field);
     case FieldType.Signature:
-      return field.region ? 
-        DocumentLabelerConstants.REGION_SELECTED : 
+      return field.region ?
+        DocumentLabelerConstants.REGION_SELECTED :
         DocumentLabelerConstants.EMPTY;
     case FieldType.Table:
       throw new Error('Field Labels cannot be of type table (tables are stored in Table Labels)');
@@ -51,10 +51,17 @@ const getTextValueFromField = (field: FieldLabelDto): string => {
   }
 };
 
+const getTextValueFromCell = (cell: CellLabelDto): string =>
+  cell.textOverride
+    ? cell.textOverride
+    : cell.region
+      ? DocumentLabelerConstants.REGION_SELECTED
+      : cell.blocks.map((block) => block.text).join(' ');
+
 /**
  * Returns the text value from a table to display in the fields panel
- * @param field 
- * @returns 
+ * @param field
+ * @returns
  */
 const getTextValueFromTable = (field: TableLabelDto) =>
   `${pluralize('row', field.rows.length, true)}`;
@@ -62,4 +69,5 @@ const getTextValueFromTable = (field: TableLabelDto) =>
 export const FieldsPanelDisplayUtils = {
   getTextValueFromField,
   getTextValueFromTable,
+  getTextValueFromCell,
 };

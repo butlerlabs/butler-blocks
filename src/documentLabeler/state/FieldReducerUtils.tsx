@@ -1,6 +1,6 @@
 import { DocumentLabelerReducerUtils } from "documentLabeler/state/DocumentLabelerReducerUtils";
 import { ActiveTable, DocumentLabelerInternalState } from "documentLabeler/state/DocumentLabelerState";
-import { Confidence, FieldLabelDto, FieldType, RowLabelDto, TableLabelDto } from "documentLabeler/types/DocumentLabelerTypes";
+import { Confidence, FieldLabelDto, FieldType, RowLabelDto, TableLabelDto } from "common/types/DocumentLabelerTypes";
 import { uuid } from 'uuidv4';
 
 export type RemoveAllBlocksFromFieldAction = {

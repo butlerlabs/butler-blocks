@@ -1,7 +1,7 @@
 import { EndUserBlockRenderUtils, RectCoords } from "documentLabeler/components/documentPanel/documentBlockLayer/utils/EndUserBlockRenderUtils";
 import { DocumentLabelerReducerUtils } from "documentLabeler/state/DocumentLabelerReducerUtils";
 import { ActiveField, DocumentLabelerData, DocumentLabelerInternalState, LabelingSelectionType } from "documentLabeler/state/DocumentLabelerState";
-import { BlockDto, BlockType, BoundingBoxDto, FieldType } from "documentLabeler/types/DocumentLabelerTypes";
+import { BlockDto, BlockType, BoundingBoxDto, FieldType } from "common/types/DocumentLabelerTypes";
 
 export type FieldColoredBlock = {
   color: string;

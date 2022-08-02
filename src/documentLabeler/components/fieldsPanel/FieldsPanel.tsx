@@ -2,11 +2,11 @@ import React from 'react';
 import { Box, makeStyles, Theme, Divider } from '@material-ui/core';
 import { useDocumentLabeler } from 'documentLabeler/DocumentLabelerProvider';
 import { FieldsPanelDisplayRow } from 'documentLabeler/components/fieldsPanel/fieldsPanelDisplayRow/FieldsPanelDisplayRow';
-import { FieldType } from 'documentLabeler/types/DocumentLabelerTypes';
-import { FieldsPanelDisplayUtils } from 'documentLabeler/components/fieldsPanel/util/FieldsPanelDisplayUtils';
+import { FieldType } from 'common/types/DocumentLabelerTypes';
 import { FieldsPanelUtils } from 'documentLabeler/components/fieldsPanel/util/FieldsPanelUtils';
 import { FieldsPanelHeader } from 'documentLabeler/components/fieldsPanel/fieldsPanelHeader/FieldsPanelHeader';
 import { DocumentLabelerReducerUtils } from 'documentLabeler/state/DocumentLabelerReducerUtils';
+import { FieldsPanelDisplayUtils } from 'documentLabeler/common/util/FieldsPanelDisplayUtils';
 
 const useStyles = makeStyles((theme: Theme) => ({
   Root: {

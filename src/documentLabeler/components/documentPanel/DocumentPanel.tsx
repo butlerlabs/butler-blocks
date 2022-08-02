@@ -4,7 +4,7 @@ import { useDocumentDisplayer } from "documentLabeler/components/documentPanel/d
 import { DocumentBlockLayer } from "documentLabeler/components/documentPanel/documentBlockLayer/DocumentBlockLayer";
 import { DocumentContainer } from "documentLabeler/components/documentPanel/documentContainer/DocumentContainer";
 import { useDocumentLabeler } from "documentLabeler/DocumentLabelerProvider";
-import { FieldType } from "documentLabeler/types/DocumentLabelerTypes";
+import { FieldType } from "common/types/DocumentLabelerTypes";
 import { withSize, SizeMeProps } from 'react-sizeme';
 
 const useStyles = makeStyles((theme: Theme) => ({

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Box, Button, makeStyles, Theme, Typography } from '@material-ui/core';
 import { useDocumentLabeler } from 'documentLabeler/DocumentLabelerProvider';
- 
+import { DocumentLabelerState } from 'documentLabeler/state/DocumentLabelerState';
+
 const useStyles = makeStyles((theme: Theme) => ({
   Root: {
     padding: theme.spacing(2),
@@ -26,15 +27,20 @@ export const FieldsPanelHeader: React.FC = () => {
  const classes = useStyles();
 
  const { state } = useDocumentLabeler();
- 
+
+ const onSaveClick = () =>
+  state.onSaveCallback(
+    DocumentLabelerState.convertInternalStateToOutputData(state)
+  );
+
  return (
   <Box className={classes.Root}>
     <Typography variant='subtitle2'>{FIELDS}</Typography>
-    <Button 
-      variant='contained' 
-      color='primary' 
+    <Button
+      variant='contained'
+      color='primary'
       className={classes.Button}
-      onClick={() => state.onSaveCallback(state.docInfo)}
+      onClick={onSaveClick}
     >
       {SAVE}
     </Button>
