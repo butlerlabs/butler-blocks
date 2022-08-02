@@ -57,8 +57,6 @@ export const DocumentBlockLayer: React.FC<Props> = ({
     dragRectangle,
   } = useDragBlockSelect();
 
-  const { fields, tables } = DocumentLabelerReducerUtils.getAllColoredFields(docInfo);
-
   const isDragging = dragRectangle !== undefined;
 
   const selectedFieldColor = state.localState.activeField
@@ -68,57 +66,13 @@ export const DocumentBlockLayer: React.FC<Props> = ({
       )
     : null;
 
-  const fieldColoredBlocks: Array<ColoredBlockType> = fields.flatMap(
-    (field) =>
-      field.info.blocks.map((block) => ({
-        color: field.color,
-        block,
-        sourceFieldId: field.info.id,
-        sourceFieldType: field.info.type,
-      })),
-  );
+  const coloredBlocks = BlockUtils.getColoredBlocks(state)
 
-  const tableCellColoredBlocks: Array<ColoredBlockType> = tables.flatMap(
-    (table) =>
-      table.info.rows.flatMap((row) =>
-        row.cells.flatMap((cell) =>
-          cell.blocks.map((block) => ({
-            color: table.color,
-            block,
-            tableId: table.info.id,
-            rowId: row.id,
-            columnId: cell.columnId,
-            sourceFieldType: FieldType.Table,
-          })),
-        ),
-      ),
-  );
+  const coloredBlocksToDisplay = BlockUtils.getColoredBlocksToDisplay(state, coloredBlocks);
 
-  const coloredBlocks = fieldColoredBlocks.concat(tableCellColoredBlocks);
+  const regions = BlockUtils.getColoredRegions(state);
 
-  const coloredBlocksToDisplay = coloredBlocks.filter((block) => {
-    if (state.localState.activeField) {
-      if (BlockUtils.isTextOrCheckBoxBlock(block)) {
-        return block.sourceFieldId === state.localState.activeField.id;
-      } else if (BlockUtils.isCellLabel(block)) {
-        return block.tableId === state.localState.activeField.id;
-      } else {
-        return false;
-      }
-    } else {
-      return true;
-    }
-  });
-
-  const regions = BlockUtils.getRegionsToDisplay(state);
-
-  const regionsToDisplay = regions.filter((region) => {
-    if (state.localState.activeField) {
-      return region.sourceFieldId === state.localState.activeField.id;
-    } else {
-      return true;
-    }
-  });
+  const regionsToDisplay = BlockUtils.getColoredRegionsToDisplay(state, regions);
 
   const filteredUnhighlightedBlocks = BlockUtils.getFilteredUnhighlightedBlocks(
     state.localState.activeField,
@@ -229,26 +183,7 @@ export const DocumentBlockLayer: React.FC<Props> = ({
         docPageHeights,
       );
 
-      const getActiveRegion = (): BoundingBoxDto | undefined => {
-        if (!state.localState.activeField) return undefined;
-        if (state.localState.activeField.type === FieldType.Table) {
-          // cannot label a table region with no active cell
-          if (!state.localState.activeField.activeCell) return undefined;
-
-          const { cell } = DocumentLabelerReducerUtils.getCellInfoFromTable(
-            DocumentLabelerReducerUtils.getSelectedTable(state),
-            state.localState.activeField.activeCell,
-          );
-          if (!cell) {
-            throw new Error('Cannot find active cell');
-          }
-          return cell.region;
-        } else {
-          return regionsToDisplay[0]?.region;
-        }
-      };
-
-      const activeRegion = getActiveRegion();
+      const activeRegion = BlockUtils.getActiveRegion(state, regionsToDisplay);
 
       if (
         activeRegion &&
@@ -276,9 +211,7 @@ export const DocumentBlockLayer: React.FC<Props> = ({
 
     if (unhighlightedBlocksToDisplay.length > 0) {
       if (
-        state.localState.activeField &&
-        (state.localState.activeField.type === FieldType.Text ||
-          state.localState.activeField.type === FieldType.Checkbox)
+        state.localState.activeField
       ) {
         dispatch({
           type: 'addBlocksToActiveField',
@@ -286,18 +219,7 @@ export const DocumentBlockLayer: React.FC<Props> = ({
             blocks: unhighlightedBlocksToDisplay,
           },
         });
-      } else if (
-        state.localState.activeField &&
-        state.localState.activeField.type === FieldType.Table
-      ) {
-        // dispatch({
-        //   type: 'addBlocksToActiveTableCell',
-        //   payload: {
-        //     blocks: unhighlightedBlocksToDisplay,
-        //   },
-        // });
       }
-
       // Reset the unhighlighted blocks
       setUnhighlightedBlocksToDisplay([]);
     } else {
@@ -315,34 +237,14 @@ export const DocumentBlockLayer: React.FC<Props> = ({
 
       if (blocks.length > 0 && state.localState.activeField) {
         const block = blocks[0];
-        if (
-          state.localState.activeField.type === FieldType.Text ||
-          state.localState.activeField.type === FieldType.Checkbox
-        ) {
-          dispatch({
-            type: 'removeBlockFromField',
-            payload: {
-              blockId: block.id,
-              field: {
-                id: state.localState.activeField.id,
-                type: state.localState.activeField.type,
-              }
-            },
-          });
-        } else if (
-          state.localState.activeField.type === FieldType.Table &&
-          state.localState.activeField.activeCell
-        ) {
-          // dispatch({
-          //   type: 'removeBlockFromCell',
-          //   payload: {
-          //     blockId: block.id,
-          //     columnId: state.activeCell.columnId,
-          //     rowId: state.activeCell.rowId,
-          //     tableId: state.activeCell.tableId,
-          //   },
-          // });
-        }
+        dispatch({
+          type: 'removeBlockFromField',
+          payload: {
+            blockId: block.id,
+            fieldId: state.localState.activeField.id,
+            fieldType: state.localState.activeField.type,
+          },
+        });
       }
     }
   };
