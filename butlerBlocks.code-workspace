@@ -6,9 +6,6 @@
 		{
 			"path": "src"
 		},
-		{
-			"path": "../butler"
-		}
 	],
 	"settings": {
 		"files.trimTrailingWhitespace": true,
