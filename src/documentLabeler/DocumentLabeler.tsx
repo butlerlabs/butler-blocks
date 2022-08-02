@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { DocumentLabelerProvider } from 'documentLabeler/DocumentLabelerProvider';
 import { DocumentLabelerData } from 'documentLabeler/state/DocumentLabelerState';
 import { DocumentLabelerContent } from 'documentLabeler/DocumentLabelerContent';
@@ -16,9 +16,14 @@ type Props = {
  * @param Props
  */
 export const DocumentLabeler: React.FC<Props> = ({data, onSaveCallback}) => {
+
+  const rootRef = useRef<HTMLDivElement | null>(null);
+
   return (
-    <DocumentLabelerProvider data={data} onSaveCallback={onSaveCallback}>
-      <DocumentLabelerContent />
+    <DocumentLabelerProvider data={data} onSaveCallback={onSaveCallback} rootRef={rootRef.current}>
+      <div ref={rootRef}>
+        <DocumentLabelerContent />
+      </div>
     </DocumentLabelerProvider>
   )
  }

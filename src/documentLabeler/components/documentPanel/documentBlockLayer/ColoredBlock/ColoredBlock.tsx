@@ -13,7 +13,6 @@ type Props = {
   onClick?: (event: React.MouseEvent) => void;
   docPageHeights: Array<number>;
   docRenderWidth: number;
-  containerRef?: HTMLDivElement;
   opacity?: number;
   autoScroll?: boolean;
 };
@@ -42,7 +41,6 @@ export const ColoredBlock: React.FC<Props> = ({
   onClick,
   docPageHeights,
   docRenderWidth,
-  containerRef,
   opacity = 1,
   autoScroll = false,
 }) => {
@@ -60,8 +58,8 @@ export const ColoredBlock: React.FC<Props> = ({
       blockRef.current &&
       state.localState.activeField &&
       autoScroll &&
-      containerRef &&
-      !HtmlVisibilityUtil.isInContainer(blockRef.current, containerRef, {
+      state.localState.rootRef &&
+      !HtmlVisibilityUtil.isInContainer(blockRef.current, state.localState.rootRef, {
         bottomOffset,
       })
     ) {
@@ -70,7 +68,7 @@ export const ColoredBlock: React.FC<Props> = ({
         block: 'start',
       });
     }
-  }, [state.localState.activeField, blockRef.current]);
+  }, [state.localState.activeField, blockRef.current, state.localState.rootRef]);
 
   useEffect(() => {
     setBGColor(alpha(color, 0.2));

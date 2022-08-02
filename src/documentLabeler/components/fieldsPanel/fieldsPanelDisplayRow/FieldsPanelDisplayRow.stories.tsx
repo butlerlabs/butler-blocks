@@ -46,6 +46,7 @@ const selectedState: DocumentLabelerInternalState = {
       type: FieldType.Text,
     },
     selectionType: LabelingSelectionType.Block,
+    rootRef: null,
   },
   onSaveCallback: (outputData: object) => null,
 }

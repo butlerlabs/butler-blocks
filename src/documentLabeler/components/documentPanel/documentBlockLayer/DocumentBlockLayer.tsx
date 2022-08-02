@@ -81,6 +81,14 @@ export const DocumentBlockLayer: React.FC<Props> = ({
     state.localState.selectionType,
   );
 
+  const hasActiveFormField = state.localState.activeField?.type !== FieldType.Table;
+
+  const hasActiveTableWithActiveCell =
+    state.localState.activeField?.type === FieldType.Table &&
+    Boolean(state.localState.activeField.activeCell);
+
+  const canLabel = hasActiveFormField || hasActiveTableWithActiveCell;
+
   /**
    * Responsible for handling the case of unselected field/cell.
    * @param ev
@@ -169,6 +177,7 @@ export const DocumentBlockLayer: React.FC<Props> = ({
   };
 
   const handleOnMouseUp = (evt: React.MouseEvent) => {
+    evt.stopPropagation();
     if (isDragging) {
       onDragEnd();
     }
@@ -176,7 +185,7 @@ export const DocumentBlockLayer: React.FC<Props> = ({
       state.localState.activeField &&
       (state.localState.selectionType === LabelingSelectionType.Region ||
         state.localState.activeField.type === FieldType.Signature);
-    if (state.localState.activeField && shouldLabelRegion && dragRectangle) {
+    if (state.localState.activeField && shouldLabelRegion && dragRectangle && canLabel) {
       const region = BlockUtils.getRegionFromRectangle(
         dragRectangle,
         width,
@@ -211,7 +220,7 @@ export const DocumentBlockLayer: React.FC<Props> = ({
 
     if (unhighlightedBlocksToDisplay.length > 0) {
       if (
-        state.localState.activeField
+        state.localState.activeField && canLabel
       ) {
         dispatch({
           type: 'addBlocksToActiveField',
@@ -235,14 +244,13 @@ export const DocumentBlockLayer: React.FC<Props> = ({
         width,
       );
 
-      if (blocks.length > 0 && state.localState.activeField) {
+      if (blocks.length > 0 && state.localState.activeField && canLabel) {
         const block = blocks[0];
         dispatch({
           type: 'removeBlockFromField',
           payload: {
             blockId: block.id,
-            fieldId: state.localState.activeField.id,
-            fieldType: state.localState.activeField.type,
+            field: state.localState.activeField,
           },
         });
       }
@@ -281,7 +289,6 @@ export const DocumentBlockLayer: React.FC<Props> = ({
       setUnhighlightedBlocksToDisplay(newBlocksToDisplay);
     }
   };
-
 
   return (
     <div
@@ -331,7 +338,7 @@ export const DocumentBlockLayer: React.FC<Props> = ({
           />
         ))}
 
-        {selectedFieldColor &&
+        {canLabel && selectedFieldColor &&
           unhighlightedBlocksToDisplay.map((block) => (
             <ColoredBlock
               key={block.id}
@@ -341,7 +348,7 @@ export const DocumentBlockLayer: React.FC<Props> = ({
               docRenderWidth={width}
             />
           ))}
-        {dragRectangle && selectedFieldColor && (
+        {dragRectangle && canLabel && selectedFieldColor && (
           // can only draw rectangle if active field is set
           <DragRectangle
             dragCoords={dragRectangle}

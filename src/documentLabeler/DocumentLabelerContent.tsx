@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   Root: {
     backgroundColor: theme.palette.background.default,
     display: 'flex',
-    height: '100%',
+    maxHeight: '100%',
   },
   FieldsPanelContainer: {
     width: theme.spacing(45),

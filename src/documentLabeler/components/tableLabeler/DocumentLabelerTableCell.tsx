@@ -3,34 +3,17 @@ import {
   Box,
   IconButton,
   makeStyles,
-  Menu,
-  MenuItem,
   TableCell,
   Theme,
-  Typography,
 } from '@material-ui/core';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import clsx from 'clsx';
 import { EditableNameDisplay } from 'documentLabeler/components/tableLabeler/editableNameDisplay/EditableNameDisplay';
 import { TruncatableTypography } from 'common/display/TruncatableTypography/TruncatableTypography';
+import { Edit } from '@material-ui/icons';
 
 const MAX_CELL_CHAR_LIMIT = 100;
 
-enum MenuActions {
-  EDIT,
-  CLEAR,
-}
-
-const MENU_ITEMS = [
-  {
-    label: 'Edit',
-    actionType: MenuActions.EDIT,
-  },
-  {
-    label: 'Clear',
-    actionType: MenuActions.CLEAR,
-  },
-];
+const CELL_VALUE = 'Cell Value';
 
 type Props = {
   textValue: string;
@@ -87,8 +70,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 /**
  * Component responsible for:
- * 1. Rendering Column Headers in the Table Editor
- * 2. Conditionally Rendering the editable name display
+ * 1. Rendering Column Headers in the Table Labeler
+ * 2. Rendering Table Cells in the Table Labeler
  * @param Props
  */
 export const DocumentLabelerTableCell: React.FC<Props> = ({
@@ -101,13 +84,12 @@ export const DocumentLabelerTableCell: React.FC<Props> = ({
   actionOnly = false,
   onClick,
   onSaveValue,
-  onDelete,
 }) => {
   const classes = useStyles();
 
   // state variable used to conditionally render either
   // the display row or the editable name display
-  const [editingValue, setEditingValue] = useState<boolean>(false);
+  const [editingValue, setEditingValue] = useState<boolean>(showEdit);
   const [menuAnchorEl, setMenuAnchorEl] = useState<Element | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -116,18 +98,6 @@ export const DocumentLabelerTableCell: React.FC<Props> = ({
       inputRef.current?.focus();
     }
   }, [editingValue, inputRef.current]);
-
-  const handleOnClickMenuItems = (action: MenuActions) => {
-    switch (action) {
-      case MenuActions.EDIT:
-        setEditingValue(true);
-        break;
-      case MenuActions.CLEAR:
-        onDelete?.();
-        break;
-    }
-    setMenuAnchorEl(null);
-  };
 
   const shouldDisplayPlaceholder = !textValue && isActive;
 
@@ -152,7 +122,7 @@ export const DocumentLabelerTableCell: React.FC<Props> = ({
           <EditableNameDisplay
             name={textValue}
             onSave={handleEditSubmit}
-            label={placeholder}
+            label={CELL_VALUE}
             inputRef={inputRef}
           />
         ) : (
@@ -181,30 +151,14 @@ export const DocumentLabelerTableCell: React.FC<Props> = ({
             {displayActions && (
               <IconButton
                 className={classes.IconButton}
-                onClick={(event) => setMenuAnchorEl(event.target as Element)}
+                onClick={() => setEditingValue(true)}
               >
-                <MoreHorizIcon />
+                <Edit />
               </IconButton>
             )}
           </>
         )}
       </Box>
-
-      <Menu
-        open={Boolean(menuAnchorEl)}
-        onClose={() => setMenuAnchorEl(null)}
-        anchorEl={menuAnchorEl}
-      >
-        {MENU_ITEMS.map((menu) => (
-          <MenuItem
-            key={menu.label}
-            value={menu.actionType}
-            onClick={() => handleOnClickMenuItems(menu.actionType)}
-          >
-            <Typography>{menu.label}</Typography>
-          </MenuItem>
-        ))}
-      </Menu>
     </TableCell>
   );
 };

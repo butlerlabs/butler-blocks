@@ -1,5 +1,5 @@
 import { DocumentLabelerReducerUtils } from "documentLabeler/state/DocumentLabelerReducerUtils";
-import { DocumentLabelerInternalState } from "documentLabeler/state/DocumentLabelerState";
+import { ActiveTable, DocumentLabelerInternalState } from "documentLabeler/state/DocumentLabelerState";
 import { Confidence, FieldLabelDto, FieldType, RowLabelDto, TableLabelDto } from "documentLabeler/types/DocumentLabelerTypes";
 import { uuid } from 'uuidv4';
 
@@ -72,6 +72,39 @@ const setTextFieldOverride = (
   return DocumentLabelerReducerUtils.updateStateWithNewField(state, updatedField, idx);
 }
 
+export type SetTableCellTextOverrideAction = {
+  type: 'setTableCellTextOverride';
+  payload: {
+    textOverride: string;
+    table: ActiveTable;
+  };
+};
+
+const setTableCellTextOverride = (
+  state: DocumentLabelerInternalState,
+  action: SetTableCellTextOverrideAction,
+): DocumentLabelerInternalState => {
+  const { table: tableInfo, textOverride } = action.payload;
+  if (!tableInfo.activeCell) {
+    throw new Error('Cannot set cell text override without specifying a cell');
+  }
+  const { table, idx } = DocumentLabelerReducerUtils.getTableFromState(state, tableInfo.id);
+  const { cell, rowIdx, columnIdx } =
+    DocumentLabelerReducerUtils.getCellInfoFromTable(table, tableInfo.activeCell);
+  const updatedCell = {
+    ...cell,
+    textOverride: textOverride,
+  }
+  const updatedTable =
+    DocumentLabelerReducerUtils.updateTableWithNewCell(
+      table,
+      updatedCell,
+      rowIdx,
+      columnIdx
+    );
+  return DocumentLabelerReducerUtils.updateStateWithNewTable(state, updatedTable, idx);
+}
+
 export type RemoveRowFromTableAction = {
   type: 'removeRowFromTable',
   payload: {
@@ -125,6 +158,7 @@ const addRowToTable = (
 export const FieldReducerUtils = {
   removeAllBlocksFromField,
   setTextFieldOverride,
+  setTableCellTextOverride,
   removeRowFromTable,
   addRowToTable,
 }

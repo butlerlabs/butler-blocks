@@ -17,17 +17,14 @@ const GET_TABLE_FTUX_TEXT = () =>
     'Try adding a row to begin annotating your table!';
 
 const getCellText = (cell: CellLabelDto): string =>
-  cell.region
-    ? DocumentLabelerConstants.REGION_SELECTED
-    : cell.blocks.map((block) => block.text).join(' ');
+  cell.textOverride
+    ? cell.textOverride
+    : cell.region
+      ? DocumentLabelerConstants.REGION_SELECTED
+      : cell.blocks.map((block) => block.text).join(' ');
 
 /**
- * Component Responsible for:
- * 1. Displaying active table in the BDT Document Labeler
- * 2. Handling User Actions on the table component (close table, hover or focus on cell, etc.)
- * 3. Adding rows and columns to and removing rows and columns from the active table
- *
- * [ModelDetailsPage]
+ * Component Responsible for Displaying the Table Labeler in the Document Labeler
  */
 export const TableLabeler: React.FC = () => {
   const { state, dispatch } = useDocumentLabeler();
@@ -80,6 +77,27 @@ export const TableLabeler: React.FC = () => {
     });
   };
 
+  const handleCellTextOverride = (
+    rowId: string,
+    columnId: string,
+    textOverride: string
+  ) => {
+    dispatch({
+      type: 'setTableCellTextOverride',
+      payload: {
+        textOverride: textOverride,
+        table: {
+          id: selectedTable.id,
+          type: FieldType.Table,
+          activeCell: {
+            rowId: rowId,
+            columnId: columnId,
+          }
+        }
+      }
+    })
+  }
+
   const columnHeaderDisplay = columns
     .map((column, index) => (
       <DocumentLabelerTableCell
@@ -117,6 +135,11 @@ export const TableLabeler: React.FC = () => {
               cell.columnId === activeCell.columnId &&
               activeRow?.id === row.id
             }
+            displayActions
+            onSaveValue=
+              {(value) =>
+                handleCellTextOverride(row.id, cell.columnId, value)
+              }
             onClick={() => handleOnCellClick(cell.columnId, row.id)}
           />
         ))

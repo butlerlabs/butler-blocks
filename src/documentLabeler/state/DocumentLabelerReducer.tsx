@@ -2,7 +2,7 @@ import { TypesafeUnreachableError } from 'common/util/error';
 import { ActiveFieldReducerUtils, SetActiveFieldAction } from 'documentLabeler/state/ActiveFieldReducerUtils';
 import { AddBlockToActiveFieldAction, BlockReducerUtils, RemoveBlockFromFieldAction } from 'documentLabeler/state/BlockReducerUtils';
 import { DocumentLabelerInternalState } from 'documentLabeler/state/DocumentLabelerState';
-import { AddRowToTableAction, FieldReducerUtils, RemoveAllBlocksFromFieldAction, RemoveRowFromTableAction, SetTextFieldOverrideAction } from 'documentLabeler/state/FieldReducerUtils';
+import { AddRowToTableAction, FieldReducerUtils, RemoveAllBlocksFromFieldAction, RemoveRowFromTableAction, SetTableCellTextOverrideAction, SetTextFieldOverrideAction } from 'documentLabeler/state/FieldReducerUtils';
 import { AddRegionToActiveFieldAction, ClearRegionFromFieldAction, RegionReducerUtils } from 'documentLabeler/state/RegionReducerUtils';
 
 type DocumentLabelerDispatchAction =
@@ -13,6 +13,7 @@ type DocumentLabelerDispatchAction =
   ClearRegionFromFieldAction |
   RemoveAllBlocksFromFieldAction |
   SetTextFieldOverrideAction |
+  SetTableCellTextOverrideAction |
   AddRowToTableAction |
   RemoveRowFromTableAction;
 
@@ -41,6 +42,8 @@ type DocumentLabelerDispatchAction =
       return FieldReducerUtils.removeAllBlocksFromField(state, action);
     case 'setFieldTextOverride':
       return FieldReducerUtils.setTextFieldOverride(state, action);
+    case 'setTableCellTextOverride':
+      return FieldReducerUtils.setTableCellTextOverride(state, action);
     case 'addRowToTable':
       return FieldReducerUtils.addRowToTable(state, action);
     case 'removeRowFromTable':

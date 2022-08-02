@@ -9,6 +9,7 @@ export const DocumentLabelerDispatchContext = createContext<DocumentLabelerDispa
   type Props = {
    data: DocumentLabelerData;
    onSaveCallback: (outputData: object) => void;
+   rootRef: HTMLDivElement | null;
    children: React.ReactNode;
   };
 
@@ -21,11 +22,12 @@ export const DocumentLabelerDispatchContext = createContext<DocumentLabelerDispa
   export const DocumentLabelerProvider: React.FC<Props> = ({
    data,
    onSaveCallback,
+   rootRef,
    children,
   }) => {
    const [state, dispatch] = useReducer(
      documentLabelerReducer,
-     DocumentLabelerState.generateInitialState(data, onSaveCallback),
+     DocumentLabelerState.generateInitialState(data, onSaveCallback, rootRef),
    );
 
    return (
