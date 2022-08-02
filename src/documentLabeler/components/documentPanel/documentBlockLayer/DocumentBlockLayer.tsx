@@ -149,8 +149,8 @@ export const DocumentBlockLayer: React.FC<Props> = ({
         },
       });
     } else if (
-      BlockUtils.isCellLabel(block) && 
-      !(state.localState.activeField.type === FieldType.Table && 
+      BlockUtils.isCellLabel(block) &&
+      !(state.localState.activeField.type === FieldType.Table &&
         state.localState.activeField.activeCell)
     ) {
       dispatch({
@@ -323,8 +323,10 @@ export const DocumentBlockLayer: React.FC<Props> = ({
             type: 'removeBlockFromField',
             payload: {
               blockId: block.id,
-              fieldId: state.localState.activeField.id,
-              fieldType: state.localState.activeField.type,
+              field: {
+                id: state.localState.activeField.id,
+                type: state.localState.activeField.type,
+              }
             },
           });
         } else if (

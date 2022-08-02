@@ -1,29 +1,13 @@
 import React from 'react';
 import { DocumentLabelerProvider } from 'documentLabeler/DocumentLabelerProvider';
 import { DocumentLabelerData } from 'documentLabeler/state/DocumentLabelerState';
-import { Box, makeStyles, Theme } from '@material-ui/core';
-import { FieldsPanel } from 'documentLabeler/components/fieldsPanel/FieldsPanel';
-import { DocumentPanel } from 'documentLabeler/components/documentPanel/DocumentPanel';
+import { DocumentLabelerContent } from 'documentLabeler/DocumentLabelerContent';
 
 type Props = {
   data: DocumentLabelerData;
   // TODO: define documentLabelerOutput type
   onSaveCallback: (documentLabelerOutput: object) => void;
 };
-
-const useStyles = makeStyles((theme: Theme) => ({
-  Root: {
-    backgroundColor: theme.palette.background.default,
-    display: 'flex',
-    height: '100%',
-  },
-  FieldsPanelContainer: {
-    width: theme.spacing(45),
-  },
-  DocumentDisplayerContainer: {
-    flex: 1,
-  }
- }));
 
 /**
  * Top level component containing the Embedded Document Labeler.  Takes in document info
@@ -32,18 +16,9 @@ const useStyles = makeStyles((theme: Theme) => ({
  * @param Props
  */
 export const DocumentLabeler: React.FC<Props> = ({data, onSaveCallback}) => {
-  const classes = useStyles();
-
   return (
     <DocumentLabelerProvider data={data} onSaveCallback={onSaveCallback}>
-      <Box className={classes.Root}>
-        <Box className={classes.DocumentDisplayerContainer}>
-          <DocumentPanel />
-        </Box>
-        <Box className={classes.FieldsPanelContainer}>
-          <FieldsPanel />
-        </Box>
-      </Box>
+      <DocumentLabelerContent />
     </DocumentLabelerProvider>
   )
  }

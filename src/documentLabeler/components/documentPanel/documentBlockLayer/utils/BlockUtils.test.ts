@@ -1,25 +1,9 @@
-import { RectCoords } from 'common/documentV2/docLabelingPane/blockLayer/EndUserBlockRenderUtils';
-import { GetRestApiMockData } from 'core/api/useApiInProvider/GetRestApiMockData.stories';
-import {
-  BoundingBoxDto,
-  DocExBlockType,
-  ModelFieldType,
-} from 'generated/api/v0';
-import {
-  BlockUtils,
-  CellColoredBlock,
-  ColoredBlockType,
-  FieldColoredBlock,
-} from 'pages/modelDetails/components/TrainingTabView/DocumentLabeler/DocumentColoredBlockLayer/BlockUtils';
-import { ModelDetailsMockData } from 'pages/modelDetails/ModelDetailsMockData.stories';
-import { MockedModelDetailsState } from 'pages/modelDetails/state/MockModelDetailsState';
-import {
-  ActiveCellType,
-  LabelingSelectionType,
-  ModelDetailsInternalState,
-} from 'pages/modelDetails/state/ModelDetailsState';
-import { SelectedFieldType } from 'pages/modelDetails/utils/FieldUtils';
-import { getColorFromColorSet } from 'utils/ColorUtils';
+import { ColorUtils } from "documentLabeler/color/ColorUtils";
+import { BlockUtils, CellColoredBlock, ColoredBlockType, FieldColoredBlock } from "documentLabeler/components/documentPanel/documentBlockLayer/utils/BlockUtils";
+import { RectCoords } from "documentLabeler/components/documentPanel/documentBlockLayer/utils/EndUserBlockRenderUtils";
+import { MockDocumentLabelerData } from "documentLabeler/MockDocumentLabelerData.stories";
+import { ActiveCell, ActiveField, LabelingSelectionType } from "documentLabeler/state/DocumentLabelerState";
+import { BlockType, BoundingBoxDto, FieldType } from "documentLabeler/types/DocumentLabelerTypes";
 
 const mockPageHeights = [500, 400, 500, 300];
 const mockWidth = 400;
@@ -83,7 +67,7 @@ const backwardsBoundingBox: BoundingBoxDto = {
 
 const simpleBlock = {
   id: 'block1',
-  blockType: DocExBlockType.Word,
+  blockType: BlockType.Word,
   text: 'test',
   boundingBox: simpleBoundingBox,
   confidence: 1,
@@ -91,16 +75,18 @@ const simpleBlock = {
 
 const fieldColoredBlock: FieldColoredBlock = {
   block: simpleBlock,
-  color: getColorFromColorSet(0),
+  color: ColorUtils.getColorFromColorSet(0),
   sourceFieldId: 'field1',
+  sourceFieldType: FieldType.Text,
 };
 
 const cellColoredBlock: CellColoredBlock = {
   block: simpleBlock,
-  color: getColorFromColorSet(0),
+  color: ColorUtils.getColorFromColorSet(0),
   columnId: 'col1',
   rowId: 'row1',
   tableId: 'table1',
+  sourceFieldType: FieldType.Table,
 };
 
 describe('getRegionFromRectangle', () => {
@@ -133,10 +119,9 @@ describe('getRegionFromRectangle', () => {
 });
 
 describe('getFilteredUnhighlightedBlocks', () => {
-  const wordBlocks = ModelDetailsMockData.staticDocumentDetails.wordBlocks;
+  const wordBlocks = MockDocumentLabelerData.wordBlocks;
   it('should display all word blocks with no selectedField', () => {
     const displayBlocks = BlockUtils.getFilteredUnhighlightedBlocks(
-      undefined,
       undefined,
       [],
       wordBlocks,
@@ -147,7 +132,6 @@ describe('getFilteredUnhighlightedBlocks', () => {
   it('should display no word blocks when selection type is region', () => {
     const displayBlocks = BlockUtils.getFilteredUnhighlightedBlocks(
       undefined,
-      undefined,
       [],
       wordBlocks,
       LabelingSelectionType.Region,
@@ -155,13 +139,12 @@ describe('getFilteredUnhighlightedBlocks', () => {
     expect(displayBlocks).toMatchObject([]);
   });
   it('should display no blocks with a signature field selected', () => {
-    const selectedSignatureField: SelectedFieldType = {
-      fieldId: 'signatureId',
-      type: ModelFieldType.Signature,
+    const selectedSignatureField: ActiveField = {
+      id: 'signatureId',
+      type: FieldType.Signature,
     };
     const displayBlocks = BlockUtils.getFilteredUnhighlightedBlocks(
       selectedSignatureField,
-      undefined,
       [],
       wordBlocks,
       LabelingSelectionType.Region,
@@ -169,56 +152,54 @@ describe('getFilteredUnhighlightedBlocks', () => {
     expect(displayBlocks).toMatchObject([]);
   });
   it('should display only word blocks with a text field selected', () => {
-    const selectedTextField: SelectedFieldType = {
-      fieldId: 'textId',
-      type: ModelFieldType.Text,
+    const selectedTextField: ActiveField = {
+      id: 'textId',
+      type: FieldType.Text,
     };
     const displayBlocks = BlockUtils.getFilteredUnhighlightedBlocks(
       selectedTextField,
-      undefined,
       [],
       wordBlocks,
       LabelingSelectionType.Block,
     );
     const expectedBlocks = wordBlocks.filter(
-      (block) => block.blockType === DocExBlockType.Word,
+      (block) => block.blockType === BlockType.Word,
     );
     expect(displayBlocks).toMatchObject(expectedBlocks);
   });
   it('should display only checkbox blocks with a checkbox field selected', () => {
-    const selectedCheckboxField: SelectedFieldType = {
-      fieldId: 'checkboxId',
-      type: ModelFieldType.Checkbox,
+    const selectedCheckboxField: ActiveField = {
+      id: 'checkboxId',
+      type: FieldType.Checkbox,
     };
     const displayBlocks = BlockUtils.getFilteredUnhighlightedBlocks(
       selectedCheckboxField,
-      undefined,
       [],
       wordBlocks,
       LabelingSelectionType.Block,
     );
     const expectedBlocks = wordBlocks.filter(
-      (block) => block.blockType === DocExBlockType.Checkbox,
+      (block) => block.blockType === BlockType.Checkbox,
     );
     expect(displayBlocks).toMatchObject(expectedBlocks);
   });
   it('should filter out blocks from an active text field', () => {
-    const selectedTextField: SelectedFieldType = {
-      fieldId: 'textId',
-      type: ModelFieldType.Text,
+    const selectedTextField: ActiveField = {
+      id: 'textId',
+      type: FieldType.Text,
     };
     // Define first two word blocks to be associated with selected text field
     const coloredBlocks: Array<ColoredBlockType> = wordBlocks
-      .filter((block) => block.blockType === DocExBlockType.Word)
+      .filter((block) => block.blockType === BlockType.Word)
       .slice(0, 2)
       .map((block) => ({
         color: 'color',
         block: block,
         sourceFieldId: 'textId',
+        sourceFieldType: FieldType.Text,
       }));
     const displayBlocks = BlockUtils.getFilteredUnhighlightedBlocks(
       selectedTextField,
-      undefined,
       coloredBlocks,
       wordBlocks,
       LabelingSelectionType.Block,
@@ -226,38 +207,37 @@ describe('getFilteredUnhighlightedBlocks', () => {
     // expect display blocks to filter out first two blocks
     const expectedBlocks = wordBlocks
       .slice(2)
-      .filter((block) => block.blockType !== DocExBlockType.Checkbox);
+      .filter((block) => block.blockType !== BlockType.Checkbox);
     expect(displayBlocks).toMatchObject(expectedBlocks);
   });
   it('should filter out blocks from an active table field', () => {
-    const selectedTableField: SelectedFieldType = {
-      fieldId: 'tableId',
-      type: ModelFieldType.Table,
-    };
-    const activeCell: ActiveCellType = {
-      tableId: 'tableId',
-      rowId: 'rowId',
-      columnId: 'columnId',
+    const selectedTableField: ActiveField = {
+      id: 'tableId',
+      type: FieldType.Table,
+      activeCell: {
+        rowId: 'rowId',
+        columnId: 'columnId',
+      },
     };
     const coloredBlocks: Array<ColoredBlockType> = [
-      ModelDetailsMockData.blockCell1,
+      MockDocumentLabelerData.wordBlocks[4],
     ].map((block) => ({
       color: 'cell',
       block: block,
       tableId: 'tableId',
       rowId: 'rowId',
       columnId: 'columnId',
+      sourceFieldType: FieldType.Table,
     }));
     const displayBlocks = BlockUtils.getFilteredUnhighlightedBlocks(
       selectedTableField,
-      activeCell,
       coloredBlocks,
       wordBlocks,
       LabelingSelectionType.Block,
     );
     const expectedBlocks = wordBlocks
-      .filter((block) => block.id !== ModelDetailsMockData.blockCell1.id)
-      .filter((block) => block.blockType !== DocExBlockType.Checkbox);
+      .filter((block) => block.id !== MockDocumentLabelerData.wordBlocks[4].id)
+      .filter((block) => block.blockType !== BlockType.Checkbox);
     expect(displayBlocks).toMatchObject(expectedBlocks);
   });
 });
@@ -274,23 +254,26 @@ describe('getColoredBlockOpacity', () => {
   });
 
   it("should return opacity 1 for cell block if it's active cell's block", () => {
-    const activeCell: ActiveCellType = {
-      columnId: 'col1',
-      rowId: 'row1',
-      tableId: 'table1',
+    const selectedTableField = {
+      id: 'tableId',
+      type: FieldType.Table,
+      activeCell: {
+        rowId: 'rowId',
+        columnId: 'columnId',
+      },
     };
     const opacity1 = BlockUtils.getColoredBlockOpacity(
       cellColoredBlock,
-      activeCell,
+      selectedTableField,
     );
     expect(opacity1).toBe(1);
 
     // Check for blocks not associated with the activeCell
-    activeCell.tableId = 'table2';
+    selectedTableField.id = 'table2';
 
     const opacity2 = BlockUtils.getColoredBlockOpacity(
       cellColoredBlock,
-      activeCell,
+      selectedTableField,
     );
     expect(opacity2).toBe(0.3);
   });
@@ -298,7 +281,7 @@ describe('getColoredBlockOpacity', () => {
 
 describe('sortBlocks', () => {
   it('should sort the blocks in correct order', () => {
-    const blocks = ModelDetailsMockData.staticDocumentDetails.wordBlocks;
+    const blocks = MockDocumentLabelerData.wordBlocks;
 
     const SORTED_BLOCK_RESULT = [
       blocks[0],
@@ -314,148 +297,3 @@ describe('sortBlocks', () => {
   });
 });
 
-const initialMockState = MockedModelDetailsState.generateMockedModelDetailsState();
-
-const mockModelDetailsState: ModelDetailsInternalState = {
-  ...initialMockState,
-  getApiState: {
-    ...initialMockState.getApiState,
-    documentDetails: GetRestApiMockData.getLoadedMockData(
-      ModelDetailsMockData.trainingDocumentDetails,
-      { id: initialMockState.modelId, documentId: 'docId' },
-    ),
-    staticDocumentDetails: GetRestApiMockData.getLoadedMockData(
-      ModelDetailsMockData.staticDocumentDetails,
-      { id: initialMockState.modelId, documentId: 'docId' },
-    ),
-  },
-};
-
-describe('getRegionsToDisplay', () => {
-  it('should return no regions if no regions are labeled', () => {
-    const stateWithNoRegions: ModelDetailsInternalState = {
-      ...mockModelDetailsState,
-      getApiState: {
-        ...mockModelDetailsState.getApiState,
-        documentDetails: {
-          ...mockModelDetailsState.getApiState.documentDetails,
-          data: mockModelDetailsState.getApiState.documentDetails.data
-            ? {
-                ...mockModelDetailsState.getApiState.documentDetails.data,
-                signatures: mockModelDetailsState.getApiState.documentDetails.data.signatures.map(
-                  (sig) => ({ ...sig, region: undefined }),
-                ),
-              }
-            : mockModelDetailsState.getApiState.documentDetails.data,
-        },
-      },
-    };
-    const regionsToDisplay = BlockUtils.getRegionsToDisplay(stateWithNoRegions);
-    expect(regionsToDisplay).toMatchObject([]);
-  });
-
-  it('should return regions for signature fields with regions', () => {
-    const regionsToDisplay = BlockUtils.getRegionsToDisplay(
-      mockModelDetailsState,
-    );
-    expect(regionsToDisplay.length).toEqual(1);
-    expect(regionsToDisplay[0].id).toEqual('field3');
-  });
-
-  it('should return regions for text fields and signature fields', () => {
-    const stateWithSimpleFieldRegions: ModelDetailsInternalState = {
-      ...mockModelDetailsState,
-      getApiState: {
-        ...mockModelDetailsState.getApiState,
-        documentDetails: {
-          ...mockModelDetailsState.getApiState.documentDetails,
-          data: mockModelDetailsState.getApiState.documentDetails.data
-            ? {
-                ...mockModelDetailsState.getApiState.documentDetails.data,
-                fields: mockModelDetailsState.getApiState.documentDetails.data.fields.map(
-                  (field) => ({
-                    ...field,
-                    blocks: [],
-                    // add a region to all simple fields
-                    region: ModelDetailsMockData.blockCell1.boundingBox,
-                  }),
-                ),
-              }
-            : mockModelDetailsState.getApiState.documentDetails.data,
-        },
-      },
-    };
-    const regionsToDisplay = BlockUtils.getRegionsToDisplay(
-      stateWithSimpleFieldRegions,
-    );
-    expect(regionsToDisplay.length).toEqual(4);
-    expect(regionsToDisplay.map((region) => region.id)).toMatchObject([
-      'textField1',
-      'textField2',
-      'field2',
-      'field3',
-    ]);
-    // Should have four unique colors for four different fields
-    expect(
-      new Set(regionsToDisplay.map((region) => region.color)).size,
-    ).toEqual(4);
-  });
-
-  it('should return regions for text fields, signature fields and table fields', () => {
-    const stateWithTableAndFieldRegions: ModelDetailsInternalState = {
-      ...mockModelDetailsState,
-      getApiState: {
-        ...mockModelDetailsState.getApiState,
-        documentDetails: {
-          ...mockModelDetailsState.getApiState.documentDetails,
-          data: mockModelDetailsState.getApiState.documentDetails.data
-            ? {
-                ...mockModelDetailsState.getApiState.documentDetails.data,
-                fields: mockModelDetailsState.getApiState.documentDetails.data.fields.map(
-                  (field) => ({
-                    ...field,
-                    blocks: [],
-                    // add a region to all simple fields
-                    region: ModelDetailsMockData.blockCell1.boundingBox,
-                  }),
-                ),
-                tables: mockModelDetailsState.getApiState.documentDetails.data.tables.map(
-                  (table, tIdx) => ({
-                    ...table,
-                    rows: table.rows.map((row, rIdx) => ({
-                      ...row,
-                      cells: row.cells.map((cell, cIdx) => {
-                        return tIdx === 0 && rIdx === 0 && cIdx === 0
-                          ? {
-                              ...cell,
-                              blocks: [],
-                              region:
-                                ModelDetailsMockData.blockCell1.boundingBox,
-                            }
-                          : cell;
-                      }),
-                    })),
-                  }),
-                ),
-              }
-            : mockModelDetailsState.getApiState.documentDetails.data,
-        },
-      },
-    };
-    const regionsToDisplay = BlockUtils.getRegionsToDisplay(
-      stateWithTableAndFieldRegions,
-    );
-    expect(regionsToDisplay.length).toEqual(5);
-    expect(regionsToDisplay.map((region) => region.id)).toMatchObject([
-      'textField1',
-      'textField2',
-      'field2',
-      'field3',
-      'table1col1row1',
-    ]);
-    // Should have five unique colors for five different fields
-    expect(
-      new Set(regionsToDisplay.map((region) => region.color)).size,
-    ).toEqual(5);
-  });
-});

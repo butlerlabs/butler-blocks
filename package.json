@@ -51,6 +51,7 @@
     "pluralize": "^8.0.0",
     "react-pdf": "^5.7.2",
     "react-sizeme": "^3.0.2",
-    "typeface-poppins": "^1.1.13"
+    "typeface-poppins": "^1.1.13",
+    "uuidv4": "^6.2.13"
   }
 }
