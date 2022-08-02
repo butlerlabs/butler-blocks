@@ -6,6 +6,7 @@ import { FieldType } from 'documentLabeler/types/DocumentLabelerTypes';
 import { FieldsPanelDisplayUtils } from 'documentLabeler/components/fieldsPanel/util/FieldsPanelDisplayUtils';
 import { FieldsPanelUtils } from 'documentLabeler/components/fieldsPanel/util/FieldsPanelUtils';
 import { FieldsPanelHeader } from 'documentLabeler/components/fieldsPanel/fieldsPanelHeader/FieldsPanelHeader';
+import { DocumentLabelerReducerUtils } from 'documentLabeler/state/DocumentLabelerReducerUtils';
 
 const useStyles = makeStyles((theme: Theme) => ({
   Root: {
@@ -33,7 +34,7 @@ export const FieldsPanel: React.FC = () => {
 
   const { state } = useDocumentLabeler();
 
-  const { fields, tables } = FieldsPanelUtils.getAllColoredFields(state.docInfo);
+  const { fields, tables } = DocumentLabelerReducerUtils.getAllColoredFields(state.docInfo);
 
   return (
     <Box className={classes.Root}>

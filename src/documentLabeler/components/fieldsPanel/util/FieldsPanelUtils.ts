@@ -3,36 +3,6 @@ import { ColorUtils } from "documentLabeler/color/ColorUtils";
 import { DocumentLabelerData } from "documentLabeler/state/DocumentLabelerState";
 import { FieldLabelDto, FieldType, TableLabelDto } from "documentLabeler/types/DocumentLabelerTypes";
 
-type FieldWithColor = {
-  info: FieldLabelDto;
-  color: string;
-}
-
-type TableWithColor = {
-  info: TableLabelDto;
-  color: string;
-}
-
-/**
- * Function used to get all fields for the current document, with associated colors
- * @param data
- */
-const getAllColoredFields = (
-  data: DocumentLabelerData,
-): { 
-  fields: Array<FieldWithColor>
-  tables: Array<TableWithColor>
-} => ({
-  fields: data.labels.fields.map((field, index) => ({
-    info: field,
-    color: ColorUtils.getColorFromColorSet(index),
-  })),
-  tables: data.labels.tables.map((table, index) => ({
-    info: table,
-    color: ColorUtils.getColorFromColorSet(index + data.labels.fields.length),
-  })),
-});
-
 /**
  * Function which determines if a field currently has a labeled value or text override
  */
@@ -58,7 +28,6 @@ const tableHasLabeledValue = (table: TableLabelDto): boolean => {
 }
 
 export const FieldsPanelUtils = {
-  getAllColoredFields,
   fieldHasLabeledValue,
   tableHasLabeledValue,
 }

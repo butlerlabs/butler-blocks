@@ -1,23 +1,18 @@
 import { TypesafeUnreachableError } from 'common/util/error';
 import { ActiveFieldReducerUtils, SetActiveFieldAction } from 'documentLabeler/state/ActiveFieldReducerUtils';
+import { AddBlockToActiveFieldAction, BlockReducerUtils, RemoveBlockFromFieldAction } from 'documentLabeler/state/BlockReducerUtils';
 import { DocumentLabelerInternalState } from 'documentLabeler/state/DocumentLabelerState';
 import { FieldReducerUtils, RemoveAllBlocksFromFieldAction, SetTextFieldOverrideAction } from 'documentLabeler/state/FieldReducerUtils';
+import { AddRegionToActiveFieldAction, ClearRegionFromFieldAction, RegionReducerUtils } from 'documentLabeler/state/RegionReducerUtils';
 
 type DocumentLabelerDispatchAction =
   SetActiveFieldAction |
-  {
-    type: 'addBlockToActiveField';
-    payload: {
-      blockId: string;
-    };
-  } | {
-    type: 'removeBlockFromField';
-    payload: {
-      blockId: string;
-      fieldId: string;
-    };
-  } | RemoveAllBlocksFromFieldAction 
-    | SetTextFieldOverrideAction;
+  AddBlockToActiveFieldAction | 
+  RemoveBlockFromFieldAction | 
+  AddRegionToActiveFieldAction |
+  ClearRegionFromFieldAction |
+  RemoveAllBlocksFromFieldAction | 
+  SetTextFieldOverrideAction;
 
  export type DocumentLabelerDispatch = (action: DocumentLabelerDispatchAction) => void;
 
@@ -32,10 +27,14 @@ type DocumentLabelerDispatchAction =
   switch (action.type) {
     case 'setActiveField':
       return ActiveFieldReducerUtils.setActiveField(state, action);
-    case 'addBlockToActiveField':
-      return state;
+    case 'addBlocksToActiveField':
+      return BlockReducerUtils.addBlockToActiveField(state, action);
     case 'removeBlockFromField':
-      return state;
+      return BlockReducerUtils.removeBlockFromField(state, action);
+    case 'addRegionToActiveField':
+      return RegionReducerUtils.addRegionToActiveField(state, action);
+    case 'clearRegionFromField':
+      return RegionReducerUtils.clearRegionFromField(state, action);
     case 'removeAllBlocksFromField':
       return FieldReducerUtils.removeAllBlocksFromField(state, action);
     case 'setFieldTextOverride':

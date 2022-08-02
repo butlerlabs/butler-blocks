@@ -116,6 +116,7 @@ export const FieldsPanelDisplayRow: React.FC<Props> = ({
     type: 'removeAllBlocksFromField',
     payload: {
       fieldId: id,
+      fieldType: type,
     }
   });
 
@@ -185,8 +186,10 @@ export const FieldsPanelDisplayRow: React.FC<Props> = ({
         ) : (
           <Box className={classes.FieldActionContainer}>
             <IconButton
-              className={classes.IconButton}
-              onClick={(event) => {
+              className={clsx(classes.IconButton, {
+                Hide: type === FieldType.Table,
+              })}
+                onClick={(event) => {
                 event.stopPropagation();
                 setLocalValue(value);
                 setEditingText(true);
