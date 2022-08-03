@@ -2,11 +2,12 @@ import React, { useRef } from 'react';
 import { DocumentLabelerProvider } from 'documentLabeler/DocumentLabelerProvider';
 import { DocumentLabelerData } from 'documentLabeler/state/DocumentLabelerState';
 import { DocumentLabelerContent } from 'documentLabeler/DocumentLabelerContent';
+import { DocumentLabelerOutputDataDto } from 'common/types/DocumentLabelerTypes';
 
 type Props = {
   data: DocumentLabelerData;
   // TODO: define documentLabelerOutput type
-  onSaveCallback: (documentLabelerOutput: object) => void;
+  onSaveCallback: (documentLabelerOutput: DocumentLabelerOutputDataDto) => void;
 };
 
 /**

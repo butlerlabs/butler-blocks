@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { alpha, fade, makeStyles, Theme } from '@material-ui/core';
-import { BlockDto, FieldType } from 'documentLabeler/types/DocumentLabelerTypes';
+import { BlockDto, FieldType } from 'common/types/DocumentLabelerTypes';
 import { useDocumentLabeler } from 'documentLabeler/DocumentLabelerProvider';
 import { HtmlVisibilityUtil } from 'common/util/HtmlVisibilityUtil';
 import { EndUserBlockRenderUtils } from 'documentLabeler/components/documentPanel/documentBlockLayer/utils/EndUserBlockRenderUtils';

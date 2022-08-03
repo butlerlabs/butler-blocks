@@ -4,7 +4,7 @@ import { FieldsPanelDisplayRow } from 'documentLabeler/components/fieldsPanel/fi
 import { MockDocumentLabelerData } from 'documentLabeler/MockDocumentLabelerData.stories';
 import { MockDocumentLabelerProvider } from 'documentLabeler/MockDocumentLabelerProvider.stories';
 import { DocumentLabelerInternalState, LabelingSelectionType } from 'documentLabeler/state/DocumentLabelerState';
-import { FieldType } from 'documentLabeler/types/DocumentLabelerTypes';
+import { FieldType } from 'common/types/DocumentLabelerTypes';
 import React from 'react';
 
 export default {

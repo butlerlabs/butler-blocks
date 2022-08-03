@@ -237,3 +237,85 @@ export type LabelDto = {
    */
   tables: Array<TableLabelDto>;
 }
+
+type SharedLabelOutputDto = {
+  id: string;
+  name: string;
+  confidenceScore: Confidence;
+  type: FieldType;
+}
+
+export type FieldLabelOutputDto = SharedLabelOutputDto & {
+  blocks: Array<BlockDto>;
+  region?: BoundingBoxDto;
+}
+
+export type SignatureLabelOutputDto = SharedLabelOutputDto & {
+  region?: BoundingBoxDto;
+}
+
+export type CellLabelOutputDto = {
+  columnId: string;
+  confidenceScore: Confidence;
+  blocks: Array<BlockDto>;
+  region?: BoundingBoxDto;
+}
+
+export type RowLabelOutputDto = {
+  id: string;
+  cells: Array<CellLabelOutputDto>;
+}
+
+export type TableLabelOutputDto = SharedLabelOutputDto & {
+  columns: Array<ColumnDto>;
+  rows: Array<RowLabelOutputDto>;
+}
+
+export type TrainingDocumentResultDto = {
+  fields: Array<FieldLabelOutputDto>;
+  signatures: Array<SignatureLabelOutputDto>;
+  tables: Array<TableLabelOutputDto>;
+}
+
+export type CreateTrainingDocumentDto = {
+  modelId: string;
+  docId: string;
+  results: TrainingDocumentResultDto;
+}
+
+export type ExtractedFieldDto = {
+  fieldName: string;
+  value: string;
+  confidenceScore: Confidence;
+}
+
+export type ExtractedTableCellDto = {
+  columnName: string;
+  value: string;
+  confidenceScore: Confidence;
+}
+
+export type ExtractedTableRowDto = {
+  cells: Array<ExtractedTableCellDto>;
+}
+
+export type ExtractedTableDto = {
+  tableName: string;
+  rows: Array<ExtractedTableRowDto>;
+  confidenceScore: Confidence;
+}
+
+export type ExtractionResultDto = {
+  documentId: string;
+  documentStatus: 'Completed';
+  fileName: string;
+  mimeType: MimeType;
+  confidenceScore: Confidence;
+  formFields: Array<ExtractedFieldDto>;
+  tables: Array<ExtractedTableDto>;
+}
+
+export type DocumentLabelerOutputDataDto = {
+  extractionResult: ExtractionResultDto;
+  createTrainingDocumentLabels: CreateTrainingDocumentDto;
+}

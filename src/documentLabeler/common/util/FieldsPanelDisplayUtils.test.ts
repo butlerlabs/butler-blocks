@@ -1,7 +1,7 @@
-import { FieldsPanelDisplayUtils } from "documentLabeler/components/fieldsPanel/util/FieldsPanelDisplayUtils";
 import { DocumentLabelerConstants } from "documentLabeler/constants/DocumentLabelerConstants";
 import { MockDocumentLabelerData } from "documentLabeler/MockDocumentLabelerData.stories";
-import { FieldLabelDto, TableLabelDto } from "documentLabeler/types/DocumentLabelerTypes";
+import { FieldLabelDto, TableLabelDto } from "common/types/DocumentLabelerTypes";
+import { FieldsPanelDisplayUtils } from "documentLabeler/common/util/FieldsPanelDisplayUtils";
 
 const textField = MockDocumentLabelerData.labels.fields[0];
 const checkboxField = MockDocumentLabelerData.labels.fields[2];

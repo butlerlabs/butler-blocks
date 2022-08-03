@@ -3,7 +3,7 @@ import { Close, Create } from '@material-ui/icons';
 import { OutlinedTextField } from 'common/display/OutlinedTextField/OutlinedTextField';
 import { TruncatableTypography } from 'common/display/TruncatableTypography/TruncatableTypography';
 import { useDocumentLabeler } from 'documentLabeler/DocumentLabelerProvider';
-import { FieldType } from 'documentLabeler/types/DocumentLabelerTypes';
+import { FieldType } from 'common/types/DocumentLabelerTypes';
 import React, { useState } from 'react';
 import clsx from 'clsx';
 
@@ -73,17 +73,17 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 /**
- * Component responsible for rendering a field in the fields panel.  
+ * Component responsible for rendering a field in the fields panel.
  * Takes in information about the field and its associated display color
  * and handles selecting the field and editing the field value.
  * @param Props
  */
 export const FieldsPanelDisplayRow: React.FC<Props> = ({
-  id, 
-  type, 
-  name, 
-  value, 
-  color, 
+  id,
+  type,
+  name,
+  value,
+  color,
   hasValue = true,
 }) => {
   const classes = useStyles();
@@ -120,7 +120,7 @@ export const FieldsPanelDisplayRow: React.FC<Props> = ({
     }
   });
 
-  const handleSaveValue = () => { 
+  const handleSaveValue = () => {
     dispatch({
       type: 'setFieldTextOverride',
       payload: {
@@ -173,9 +173,9 @@ export const FieldsPanelDisplayRow: React.FC<Props> = ({
         )}
       </Box>
         {editingText ? (
-          <Button 
-            variant='text' 
-            color='primary' 
+          <Button
+            variant='text'
+            color='primary'
             onClick={(event) => {
               event.stopPropagation();
               handleSaveValue();

@@ -1,6 +1,7 @@
 import { createContext, useContext, useReducer } from 'react';
 import { DocumentLabelerDispatch, documentLabelerReducer } from 'documentLabeler/state/DocumentLabelerReducer';
 import { DocumentLabelerData, DocumentLabelerInternalState, DocumentLabelerState } from 'documentLabeler/state/DocumentLabelerState';
+import { DocumentLabelerOutputDataDto } from 'common/types/DocumentLabelerTypes';
 
 export const DocumentLabelerStateContext = createContext<DocumentLabelerInternalState | null>(null);
 
@@ -8,7 +9,7 @@ export const DocumentLabelerDispatchContext = createContext<DocumentLabelerDispa
 
   type Props = {
    data: DocumentLabelerData;
-   onSaveCallback: (outputData: object) => void;
+   onSaveCallback: (outputData: DocumentLabelerOutputDataDto) => void;
    rootRef: HTMLDivElement | null;
    children: React.ReactNode;
   };

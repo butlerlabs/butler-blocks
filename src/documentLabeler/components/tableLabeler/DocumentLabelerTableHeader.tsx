@@ -10,7 +10,7 @@ import {
 import { Close } from '@material-ui/icons';
 import { useDocumentLabeler } from 'documentLabeler/DocumentLabelerProvider';
 import { DocumentLabelerReducerUtils } from 'documentLabeler/state/DocumentLabelerReducerUtils';
-import { FieldType } from 'documentLabeler/types/DocumentLabelerTypes';
+import { FieldType } from 'common/types/DocumentLabelerTypes';
 
 const ADD_ROW = 'Add Row';
 

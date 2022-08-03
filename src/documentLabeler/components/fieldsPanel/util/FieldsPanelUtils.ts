@@ -1,7 +1,7 @@
 import { TypesafeUnreachableError } from "common/util/error";
 import { ColorUtils } from "documentLabeler/color/ColorUtils";
 import { DocumentLabelerData } from "documentLabeler/state/DocumentLabelerState";
-import { FieldLabelDto, FieldType, TableLabelDto } from "documentLabeler/types/DocumentLabelerTypes";
+import { FieldLabelDto, FieldType, TableLabelDto } from "common/types/DocumentLabelerTypes";
 
 /**
  * Function which determines if a field currently has a labeled value or text override
@@ -20,8 +20,8 @@ const fieldHasLabeledValue = (field: FieldLabelDto): boolean => {
   }
 };
 
-/** 
- * Function which determines if a table currently has a labeled value 
+/**
+ * Function which determines if a table currently has a labeled value
  */
 const tableHasLabeledValue = (table: TableLabelDto): boolean => {
   return table.rows.length > 0;

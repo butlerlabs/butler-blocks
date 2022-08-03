@@ -3,7 +3,7 @@ import { BlockUtils, CellColoredBlock, ColoredBlockType, FieldColoredBlock } fro
 import { RectCoords } from "documentLabeler/components/documentPanel/documentBlockLayer/utils/EndUserBlockRenderUtils";
 import { MockDocumentLabelerData } from "documentLabeler/MockDocumentLabelerData.stories";
 import { ActiveCell, ActiveField, LabelingSelectionType } from "documentLabeler/state/DocumentLabelerState";
-import { BlockType, BoundingBoxDto, FieldType } from "documentLabeler/types/DocumentLabelerTypes";
+import { BlockType, BoundingBoxDto, FieldType } from "common/types/DocumentLabelerTypes";
 
 const mockPageHeights = [500, 400, 500, 300];
 const mockWidth = 400;

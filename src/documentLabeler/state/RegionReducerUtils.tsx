@@ -1,6 +1,6 @@
 import { DocumentLabelerReducerUtils } from "documentLabeler/state/DocumentLabelerReducerUtils";
 import { ActiveField, ActiveTable, DocumentLabelerInternalState } from "documentLabeler/state/DocumentLabelerState"
-import { BoundingBoxDto, FieldType, TableLabelDto } from "documentLabeler/types/DocumentLabelerTypes";
+import { BoundingBoxDto, FieldType, TableLabelDto } from "common/types/DocumentLabelerTypes";
 
 export type ClearRegionFromFieldAction = {
   type: 'clearRegionFromField',

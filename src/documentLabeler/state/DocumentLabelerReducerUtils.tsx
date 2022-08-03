@@ -1,20 +1,20 @@
 import { ListUtil } from "common/util/ListUtil/ListUtil";
 import { ColorUtils } from "documentLabeler/color/ColorUtils";
 import { ActiveCell, DocumentLabelerData, DocumentLabelerInternalState } from "documentLabeler/state/DocumentLabelerState";
-import { CellLabelDto, FieldLabelDto, FieldType, TableLabelDto } from "documentLabeler/types/DocumentLabelerTypes";
+import { CellLabelDto, FieldLabelDto, FieldType, TableLabelDto } from "common/types/DocumentLabelerTypes";
 
 /**
- * Helper function to look up active field information for a specified 
- * field Id in the document labeler state.  
- * @param state 
- * @param fieldId 
+ * Helper function to look up active field information for a specified
+ * field Id in the document labeler state.
+ * @param state
+ * @param fieldId
  * @returns the field information and its index in the fields list
  */
 const getFieldFromState = (
-  state: DocumentLabelerInternalState, 
+  state: DocumentLabelerInternalState,
   fieldId: string
-): { 
-  field: FieldLabelDto, 
+): {
+  field: FieldLabelDto,
   idx: number,
 } => {
   const { fields } = state.docInfo.labels;
@@ -29,17 +29,17 @@ const getFieldFromState = (
 }
 
 /**
- * Helper function to look up table information for a specified 
- * table Id in the document labeler state.  
- * @param state 
- * @param fieldId 
+ * Helper function to look up table information for a specified
+ * table Id in the document labeler state.
+ * @param state
+ * @param fieldId
  * @returns the table information and its index in the tables list
  */
  const getTableFromState = (
-  state: DocumentLabelerInternalState, 
+  state: DocumentLabelerInternalState,
   fieldId: string
-): { 
-  table: TableLabelDto, 
+): {
+  table: TableLabelDto,
   idx: number,
 } => {
   const { tables } = state.docInfo.labels;
@@ -107,7 +107,7 @@ type TableWithColor = {
  */
 const getAllColoredFields = (
   data: DocumentLabelerData,
-): { 
+): {
   fields: Array<FieldWithColor>
   tables: Array<TableWithColor>
 } => ({
@@ -139,7 +139,7 @@ const getAllColoredFields = (
       `No Field found for Field Id ${fieldId} when looking up field color`,
     );
   }
-  
+
   return ColorUtils.getColorFromColorSet(idx);
 };
 
@@ -198,7 +198,7 @@ const updateTableWithNewCell = (
 ): TableLabelDto => {
   const row = table.rows[rowIdx];
   const updatedRow = {
-    ...row, 
+    ...row,
     cells: ListUtil.replaceElementAtIndex(cell, columnIdx, row.cells),
   }
   return {
