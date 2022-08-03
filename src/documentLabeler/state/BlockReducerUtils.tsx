@@ -38,7 +38,7 @@ const addBlockToActiveTable = (
     region: undefined,
     blocks: [...cell.blocks, ...blocksToAdd],
   }
-  const updatedFields = state.docInfo.labels.fields.map((field) => {
+  const updatedFields = state.docInfo.results.fields.map((field) => {
     // filter out blocks that were stolen from other fields
     return {
       ...field,
@@ -48,7 +48,7 @@ const addBlockToActiveTable = (
     }
   });
   // filter out blocks that were stolen from other tables
-  const updatedTables = state.docInfo.labels.tables.map((table, tblIdx) => ({
+  const updatedTables = state.docInfo.results.tables.map((table, tblIdx) => ({
     ...table,
     rows: table.rows.map((row, rIdx) => ({
       ...row,
@@ -70,8 +70,8 @@ const addBlockToActiveTable = (
     ...state,
     docInfo: {
       ...state.docInfo,
-      labels: {
-        ...state.docInfo.labels,
+      results: {
+        ...state.docInfo.results,
         tables: updatedTables,
         fields: updatedFields,
       }
@@ -99,7 +99,7 @@ const addBlockToActiveFormField = (
     region: undefined,
     blocks: [...field.blocks, ...blocksToAdd],
   }
-  const updatedFields = state.docInfo.labels.fields.map((field) => {
+  const updatedFields = state.docInfo.results.fields.map((field) => {
     if (field.id === updatedField.id) {
       return updatedField;
     }
@@ -112,7 +112,7 @@ const addBlockToActiveFormField = (
     }
   });
   // filter out blocks that were stolen from other tables
-  const updatedTables = state.docInfo.labels.tables.map((table) => ({
+  const updatedTables = state.docInfo.results.tables.map((table) => ({
     ...table,
     rows: table.rows.map((row) => ({
       ...row,
@@ -128,8 +128,8 @@ const addBlockToActiveFormField = (
     ...state,
     docInfo: {
       ...state.docInfo,
-      labels: {
-        ...state.docInfo.labels,
+      results: {
+        ...state.docInfo.results,
         tables: updatedTables,
         fields: updatedFields,
       }

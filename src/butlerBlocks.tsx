@@ -4,6 +4,13 @@ import { DocumentLabeler } from 'documentLabeler/DocumentLabeler';
 import { DocumentLabelerData } from 'documentLabeler/state/DocumentLabelerState';
 import { ButlerProvider } from 'common/theme/ButlerProvider';
 import { DocumentLabelerOutputDataDto } from 'common/types/DocumentLabelerTypes';
+import { ButlerBlockApi, ButlerApiCallFactory } from 'api/apiCalls';
+
+type CreateDocLabelerFn = (
+  id: string,
+  data: DocumentLabelerData,
+  onSaveCallback: (data: DocumentLabelerOutputDataDto) => void
+) => void;
 
 /**
  * Will be in butlerBlocks.js, exported by our package and imported
@@ -31,6 +38,19 @@ import { DocumentLabelerOutputDataDto } from 'common/types/DocumentLabelerTypes'
     );
 };
 
-export const butlerBlocks = {
-  createDocLabeler,
+type LoadedButlerBlocksSdk = {
+  createDocLabeler: CreateDocLabelerFn;
+  api: ButlerBlockApi;
+}
+
+const loadButlerBlocks = (apiKey: string): LoadedButlerBlocksSdk => {
+
+  return {
+    createDocLabeler,
+    api: ButlerApiCallFactory.create(apiKey),
+  }
+}
+
+export {
+  loadButlerBlocks,
 };

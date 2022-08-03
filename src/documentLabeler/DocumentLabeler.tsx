@@ -6,7 +6,6 @@ import { DocumentLabelerOutputDataDto } from 'common/types/DocumentLabelerTypes'
 
 type Props = {
   data: DocumentLabelerData;
-  // TODO: define documentLabelerOutput type
   onSaveCallback: (documentLabelerOutput: DocumentLabelerOutputDataDto) => void;
 };
 

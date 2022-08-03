@@ -47,6 +47,7 @@
     "@types/pluralize": "0.0.29",
     "@types/react-dom": "^18.0.6",
     "@types/react-pdf": "^5.7.2",
+    "axios": "^0.27.2",
     "clsx": "^1.2.1",
     "pluralize": "^8.0.0",
     "react-pdf": "^5.7.2",

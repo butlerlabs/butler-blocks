@@ -183,7 +183,7 @@ const documentLabelerData: DocumentLabelerData = {
   fileName,
   mimeType,
   wordBlocks,
-  labels,
+  results: labels,
 }
 
 

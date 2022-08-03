@@ -1,11 +1,11 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createTheme } from '@material-ui/core/styles';
 import { ButlerColorPalette } from 'common/theme/color';
 import { ButlerTypography } from 'common/theme/font';
 
 /**
  * Can use the material-ui theme editor: https://material.io/resources/color
  */
-export const ButlerTheme = createMuiTheme({
+export const ButlerTheme = createTheme({
   palette: {
     primary: ButlerColorPalette.primary,
     secondary: ButlerColorPalette.secondary,
