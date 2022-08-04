@@ -1,4 +1,4 @@
-import { BlockDto, Confidence, CreateTrainingDocumentDto, DocumentLabelerOutputDataDto, ExtractedFieldDto, ExtractedTableDto, ExtractionResultDto, FieldLabelOutputDto, FieldType, LabelDto, MimeType, SignatureLabelOutputDto, TableLabelOutputDto } from 'common/types/DocumentLabelerTypes';
+import { BlockDto, Confidence, TrainingDocumentLabelsDto, DocumentLabelerOutputDataDto, ExtractedFieldDto, ExtractedTableDto, ExtractionResultDto, FieldLabelOutputDto, FieldType, LabelDto, MimeType, SignatureLabelOutputDto, TableLabelOutputDto } from 'common/types/DocumentLabelerTypes';
 import { FieldsPanelDisplayUtils } from 'documentLabeler/common/util/FieldsPanelDisplayUtils';
 
 // Initial data passed in from external api calls to generate Internal State.
@@ -9,7 +9,7 @@ export type DocumentLabelerData = {
   mimeType: MimeType;
   docUrl: string;
   wordBlocks: Array<BlockDto>;
-  labels: LabelDto;
+  results: LabelDto;
 };
 
 export type ActiveCell = {
@@ -68,7 +68,7 @@ const convertInternalStateToOutputData = (
   state: DocumentLabelerInternalState,
 ): DocumentLabelerOutputDataDto => {
   const trainingSimpleFields: Array<FieldLabelOutputDto> =
-    state.docInfo.labels.fields.filter(
+    state.docInfo.results.fields.filter(
       (field) =>
         field.type === FieldType.Text
         || field.type === FieldType.Checkbox
@@ -78,7 +78,7 @@ const convertInternalStateToOutputData = (
       confidenceScore: field.confidence,
     }));
   const trainingSignatureFields: Array<SignatureLabelOutputDto> =
-    state.docInfo.labels.fields.filter(
+    state.docInfo.results.fields.filter(
       (field) =>
         field.type === FieldType.Signature
       )
@@ -87,7 +87,7 @@ const convertInternalStateToOutputData = (
       confidenceScore: field.confidence,
     }));
   const trainingTables: Array<TableLabelOutputDto> =
-    state.docInfo.labels.tables.map((table) => ({
+    state.docInfo.results.tables.map((table) => ({
       ...table,
       confidenceScore: table.confidence,
       type: FieldType.Table,
@@ -99,7 +99,7 @@ const convertInternalStateToOutputData = (
         }))
       }))
     }));
-  const trainingDocInfo: CreateTrainingDocumentDto = {
+  const trainingDocumentLabels: TrainingDocumentLabelsDto = {
     modelId: state.docInfo.modelId,
     docId: state.docInfo.docId,
     results: {
@@ -109,13 +109,13 @@ const convertInternalStateToOutputData = (
     }
   };
   const extractedFormFields: Array<ExtractedFieldDto> =
-    state.docInfo.labels.fields.map((field) => ({
+    state.docInfo.results.fields.map((field) => ({
       fieldName: field.name,
       value: FieldsPanelDisplayUtils.getTextValueFromField(field),
       confidenceScore: field.confidence,
     }));
   const extractedTables: Array<ExtractedTableDto> =
-    state.docInfo.labels.tables.map((table) => ({
+    state.docInfo.results.tables.map((table) => ({
       tableName: table.name,
       confidenceScore: table.confidence,
       rows: table.rows.map((row) => ({
@@ -127,7 +127,7 @@ const convertInternalStateToOutputData = (
         }))
       }))
     }));
-  const extractionResultInfo: ExtractionResultDto ={
+  const extractionResult: ExtractionResultDto ={
     ...state.docInfo,
     documentId: state.docInfo.docId,
     documentStatus: 'Completed',
@@ -136,8 +136,8 @@ const convertInternalStateToOutputData = (
     tables: extractedTables,
   };
   return {
-    createTrainingDocumentLabels: trainingDocInfo,
-    extractionResult: extractionResultInfo,
+    trainingDocumentLabels,
+    extractionResult,
   };
 }
 

@@ -1,7 +1,7 @@
 import { ListUtil } from "common/util/ListUtil/ListUtil";
 import { ColorUtils } from "documentLabeler/color/ColorUtils";
 import { ActiveCell, DocumentLabelerData, DocumentLabelerInternalState } from "documentLabeler/state/DocumentLabelerState";
-import { CellLabelDto, FieldLabelDto, FieldType, TableLabelDto } from "common/types/DocumentLabelerTypes";
+import { CellLabelDto, FieldLabelDto, TableLabelDto } from "common/types/DocumentLabelerTypes";
 
 /**
  * Helper function to look up active field information for a specified
@@ -17,7 +17,7 @@ const getFieldFromState = (
   field: FieldLabelDto,
   idx: number,
 } => {
-  const { fields } = state.docInfo.labels;
+  const { fields } = state.docInfo.results;
   const idx = fields.findIndex((field) => field.id === fieldId);
   if (idx === -1) {
     throw new Error(`Did not find unique field info in document labels when looking up field id ${fieldId}`)
@@ -42,7 +42,7 @@ const getFieldFromState = (
   table: TableLabelDto,
   idx: number,
 } => {
-  const { tables } = state.docInfo.labels;
+  const { tables } = state.docInfo.results;
   const idx = tables.findIndex((table) => table.id === fieldId);
   if (idx === -1) {
     throw new Error(`Did not find unique field info in document labels when looking up field id ${fieldId}`)
@@ -58,14 +58,14 @@ const updateStateWithNewField = (
   updatedField: FieldLabelDto,
   fieldIdx: number,
 ): DocumentLabelerInternalState => {
-  const { fields } = state.docInfo.labels;
+  const { fields } = state.docInfo.results;
   const updatedFields = ListUtil.replaceElementAtIndex(updatedField, fieldIdx, fields);
   return {
     ...state,
     docInfo: {
       ...state.docInfo,
-      labels: {
-        ...state.docInfo.labels,
+      results: {
+        ...state.docInfo.results,
         fields: updatedFields,
       },
     },
@@ -77,14 +77,14 @@ const updateStateWithNewTable = (
   updatedTable: TableLabelDto,
   fieldIdx: number,
 ): DocumentLabelerInternalState => {
-  const { tables } = state.docInfo.labels;
+  const { tables } = state.docInfo.results;
   const updatedTables = ListUtil.replaceElementAtIndex(updatedTable, fieldIdx, tables);
   return {
     ...state,
     docInfo: {
       ...state.docInfo,
-      labels: {
-        ...state.docInfo.labels,
+      results: {
+        ...state.docInfo.results,
         tables: updatedTables,
       },
     },
@@ -111,13 +111,13 @@ const getAllColoredFields = (
   fields: Array<FieldWithColor>
   tables: Array<TableWithColor>
 } => ({
-  fields: data.labels.fields.map((field, index) => ({
+  fields: data.results.fields.map((field, index) => ({
     info: field,
     color: ColorUtils.getColorFromColorSet(index),
   })),
-  tables: data.labels.tables.map((table, index) => ({
+  tables: data.results.tables.map((table, index) => ({
     info: table,
-    color: ColorUtils.getColorFromColorSet(index + data.labels.fields.length),
+    color: ColorUtils.getColorFromColorSet(index + data.results.fields.length),
   })),
 });
 

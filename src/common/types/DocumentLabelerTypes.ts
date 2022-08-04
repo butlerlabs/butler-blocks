@@ -277,7 +277,7 @@ export type TrainingDocumentResultDto = {
   tables: Array<TableLabelOutputDto>;
 }
 
-export type CreateTrainingDocumentDto = {
+export type TrainingDocumentLabelsDto = {
   modelId: string;
   docId: string;
   results: TrainingDocumentResultDto;
@@ -317,5 +317,5 @@ export type ExtractionResultDto = {
 
 export type DocumentLabelerOutputDataDto = {
   extractionResult: ExtractionResultDto;
-  createTrainingDocumentLabels: CreateTrainingDocumentDto;
+  trainingDocumentLabels: TrainingDocumentLabelsDto;
 }
