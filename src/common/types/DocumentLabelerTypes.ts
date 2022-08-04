@@ -102,11 +102,11 @@ export type FieldLabelDto = {
    */
   type: FieldType;
   /**
-   * Extraction Confidence for the field label
+   * Extraction Confidence Score for the field label
    * @type {Confidence}
    * @memberof FieldLabelDto
    */
-  confidence: Confidence;
+  confidenceScore: Confidence;
   /**
    * Blocks that have been labeled for this field
    * @type {[BlockDto]}
@@ -135,11 +135,11 @@ export type CellLabelDto = {
    */
   columnId: string;
   /**
-  * Extraction Confidence for the cell label
+  * Extraction Confidence Score for the cell label
   * @type {Confidence}
   * @memberof CellLabelDto
   */
-  confidence: Confidence;
+  confidenceScore: Confidence;
   /**
   * Blocks that have been labeled for this cell
   * @type {[BlockDto]}
@@ -204,11 +204,11 @@ export type TableLabelDto = {
   */
   name: string;
   /**
-  * Extraction Confidence for the table label
+  * Extraction Confidence Score for the table label
   * @type {Confidence}
   * @memberof TableLabelDto
   */
-  confidence: Confidence;
+   confidenceScore: Confidence;
   /**
   * Column names for this table label
   * @type {[ColumnDto]}
