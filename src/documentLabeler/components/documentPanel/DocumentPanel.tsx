@@ -45,13 +45,14 @@ const DocumentPanelInternal = withSize({
 
   const { state } = useDocumentLabeler();
 
+
   const width = size?.width ?? 0;
   const height = size?.height ?? 0;
 
   const docDisplayerState = useDocumentDisplayer(
     state.docInfo.mimeType,
     { width, height },
-    state.docInfo.docUrl,
+    state.docInfo.tempDocUrl,
   );
 
   return (
@@ -65,7 +66,7 @@ const DocumentPanelInternal = withSize({
           <DocumentDisplayer
             mimeType={state.docInfo.mimeType}
             width={width}
-            document={state.docInfo.docUrl}
+            document={state.docInfo.tempDocUrl}
             loaders={docDisplayerState.loaders}
             pages={docDisplayerState.pages}
           />

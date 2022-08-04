@@ -301,7 +301,7 @@ export const DocumentBlockLayer: React.FC<Props> = ({
       <Box className={classes.EndUserBlockLayerRoot}>
         {coloredBlocksToDisplay.map((coloredBlock, index) => (
           <ColoredBlock
-            key={coloredBlock.block.id}
+            key={`${coloredBlock.block.id}${index}`}
             block={coloredBlock.block}
             color={coloredBlock.color}
             docPageHeights={docPageHeights}
@@ -314,7 +314,6 @@ export const DocumentBlockLayer: React.FC<Props> = ({
             onClick={(ev) => handleOnColoredBlockClick(ev, coloredBlock)}
           />
         ))}
-
         {regionsToDisplay.map((coloredRegion, index) => (
           <ColoredBlock
             key={coloredRegion.id}

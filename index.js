@@ -9,12 +9,11 @@ import { loadButlerBlocks } from "./src/butlerBlocks";
  * (could be used in their application, or to power a Butler API label endpoint).
  */
 
-
 const butlerBlocks = loadButlerBlocks('MY_API_KEY');
 
-const stubData = { 
-  modelId: '7987a3b5-c180-4843-8936-6ba3bd2d76d1', 
-  documentId: '3e2ee31f-ee9d-45e8-b3a0-70ff73bf9f49'
+const stubData = {
+  modelId: 'MY_MODEL_ID',
+  documentId: 'MY_DOCUMENT_ID',
 };
 
 const onSaveCallback = (docInfo) => {

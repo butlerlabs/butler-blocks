@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, fade, makeStyles, Theme } from '@material-ui/core';
+import { alpha, Box, makeStyles, Theme } from '@material-ui/core';
 import { EndUserBlockRenderUtils, RectCoords } from 'documentLabeler/components/documentPanel/documentBlockLayer/utils/EndUserBlockRenderUtils';
 
 type Props = {
@@ -33,7 +33,7 @@ export const DragRectangle: React.FC<Props> = ({ dragCoords, bgColor }) => {
   };
 
   const style: React.CSSProperties = {
-    backgroundColor: bgColor ? fade(bgColor, 0.1) : 'transparent',
+    backgroundColor: bgColor ? alpha(bgColor, 0.1) : 'transparent',
   };
 
   if (bgColor) {

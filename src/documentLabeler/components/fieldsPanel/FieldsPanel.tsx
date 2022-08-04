@@ -11,6 +11,7 @@ import { FieldsPanelDisplayUtils } from 'documentLabeler/common/util/FieldsPanel
 const useStyles = makeStyles((theme: Theme) => ({
   Root: {
     display: 'flex',
+    flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
     width: theme.spacing(45),

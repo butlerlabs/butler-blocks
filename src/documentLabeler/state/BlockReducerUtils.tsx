@@ -1,4 +1,3 @@
-import { ListUtil } from "common/util/ListUtil/ListUtil";
 import { DocumentLabelerReducerUtils } from "documentLabeler/state/DocumentLabelerReducerUtils";
 import { ActiveField, ActiveTable, DocumentLabelerInternalState } from "documentLabeler/state/DocumentLabelerState";
 import { BlockDto, CellLabelDto, FieldLabelDto, FieldType } from "common/types/DocumentLabelerTypes";

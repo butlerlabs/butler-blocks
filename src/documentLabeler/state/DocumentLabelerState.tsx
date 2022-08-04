@@ -7,7 +7,7 @@ export type DocumentLabelerData = {
   docId: string;
   fileName: string;
   mimeType: MimeType;
-  docUrl: string;
+  tempDocUrl: string;
   wordBlocks: Array<BlockDto>;
   results: LabelDto;
 };

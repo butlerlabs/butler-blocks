@@ -1,7 +1,7 @@
 import { ListUtil } from "common/util/ListUtil/ListUtil";
 import { ColorUtils } from "documentLabeler/color/ColorUtils";
 import { ActiveCell, DocumentLabelerData, DocumentLabelerInternalState } from "documentLabeler/state/DocumentLabelerState";
-import { CellLabelDto, FieldLabelDto, TableLabelDto } from "common/types/DocumentLabelerTypes";
+import { CellLabelDto, FieldLabelDto, FieldType, TableLabelDto } from "common/types/DocumentLabelerTypes";
 
 /**
  * Helper function to look up active field information for a specified

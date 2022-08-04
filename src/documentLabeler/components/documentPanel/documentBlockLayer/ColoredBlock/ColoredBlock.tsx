@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { alpha, fade, makeStyles, Theme } from '@material-ui/core';
+import { alpha, makeStyles, Theme } from '@material-ui/core';
 import { BlockDto, FieldType } from 'common/types/DocumentLabelerTypes';
 import { useDocumentLabeler } from 'documentLabeler/DocumentLabelerProvider';
 import { HtmlVisibilityUtil } from 'common/util/HtmlVisibilityUtil';
@@ -47,7 +47,7 @@ export const ColoredBlock: React.FC<Props> = ({
   const classes = useStyles();
   const { state } = useDocumentLabeler();
   const blockRef = useRef<HTMLDivElement | null>(null);
-  const [bgColor, setBGColor] = useState(fade(color, 0.2));
+  const [bgColor, setBGColor] = useState(alpha(color, 0.2));
 
   useEffect(() => {
     const bottomOffset =

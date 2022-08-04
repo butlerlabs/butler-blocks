@@ -10,7 +10,7 @@ const modelId = 'modelId';
 
 const docId = 'docId';
 
-const docUrl =
+const tempDocUrl =
   'https://matt-public-bucket.s3.amazonaws.com/productboard-berhgzumndn1jyt1apsq7wey-1.pdf';
 
 const fileName = 'ExampleInvoice.pdf';
@@ -179,7 +179,7 @@ const labels: LabelDto = {
 const documentLabelerData: DocumentLabelerData = {
   modelId,
   docId,
-  docUrl,
+  tempDocUrl,
   fileName,
   mimeType,
   wordBlocks,
@@ -190,7 +190,7 @@ const documentLabelerData: DocumentLabelerData = {
 export const MockDocumentLabelerData = {
   modelId,
   docId,
-  docUrl,
+  tempDocUrl,
   fileName,
   mimeType,
   wordBlocks,

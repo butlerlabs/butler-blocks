@@ -1,4 +1,3 @@
-import { ButlerColorSet } from "documentLabeler/color/ColorUtils"
 import { FieldsPanelUtils } from "documentLabeler/components/fieldsPanel/util/FieldsPanelUtils";
 import { MockDocumentLabelerData } from "documentLabeler/MockDocumentLabelerData.stories";
 import { FieldLabelDto, TableLabelDto } from "common/types/DocumentLabelerTypes";

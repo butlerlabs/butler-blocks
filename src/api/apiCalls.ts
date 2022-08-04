@@ -7,8 +7,8 @@ const API_BASE_URL = 'https://app.butlerlabs.ai/api';
 
 type GetExtractionResultsApiCall = (modelId: string, documentId: string) => Promise<AxiosResponse<DocumentLabelerData>>;
 type SubmitDocumentLabelsApiCall = (
-  modelId: string, 
-  documentId: string, 
+  modelId: string,
+  documentId: string,
   labels: TrainingDocumentLabelsDto
 ) => Promise<AxiosResponse<void>>;
 
@@ -22,18 +22,18 @@ const getAuthHeaders = (apiKey: string) => ({
 })
 
 const createGetExtractionResultsApiCall = (
-  apiKey: string, 
+  apiKey: string,
   apiBaseUrl: string
 ): GetExtractionResultsApiCall => {
   return (
-    modelId: string, 
-    documentId: string 
+    modelId: string,
+    documentId: string
   ) => {
     const authHeaders = getAuthHeaders(apiKey);
 
-    const extractionResultsUrl = 
+    const extractionResultsUrl =
       `${apiBaseUrl}/models/${modelId}/documents/${documentId}/enhanced_results`;
-    
+
     return axios.get(
       extractionResultsUrl,
       { headers: { ...authHeaders } }
@@ -44,26 +44,26 @@ const createGetExtractionResultsApiCall = (
 /**
  * Creates the Submit Document Labels API call for the API key
  * that is provided
- * @param apiKey 
- * @param apiBaseUrl 
- * @returns 
+ * @param apiKey
+ * @param apiBaseUrl
+ * @returns
  */
 const createSubmitDocumentLabelsApiCall = (
-  apiKey: string, 
+  apiKey: string,
   apiBaseUrl: string
 ): SubmitDocumentLabelsApiCall => {
   return (
-    modelId: string, 
+    modelId: string,
     documentId: string,
-    labels: TrainingDocumentLabelsDto 
+    labels: TrainingDocumentLabelsDto
   ) => {
     const authHeaders = getAuthHeaders(apiKey);
-    
-    const submitLabelsUrl = 
+
+    const submitLabelsUrl =
       `${apiBaseUrl}/models/${modelId}/documents/${documentId}/labels`;
 
     const params = { labels };
-    
+
     return axios.post(
       submitLabelsUrl,
       { headers: { ...authHeaders }, params }
@@ -75,11 +75,11 @@ const createSubmitDocumentLabelsApiCall = (
  * Factory used to initialize the Butler REST API using the provided API key.
  * @param apiKey Your personal API key
  * @param apiBaseUrl The API Base URL. Should be left to the default for most cases
- * @returns 
+ * @returns
  */
 export const ButlerApiCallFactory = {
   create: (
-    apiKey: string, 
+    apiKey: string,
     apiBaseUrl: string = API_BASE_URL
   ): ButlerBlockApi => {
     return {

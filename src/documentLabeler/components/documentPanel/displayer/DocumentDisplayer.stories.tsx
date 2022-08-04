@@ -50,7 +50,7 @@ const TestDocumentDisplayer = withSize({ monitorHeight: true })(
 
 export const Default = () => (
   <TestDocumentDisplayer
-    document={MockDocumentLabelerData.docUrl}
+    document={MockDocumentLabelerData.tempDocUrl}
     mimeType={MimeType.Pdf}
   />
 );
