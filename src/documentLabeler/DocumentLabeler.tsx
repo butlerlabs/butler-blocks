@@ -2,12 +2,22 @@ import React, { useRef } from 'react';
 import { DocumentLabelerProvider } from 'documentLabeler/DocumentLabelerProvider';
 import { DocumentLabelerData } from 'documentLabeler/state/DocumentLabelerState';
 import { DocumentLabelerContent } from 'documentLabeler/DocumentLabelerContent';
+import { makeStyles, Theme } from '@material-ui/core';
 import { DocumentLabelerOutputDataDto } from 'common/types/DocumentLabelerTypes';
 
 type Props = {
   data: DocumentLabelerData;
+  // TODO: define documentLabelerOutput type
   onSaveCallback: (documentLabelerOutput: DocumentLabelerOutputDataDto) => void;
 };
+
+const useStyles = makeStyles((theme: Theme) => ({
+  Root: {
+    display: 'flex',
+    width: '100%',
+    height: '100%',
+  },
+}));
 
 /**
  * Top level component containing the Embedded Document Labeler.  Takes in document info
@@ -16,12 +26,13 @@ type Props = {
  * @param Props
  */
 export const DocumentLabeler: React.FC<Props> = ({data, onSaveCallback}) => {
+  const classes = useStyles();
 
   const rootRef = useRef<HTMLDivElement | null>(null);
 
   return (
     <DocumentLabelerProvider data={data} onSaveCallback={onSaveCallback} rootRef={rootRef.current}>
-      <div ref={rootRef}>
+      <div ref={rootRef} className={classes.Root}>
         <DocumentLabelerContent />
       </div>
     </DocumentLabelerProvider>

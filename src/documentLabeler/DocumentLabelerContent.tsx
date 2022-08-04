@@ -10,13 +10,15 @@ const useStyles = makeStyles((theme: Theme) => ({
   Root: {
     backgroundColor: theme.palette.background.default,
     display: 'flex',
-    maxHeight: '100%',
+    flex: 1,
   },
   FieldsPanelContainer: {
     width: theme.spacing(45),
+    display: 'flex',
   },
   DocumentDisplayerContainer: {
     flex: 1,
+    display: 'flex',
   }
  }));
 

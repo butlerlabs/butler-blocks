@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Divider, TableHead, TableRow } from '@material-ui/core';
 import { useDocumentLabeler } from 'documentLabeler/DocumentLabelerProvider';
-import { FieldType } from 'common/types/DocumentLabelerTypes';
+import { DocumentLabelerConstants } from 'documentLabeler/constants/DocumentLabelerConstants';
+import { CellLabelDto, FieldType } from 'common/types/DocumentLabelerTypes';
 import { DocumentLabelerReducerUtils } from 'documentLabeler/state/DocumentLabelerReducerUtils';
 import { DocumentLabelerTableCell } from 'documentLabeler/components/tableLabeler/DocumentLabelerTableCell';
 import { DocumentLabelerTableContainer } from 'documentLabeler/components/tableLabeler/DocumentLabelerTableContainer';
@@ -9,12 +10,18 @@ import { DocumentLabelerTableHeader } from 'documentLabeler/components/tableLabe
 import { ExtractedDataTableContainer } from 'common/dataTable/ExtractedDataTableContainer';
 import { DataTableFtux } from 'common/dataTable/ftux/DataTableFtux';
 import { DeleteRowIconCell } from 'common/dataTable/IconCell/deleteRowIconCell/DeleteRowIconCell';
-import { FieldsPanelDisplayUtils } from 'documentLabeler/common/util/FieldsPanelDisplayUtils';
 
 const COLUMN_NAME = 'Column Name';
 const DRAG_OR_CLICK = 'Drag (or click) on value';
 const GET_TABLE_FTUX_TEXT = () =>
     'Try adding a row to begin annotating your table!';
+
+const getCellText = (cell: CellLabelDto): string =>
+  cell.textOverride
+    ? cell.textOverride
+    : cell.region
+      ? DocumentLabelerConstants.REGION_SELECTED
+      : cell.blocks.map((block) => block.text).join(' ');
 
 /**
  * Component Responsible for Displaying the Table Labeler in the Document Labeler
@@ -121,7 +128,7 @@ export const TableLabeler: React.FC = () => {
         .map((cell) => (
           <DocumentLabelerTableCell
             key={`${row.id}-${cell.columnId}}`}
-            textValue={FieldsPanelDisplayUtils.getTextValueFromCell(cell)}
+            textValue={getCellText(cell)}
             placeholder={DRAG_OR_CLICK}
             isActive={
               activeCell &&

@@ -1,6 +1,4 @@
 import { TypesafeUnreachableError } from "common/util/error";
-import { ColorUtils } from "documentLabeler/color/ColorUtils";
-import { DocumentLabelerData } from "documentLabeler/state/DocumentLabelerState";
 import { FieldLabelDto, FieldType, TableLabelDto } from "common/types/DocumentLabelerTypes";
 
 /**

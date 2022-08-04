@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { DocumentLabeler } from 'documentLabeler/DocumentLabeler';
 import { DocumentLabelerData } from 'documentLabeler/state/DocumentLabelerState';
@@ -29,13 +28,11 @@ type CreateDocLabelerFn = (
 
     const docLabelerRoot = ReactDOM.createRoot(docLabelerContainer);
 
-    docLabelerRoot.render(
-      <React.StrictMode>
-        <ButlerProvider>
-          <DocumentLabeler data={data} onSaveCallback={onSaveCallback} />
-        </ButlerProvider>
-      </React.StrictMode>
-    );
+  docLabelerRoot.render(
+    <ButlerProvider>
+      <DocumentLabeler data={data} onSaveCallback={onSaveCallback} />
+    </ButlerProvider>
+  );
 };
 
 type LoadedButlerBlocksSdk = {
