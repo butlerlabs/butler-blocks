@@ -100,7 +100,7 @@ const textField1: FieldLabelDto = {
   id: 'textField1',
   name: 'Brand',
   type: FieldType.Text,
-  confidence: Confidence.High,
+  confidenceScore: Confidence.High,
   blocks: [block1],
 };
 
@@ -108,7 +108,7 @@ const textField2: FieldLabelDto = {
   id: 'textField2',
   name: 'Date',
   type: FieldType.Text,
-  confidence: Confidence.Low,
+  confidenceScore: Confidence.Low,
   blocks: [block2],
 };
 
@@ -116,7 +116,7 @@ const checkboxField: FieldLabelDto = {
   id: 'field2',
   name: 'isPaid',
   type: FieldType.Checkbox,
-  confidence: Confidence.High,
+  confidenceScore: Confidence.High,
 
   blocks: [checkboxBlock],
 };
@@ -125,7 +125,7 @@ const signatureField: FieldLabelDto = {
   id: 'field3',
   name: 'Sign',
   type: FieldType.Signature,
-  confidence: Confidence.High,
+  confidenceScore: Confidence.High,
   blocks: [],
   region: {
     left: 0.71676061391830444,
@@ -139,7 +139,7 @@ const signatureField: FieldLabelDto = {
 const tableField1: TableLabelDto = {
   id: 'table1',
   name: 'purchases',
-  confidence: Confidence.High,
+  confidenceScore: Confidence.High,
   columns: [
     {
       id: 'col1',
@@ -156,12 +156,12 @@ const tableField1: TableLabelDto = {
       cells: [
         {
           columnId: 'col1',
-          confidence: Confidence.High,
+          confidenceScore: Confidence.High,
           blocks: [],
         },
         {
           columnId: 'col2',
-          confidence: Confidence.Low,
+          confidenceScore: Confidence.Low,
           blocks: [],
         },
       ],

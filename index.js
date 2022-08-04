@@ -16,8 +16,12 @@ const stubData = {
   documentId: 'MY_DOCUMENT_ID',
 };
 
+const submitLabels = async (trainingDocumentLabels) => {
+  await butlerBlocks.api.submitDocumentLabels(stubData.modelId, stubData.documentId, trainingDocumentLabels.results);
+}
+
 const onSaveCallback = (docInfo) => {
-  console.log(docInfo);
+  submitLabels(docInfo.trainingDocumentLabels);
 };
 
 const initializeDocLabeler = async ({ modelId, documentId }) => {

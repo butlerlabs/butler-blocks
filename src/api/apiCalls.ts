@@ -1,15 +1,15 @@
 import axios, { AxiosResponse } from 'axios';
 
-import { TrainingDocumentLabelsDto } from 'common/types/DocumentLabelerTypes';
+import { TrainingDocumentResultDto } from 'common/types/DocumentLabelerTypes';
 import { DocumentLabelerData } from 'documentLabeler/state/DocumentLabelerState';
 
 const API_BASE_URL = 'https://app.butlerlabs.ai/api';
 
 type GetExtractionResultsApiCall = (modelId: string, documentId: string) => Promise<AxiosResponse<DocumentLabelerData>>;
 type SubmitDocumentLabelsApiCall = (
-  modelId: string,
-  documentId: string,
-  labels: TrainingDocumentLabelsDto
+  modelId: string, 
+  documentId: string, 
+  labels: TrainingDocumentResultDto
 ) => Promise<AxiosResponse<void>>;
 
 export type ButlerBlockApi = {
@@ -55,18 +55,17 @@ const createSubmitDocumentLabelsApiCall = (
   return (
     modelId: string,
     documentId: string,
-    labels: TrainingDocumentLabelsDto
+    labels: TrainingDocumentResultDto 
   ) => {
     const authHeaders = getAuthHeaders(apiKey);
 
     const submitLabelsUrl =
       `${apiBaseUrl}/models/${modelId}/documents/${documentId}/labels`;
-
-    const params = { labels };
-
-    return axios.post(
+    
+    return axios.put(
       submitLabelsUrl,
-      { headers: { ...authHeaders }, params }
+      labels,
+      { headers: { ...authHeaders }  }
     );
   }
 }
