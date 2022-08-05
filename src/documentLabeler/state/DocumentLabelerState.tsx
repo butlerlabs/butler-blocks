@@ -72,32 +72,17 @@ const convertInternalStateToOutputData = (
       (field) =>
         field.type === FieldType.Text
         || field.type === FieldType.Checkbox
-      )
-    .map((field) => ({
-      ...field,
-      confidenceScore: field.confidence,
-    }));
+      );
   const trainingSignatureFields: Array<SignatureLabelOutputDto> =
     state.docInfo.results.fields.filter(
       (field) =>
         field.type === FieldType.Signature
-      )
-    .map((field) => ({
-      ...field,
-      confidenceScore: field.confidence,
-    }));
+      );
   const trainingTables: Array<TableLabelOutputDto> =
     state.docInfo.results.tables.map((table) => ({
       ...table,
-      confidenceScore: table.confidence,
       type: FieldType.Table,
-      rows: table.rows.map((row) => ({
-        ...row,
-        cells: row.cells.map((cell) => ({
-          ...cell,
-          confidenceScore: cell.confidence,
-        }))
-      }))
+      rows: table.rows
     }));
   const trainingDocumentLabels: TrainingDocumentLabelsDto = {
     modelId: state.docInfo.modelId,
@@ -112,18 +97,19 @@ const convertInternalStateToOutputData = (
     state.docInfo.results.fields.map((field) => ({
       fieldName: field.name,
       value: FieldsPanelDisplayUtils.getTextValueFromField(field),
-      confidenceScore: field.confidence,
+      confidenceScore: field.confidenceScore,
     }));
+
   const extractedTables: Array<ExtractedTableDto> =
     state.docInfo.results.tables.map((table) => ({
       tableName: table.name,
-      confidenceScore: table.confidence,
+      confidenceScore: table.confidenceScore,
       rows: table.rows.map((row) => ({
         ...row,
         cells: row.cells.map((cell, idx) => ({
           columnName: table.columns[idx].name,
           value: FieldsPanelDisplayUtils.getTextValueFromCell(cell),
-          confidenceScore: cell.confidence,
+          confidenceScore: cell.confidenceScore,
         }))
       }))
     }));

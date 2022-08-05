@@ -143,7 +143,7 @@ const addRowToTable = (
     id: uuid(),
     cells: table.columns.map((col) => ({
       columnId: col.id,
-      confidence: Confidence.UserReviewed,
+      confidenceScore: Confidence.UserReviewed,
       blocks: [],
     })),
   };
