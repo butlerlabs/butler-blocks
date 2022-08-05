@@ -1,8 +1,10 @@
 {
   "name": "butlerblocks",
-  "version": "1.0.0",
+  "version": "1.0.12",
   "description": "Butler Labs Inc.'s Library of embeddable components and apis to power AI for developers",
-  "main": "index.js",
+  "main": "dist/butlerBlocks.js",
+  "module": "dist/butlerBlocks.js",
+  "files": ["dist", "README.md"],
   "scripts": {
     "test": "jest",
     "start": "webpack-dev-server --open --mode development --hot",

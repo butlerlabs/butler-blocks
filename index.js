@@ -1,30 +1,34 @@
-import { loadButlerBlocks } from "./src/butlerBlocks";
+import { loadButlerBlocks } from 'butlerblocks';
 
 /**
- * Customer's index.js file, will import butlerBlocks via a require statement.
- * initializeDocLabeler and onSaveCallback will be defined by the end user.
- * initializeDocLabeler should fetch document data and feed it to the butlerBlocks
- * doc labeler component.
- * onSaveCallback will be defined by the end user to handle the output document data
- * (could be used in their application, or to power a Butler API label endpoint).
+ * Example Usage of the ButlerBlocks Embedded Doc Labeler
+ * This example shows how to import butlerBlocks, fetch data 
+ * for the document labeler, render the document labeler,
+ * and generate a new training document with the updated labels.
  */
 
 const butlerBlocks = loadButlerBlocks('MY_API_KEY');
 
-const stubData = {
+const myDocument = {
   modelId: 'MY_MODEL_ID',
   documentId: 'MY_DOCUMENT_ID',
 };
 
+const submitLabels = async (trainingDocumentLabels) => {
+  await butlerBlocks.api.submitDocumentLabels(
+    myDocument.modelId, 
+    myDocument.documentId, 
+    trainingDocumentLabels.results
+  );
+}
+
 const onSaveCallback = (docInfo) => {
-  console.log(docInfo);
+  submitLabels(docInfo.trainingDocumentLabels);
 };
 
 const initializeDocLabeler = async ({ modelId, documentId }) => {
-  // in finalized version, our customer would add an API call to our
-  // EUI endpoint here which would fetch the Document Labeler's data,
-  // and then pass it to the following call instead of the stub data.
-  const extractionResultsResponse = await butlerBlocks.api.getExtractionResults(modelId, documentId);
+  const extractionResultsResponse = 
+    await butlerBlocks.api.getExtractionResults(modelId, documentId);
   const { data } = extractionResultsResponse;
 
   butlerBlocks.createDocLabeler('ButlerDocumentLabeler', data, onSaveCallback);

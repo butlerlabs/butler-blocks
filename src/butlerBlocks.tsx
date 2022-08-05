@@ -48,6 +48,4 @@ const loadButlerBlocks = (apiKey: string): LoadedButlerBlocksSdk => {
   }
 }
 
-export {
-  loadButlerBlocks,
-};
+export { loadButlerBlocks };
