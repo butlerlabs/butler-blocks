@@ -1,4 +1,4 @@
-import { loadButlerBlocks } from 'butlerblocks';
+import { loadButlerBlocks } from 'butler-blocks';
 
 /**
  * Example Usage of the ButlerBlocks Embedded Doc Labeler
