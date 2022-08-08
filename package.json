@@ -4,7 +4,10 @@
   "description": "Butler Labs Inc.'s Library of embeddable components and apis to power AI for developers",
   "main": "dist/butlerBlocks.js",
   "module": "dist/butlerBlocks.js",
-  "files": ["dist", "README.md"],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "test": "jest",
     "start": "webpack-dev-server --open --mode development --hot",

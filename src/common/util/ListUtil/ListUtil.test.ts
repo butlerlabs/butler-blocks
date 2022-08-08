@@ -26,5 +26,9 @@ describe('ListUtil', () => {
     it('should throw an error for indices larger than the array length', () => {
       expect(() => ListUtil.replaceElementAtIndex(4, 4, startArray)).toThrow();
     });
+    it('should work for one element', () => {
+      const oneItemSplice = ListUtil.replaceElementAtIndex(1, 0, [0]);
+      expect(oneItemSplice).toMatchObject([1]);
+    })
   });
 });
