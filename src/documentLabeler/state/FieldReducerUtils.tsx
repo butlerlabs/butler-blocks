@@ -1,7 +1,7 @@
 import { DocumentLabelerReducerUtils } from "documentLabeler/state/DocumentLabelerReducerUtils";
 import { ActiveTable, DocumentLabelerInternalState } from "documentLabeler/state/DocumentLabelerState";
 import { Confidence, FieldLabelDto, FieldType, RowLabelDto, TableLabelDto } from "common/types/DocumentLabelerTypes";
-import { uuid } from 'uuidv4';
+import { v4 } from 'uuid';
 
 export type RemoveAllBlocksFromFieldAction = {
   type: 'removeAllBlocksFromField';
@@ -140,7 +140,7 @@ const addRowToTable = (
   const { tableId } = action.payload;
   const { table, idx } = DocumentLabelerReducerUtils.getTableFromState(state, tableId);
   const newRow: RowLabelDto = {
-    id: uuid(),
+    id: v4(),
     cells: table.columns.map((col) => ({
       columnId: col.id,
       confidenceScore: Confidence.UserReviewed,
