@@ -1,19 +1,32 @@
 import { loadButlerBlocks } from 'butler-blocks';
 
-/**
- * Example Usage of the ButlerBlocks Embedded Doc Labeler
- * This example shows how to import butlerBlocks, fetch data
- * for the document labeler, render the document labeler,
- * and generate a new training document with the updated labels.
- */
+// Step 1: Initialize Butler Blocks with your API Key
 
-const butlerBlocks = loadButlerBlocks('MY_API_KEY');
+// Get this API key from your Butler Account!
+const myApiKey = 'MY_API_KEY';
 
+const butlerBlocks = loadButlerBlocks(myApiKey);
+
+// Step 2: Get your Document Info
+
+// Get this info from the API response when you upload your documents!
 const myDocument = {
   modelId: 'MY_MODEL_ID',
   documentId: 'MY_DOCUMENT_ID',
 };
 
+// Step 3: Fetch data about your document from Butler
+const fetchDocumentData = async ({ modelId, documentId }) => {
+  const extractionResultsResponse =
+    await butlerBlocks.api.getExtractionResults(modelId, documentId);
+  const { data } = extractionResultsResponse;
+  return data;
+}
+
+// Step 4: Handle saving labels
+
+// Define a submit labels function, which will pass the output of the
+// document labeler to the API to help train your model!
 const submitLabels = async (trainingDocumentLabels) => {
   await butlerBlocks.api.submitDocumentLabels(
     myDocument.modelId,
@@ -22,16 +35,24 @@ const submitLabels = async (trainingDocumentLabels) => {
   );
 }
 
+// This function defines what action to take when the user clicks
+// the save button in the document labeler
 const onSaveCallback = (docInfo) => {
-  submitLabels(docInfo.trainingDocumentLabels);
+    submitLabels(docInfo.trainingDocumentLabels);
 };
 
-const initializeDocLabeler = async ({ modelId, documentId }) => {
-  const extractionResultsResponse =
-    await butlerBlocks.api.getExtractionResults(modelId, documentId);
-  const { data } = extractionResultsResponse;
+// Step 5: Initialize your Document Labeler!
 
+// This function will inject the Butler Document Labeler into the
+// div element you specified earlier with the fetched document data
+const initializeDocLabeler = ({ modelId, documentId }) => {
+  // using the function we defined earlier to fetch document data
+  const data = await fetchDocumentData(modelId, documentId);
+
+  // Note: the first parameter for this function should be the Id
+  // that you specified in your html div element
   butlerBlocks.createDocLabeler('ButlerDocumentLabeler', data, onSaveCallback);
 };
 
+// Call this function when you want to display the labeler!
 initializeDocLabeler(myDocument);
