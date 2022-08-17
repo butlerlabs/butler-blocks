@@ -1,10 +1,8 @@
 const path = require('path');
 
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-
 module.exports = {
   mode: 'development',
-  entry: './index.js',
+  entry: './src/butlerBlocks.tsx',
   devtool: 'inline-source-map',
   output: {
     path: path.join(__dirname, '/dist'),
@@ -51,9 +49,4 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.jsx', '.js'],
     modules: [path.resolve(__dirname, 'src'), 'node_modules']
   },
-  plugins:[
-    new HtmlWebpackPlugin({
-      template: './index.html'
-    })
-  ],
 }

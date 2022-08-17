@@ -29,7 +29,7 @@ const butlerBlocks = loadButlerBlocks(myApiKey);
 //...
 ```
 
-Example Workflow with the Document Labeler
+## Example Workflow with the Document Labeler
 
 Note: Before fetching data, you'll need to use the core
 [Butler Product](app.butlerlabs.ai) to create a model, and
