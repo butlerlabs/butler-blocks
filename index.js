@@ -1,4 +1,5 @@
-import { loadButlerBlocks } from 'butler-blocks';
+import { loadButlerBlocks } from './src/butlerBlocks';
+import { TestConstants } from './testConstants';
 
 /**
  * Example Usage of the ButlerBlocks Embedded Doc Labeler
@@ -7,11 +8,13 @@ import { loadButlerBlocks } from 'butler-blocks';
  * and generate a new training document with the updated labels.
  */
 
-const butlerBlocks = loadButlerBlocks('MY_API_KEY');
+const { apiKey, modelId, documentId } = TestConstants;
+
+const butlerBlocks = loadButlerBlocks(apiKey);
 
 const myDocument = {
-  modelId: 'MY_MODEL_ID',
-  documentId: 'MY_DOCUMENT_ID',
+  modelId,
+  documentId,
 };
 
 const submitLabels = async (trainingDocumentLabels) => {

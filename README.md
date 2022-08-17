@@ -54,21 +54,21 @@ For more help, check out the [documentation](https://docs.butlerlabs.ai/referenc
 import { loadButlerBlocks } from 'butler-blocks';
 
 // Step 1: Initialize Butler Blocks with your API Key
+
 // Get this API key from your Butler Account!
 const myApiKey = 'MY_API_KEY';
 
 const butlerBlocks = loadButlerBlocks(myApiKey);
 
 // Step 2: Get your Document Info
-// Get this info from the API response when you upload
-// your documents!
+
+// Get this info from the API response when you upload your documents!
 const myDocument = {
   modelId: 'MY_MODEL_ID',
   documentId: 'MY_DOCUMENT_ID',
 };
 
 // Step 3: Fetch data about your document from Butler
-// This data can be used to initialize a document labeler in your app!
 const fetchDocumentData = async ({ modelId, documentId }) => {
   const extractionResultsResponse =
     await butlerBlocks.api.getExtractionResults(modelId, documentId);
@@ -77,6 +77,7 @@ const fetchDocumentData = async ({ modelId, documentId }) => {
 }
 
 // Step 4: Handle saving labels
+
 // Define a submit labels function, which will pass the output of the
 // document labeler to the API to help train your model!
 const submitLabels = async (trainingDocumentLabels) => {
@@ -93,7 +94,8 @@ const onSaveCallback = (docInfo) => {
     submitLabels(docInfo.trainingDocumentLabels);
 };
 
-// Step 5: Initialize your Document Labeler
+// Step 5: Initialize your Document Labeler!
+
 // This function will inject the Butler Document Labeler into the
 // div element you specified earlier with the fetched document data
 const initializeDocLabeler = ({ modelId, documentId }) => {
