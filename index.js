@@ -16,7 +16,7 @@ const myDocument = {
 };
 
 // Step 3: Fetch data about your document from Butler
-const fetchDocumentData = async ({ modelId, documentId }) => {
+const fetchDocumentData = async (modelId, documentId) => {
   const extractionResultsResponse =
     await butlerBlocks.api.getExtractionResults(modelId, documentId);
   const { data } = extractionResultsResponse;
@@ -45,7 +45,7 @@ const onSaveCallback = (docInfo) => {
 
 // This function will inject the Butler Document Labeler into the
 // div element you specified earlier with the fetched document data
-const initializeDocLabeler = ({ modelId, documentId }) => {
+const initializeDocLabeler = async ({ modelId, documentId }) => {
   // using the function we defined earlier to fetch document data
   const data = await fetchDocumentData(modelId, documentId);
 
