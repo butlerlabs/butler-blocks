@@ -1,19 +1,22 @@
 {
   "name": "butler-blocks",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Butler Labs Inc.'s Library of embeddable components and apis to power AI for developers",
-  "main": "dist/butlerBlocks.js",
-  "module": "dist/butlerBlocks.js",
+  "main": "lib/butlerBlocks.js",
+  "module": "lib/butlerBlocks.js",
+  "types": "lib/butlerBlocks.d.ts",
   "files": [
+    "lib",
     "dist",
     "README.md"
   ],
   "scripts": {
     "test": "jest",
     "start": "webpack-dev-server --open --mode development --hot",
-    "build": "webpack --mode production",
+    "build": "yarn run clean && tsc && webpack --mode production",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "clean": "shx rm -rf lib dist"
   },
   "author": "Butler Labs Inc.",
   "license": "MIT",
@@ -37,6 +40,7 @@
     "jest": "^28.1.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "shx": "^0.3.4",
     "style-loader": "^3.3.1",
     "ts-jest": "^28.0.7",
     "ts-loader": "^9.3.1",
