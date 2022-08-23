@@ -5,7 +5,7 @@ const fontWeightLight = 300;
 const fontWeightRegular = 400;
 const fontWeightMedium = 500;
 const fontWeightBold = 700;
-const fontFamily = 'Poppins;';
+const fontFamily = 'Poppins';
 const defaultFontColor = ButlerColorPalette.text.primary;
 
 export const ButlerTypography = {
