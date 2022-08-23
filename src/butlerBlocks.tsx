@@ -1,4 +1,4 @@
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import { DocumentLabeler } from 'documentLabeler/DocumentLabeler';
 import { DocumentLabelerData } from 'documentLabeler/state/DocumentLabelerState';
 import { ButlerProvider } from 'common/theme/ButlerProvider';
@@ -26,12 +26,11 @@ type CreateDocLabelerFn = (
       throw new Error(`Could not find container element with id ${id}`)
     }
 
-    const docLabelerRoot = ReactDOM.createRoot(docLabelerContainer);
-
-  docLabelerRoot.render(
+  ReactDOM.render(
     <ButlerProvider>
       <DocumentLabeler data={data} onSaveCallback={onSaveCallback} />
-    </ButlerProvider>
+    </ButlerProvider>,
+    docLabelerContainer
   );
 };
 
