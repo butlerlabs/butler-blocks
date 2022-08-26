@@ -2,8 +2,8 @@
   "name": "butler-blocks",
   "version": "1.0.3",
   "description": "Butler Labs Inc.'s Library of embeddable components and apis to power AI for developers",
-  "main": "lib/butlerBlocks.js",
-  "module": "lib/butlerBlocks.js",
+  "main": "dist/butlerBlocks.js",
+  "module": "dist/butlerBlocks.js",
   "types": "lib/butlerBlocks.d.ts",
   "files": [
     "lib",
