@@ -26,15 +26,11 @@ module.exports = {
       {
         test: /\.tsx?$/,
         loader: "ts-loader",
-        options: {
-          compilerOptions: {
-            noEmit: false,
-          },
-        },
       },
       {
         test: /\.(woff|woff2)$/,
-        type: 'asset/resource',
+        loader: 'base64-inline-loader',
+        type: 'javascript/auto'
       },
       {
         test: /\.css$/,

@@ -17,9 +17,12 @@
     "baseUrl": "src",
     "rootDir": "src",
     "declaration": true,
-    "outDir": "lib"
+    "outDir": "lib",
+    "paths": {
+      "*": ["*"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "src/**/*.stories.tsx", "src/**/*.stories.ts"],
-  "files": ["./src/butlerBlocks.tsx"]
+  "files": ["./src/butlerBlocks.tsx"],
 }
