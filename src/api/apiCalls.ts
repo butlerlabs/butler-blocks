@@ -1,10 +1,13 @@
 import axios, { AxiosResponse } from 'axios';
 
-import { TrainingDocumentResultDto } from 'common/types/DocumentLabelerTypes';
+import { CreateModelDto, ModelInfoDto, TrainingDocumentResultDto } from 'common/types/DocumentLabelerTypes';
 import { DocumentLabelerData } from 'documentLabeler/state/DocumentLabelerState';
 
 const API_BASE_URL = 'https://app.butlerlabs.ai/api';
 
+type GetModelApiCall = (modelId: string) => Promise<AxiosResponse<ModelInfoDto>>;
+type CreateNewCustomModelApiCall = (model: CreateModelDto) => Promise<AxiosResponse<ModelInfoDto>>;
+type TrainCustomModelApiCall = (modelId: string) => Promise<AxiosResponse<void>>;
 type GetExtractionResultsApiCall = (modelId: string, documentId: string) => Promise<AxiosResponse<DocumentLabelerData>>;
 type SubmitDocumentLabelsApiCall = (
   modelId: string, 
@@ -15,11 +18,88 @@ type SubmitDocumentLabelsApiCall = (
 export type ButlerBlockApi = {
   getExtractionResults: GetExtractionResultsApiCall;
   submitDocumentLabels: SubmitDocumentLabelsApiCall;
+  getModel: GetModelApiCall;
+  createCustomModel: CreateNewCustomModelApiCall;
+  trainCustomModel: TrainCustomModelApiCall;
 }
 
 const getAuthHeaders = (apiKey: string) => ({
   'Authorization': `Bearer ${apiKey}`
 })
+
+/**
+ * Creates the Get Model Details API call for the API key
+ * @param apiKey string
+ * @param apiBaseUrl string
+ * @returns GetModelApiCall
+ */
+const createGetModelApiCall = (
+  apiKey: string,
+  apiBaseUrl: string
+): GetModelApiCall => {
+  return (
+    modelId: string
+  ) => {
+    const authHeaders = getAuthHeaders(apiKey);
+
+    const getModelUrl = `${apiBaseUrl}/models/${modelId}`;
+
+    return axios.get(
+      getModelUrl,
+      { headers: { ...authHeaders } }
+    );
+  }
+}
+
+/**
+ * Creates the Create New Custom Model API call for the API key
+ * @param apiKey string
+ * @param apiBaseUrl string
+ * @returns CreateNewCustomModelApiCall
+ */
+const createNewCustomModelApiCall = (
+  apiKey: string,
+  apiBaseUrl: string
+): CreateNewCustomModelApiCall => {
+  return (
+    model: CreateModelDto
+  ) => {
+    const authHeaders = getAuthHeaders(apiKey);
+
+    const createCustomModelUrl = `${apiBaseUrl}/models`;
+
+    return axios.post(
+      createCustomModelUrl,
+      model,
+      { headers: { ...authHeaders } }
+    );
+  }
+}
+
+/**
+ * Creates the Train Custom Model API call for the API key
+ * @param apiKey string
+ * @param apiBaseUrl string
+ * @returns TrainCustomModelApiCall
+ */
+const createTrainCustomModelApiCall = (
+  apiKey: string,
+  apiBaseUrl: string
+): TrainCustomModelApiCall => {
+  return (
+    modelId: string
+  ) => {
+    const authHeaders = getAuthHeaders(apiKey);
+
+    const trainCustomModelUrl = `${apiBaseUrl}/models/${modelId}/train`;
+
+    return axios.post(
+      trainCustomModelUrl,
+      {},
+      { headers: { ...authHeaders } }
+    );
+  }
+}
 
 const createGetExtractionResultsApiCall = (
   apiKey: string,
@@ -83,7 +163,10 @@ export const ButlerApiCallFactory = {
   ): ButlerBlockApi => {
     return {
       getExtractionResults: createGetExtractionResultsApiCall(apiKey, apiBaseUrl),
-      submitDocumentLabels: createSubmitDocumentLabelsApiCall(apiKey, apiBaseUrl)
+      submitDocumentLabels: createSubmitDocumentLabelsApiCall(apiKey, apiBaseUrl),
+      getModel: createGetModelApiCall(apiKey, apiBaseUrl),
+      createCustomModel: createNewCustomModelApiCall(apiKey, apiBaseUrl),
+      trainCustomModel: createTrainCustomModelApiCall(apiKey, apiBaseUrl),
     }
   }
 }
