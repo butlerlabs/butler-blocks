@@ -1,6 +1,6 @@
 {
   "name": "butler-blocks",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Butler Labs Inc.'s Library of embeddable components and apis to power AI for developers",
   "main": "dist/butlerBlocks.js",
   "module": "dist/butlerBlocks.js",
