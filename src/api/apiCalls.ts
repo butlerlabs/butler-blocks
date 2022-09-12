@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 
-import { CreateModelDto, ModelInfoDto, TrainingDocumentResultDto } from 'common/types/DocumentLabelerTypes';
+import { TrainingDocumentResultDto } from 'common/types/DocumentLabelerTypes';
+import { CreateModelDto, ModelInfoDto } from 'common/types/ApiTypes';
 import { DocumentLabelerData } from 'documentLabeler/state/DocumentLabelerState';
 
 const API_BASE_URL = 'https://app.butlerlabs.ai/api';
