@@ -13,7 +13,7 @@
   "scripts": {
     "test": "jest",
     "start": "webpack-dev-server --open --mode development --hot",
-    "build": "yarn run clean && tsc && webpack --mode production && resolve-tspaths",
+    "build": "npm run clean && tsc && webpack --mode production && resolve-tspaths",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "clean": "shx rm -rf lib dist"
