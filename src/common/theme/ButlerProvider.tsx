@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 
 // Required to make sure our styles pick up the font
-import 'typeface-poppins';
+import 'styles/poppins.css';
 
 import { ThemeProvider, StylesProvider } from '@material-ui/core';
 import { StylesOptions } from '@material-ui/styles';
