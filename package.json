@@ -72,7 +72,7 @@
   },
   "overrides": {
     "remark-parse": {
-      "trim": "0.0.3"
+      "trim": "1.0.1"
     },
     "meow": {
       "trim-newlines": "4.0.2"
