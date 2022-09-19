@@ -28,6 +28,11 @@ module.exports = {
         loader: "ts-loader"
       },
       {
+        test: /\.(woff|woff2)$/,
+        loader: 'base64-inline-loader',
+        type: 'javascript/auto'
+      },
+      {
         test: /\.css$/,
         use: [
           'style-loader',
