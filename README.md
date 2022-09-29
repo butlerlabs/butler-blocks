@@ -1,5 +1,9 @@
 # Butler Blocks
-Butler Blocks is Butler Labs Inc.'s Library of embeddable UI components and api wrappers to power AI for developers
+<b>Butler Blocks is a JavaScript library that helps developers build incredible document processing and review experiences into their apps.</b>
+
+![Butler Blocks gif](https://butler-public-assets.s3.amazonaws.com/butler_blocks.gif)
+
+Combined with Butler's [document extraction APIs](https://www.butlerlabs.ai/landing-pages/document-ai-ocr?), developers can use this library to eliminate manual data entry for their users. 
 
 ---
 
@@ -11,10 +15,10 @@ npm install butler-blocks --save
 
 ## Using Butler Blocks
 
-Load Butler Blocks with your API Key
+### Load Butler Blocks with your API Key
 
 Note: You'll need your API key, which can be found
-on the settings page of the [Butler Product](app.butlerlabs.ai)
+on the settings page of the [Butler Product](https://app.butlerlabs.ai/settings).
 
 ```js
 import { loadButlerBlocks } from 'butler-blocks';
@@ -29,13 +33,14 @@ const butlerBlocks = loadButlerBlocks(myApiKey);
 //...
 ```
 
-## Example Workflow with the Document Labeler
+### Fetch and display document extraction results
 
-Note: Before fetching data, you'll need to use the core
-[Butler Product](app.butlerlabs.ai) to create a model, and
-then use the core API suite to upload a document to that model
+Note: Before fetching data, you'll need to use the Butler core product to create a document extraction model, and
+then use the REST APIs to upload documents to that model.
 
-For more help, check out the [documentation](https://docs.butlerlabs.ai/reference/welcome)
+For details on how to get started, check out the [documentation](https://docs.butlerlabs.ai/reference/welcome)
+
+#### Add the Document Labeler component to your HTML code
 
 ```html
 <body>
@@ -49,6 +54,8 @@ For more help, check out the [documentation](https://docs.butlerlabs.ai/referenc
   <!-- ... -->
 </body>
 ```
+
+#### Initialize the Butler Blocks library and load data from the REST APIs
 
 ```js
 import { loadButlerBlocks } from 'butler-blocks';
