@@ -1,7 +1,6 @@
 const path = require('path');
 
 module.exports = {
-  mode: 'development',
   entry: './src/butlerBlocks.tsx',
   devtool: 'source-map',
   output: {
