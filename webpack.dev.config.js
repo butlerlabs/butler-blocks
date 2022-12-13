@@ -1,19 +1,19 @@
-const commonWebpackConfig = require('./webpack.config.js');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const commonWebpackConfig = require("./webpack.config.js");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-	...commonWebpackConfig,
-  mode: 'development',
-  entry: './index.js',
+  ...commonWebpackConfig,
+  mode: "development",
+  entry: "./index.js",
   devServer: {
-    static: './',
-		hot: true,
+    static: "./",
+    hot: true,
   },
-	plugins: [
+  plugins: [
     new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: './index.html',
-      chunks: ['main']
-    }),  
+      filename: "index.html",
+      template: "./index.html",
+      chunks: ["main"],
+    }),
   ],
-}
+};
