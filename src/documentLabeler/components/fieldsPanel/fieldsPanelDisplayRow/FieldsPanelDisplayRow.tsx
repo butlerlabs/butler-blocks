@@ -92,7 +92,7 @@ export const FieldsPanelDisplayRow: React.FC<Props> = ({
 }) => {
   const classes = useStyles();
 
-  const { fieldsNameFormatter, displayOnly } = useBBConfiguration();
+  const { fieldDisplayNameFormatter, displayOnly } = useBBConfiguration();
   const { state, dispatch } = useDocumentLabeler();
 
   const [editingText, setEditingText] = useState<boolean>(false);
@@ -100,8 +100,8 @@ export const FieldsPanelDisplayRow: React.FC<Props> = ({
 
   const fieldIsActive = state.localState.activeField?.id === id;
 
-  const displayFieldName = fieldsNameFormatter
-    ? fieldsNameFormatter(name)
+  const displayFieldName = fieldDisplayNameFormatter
+    ? fieldDisplayNameFormatter(name)
     : name;
 
   const handleFieldClick = () => {

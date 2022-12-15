@@ -111,13 +111,7 @@ const initializeDocLabeler = async ({ modelId, documentId }) => {
 
   // Note: the first parameter for this function should be the Id
   // that you specified in your html div element
-  butlerBlocks.createDocLabeler('ButlerDocumentLabeler', data, {
-    onSaveCallback, // Required
-    // saveActionButtonText: 'Confirm', // Optional
-    // fieldsNameFormatter: (fieldName) => fieldName.toUpperCase(), // Optional
-    // displayOnly: true, // Optional (Default = false)
-    // hideSaveButton: true, // Optional (Default = false)
-  });
+  butlerBlocks.createDocLabeler('ButlerDocumentLabeler', data, onSaveCallback);
 };
 
 // Call this function when you want to display the labeler!

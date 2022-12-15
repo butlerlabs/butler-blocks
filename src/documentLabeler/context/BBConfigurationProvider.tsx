@@ -7,7 +7,7 @@ export type BBConfigurations = {
   displayOnly?: boolean;
   hideSaveButton?: boolean;
   saveActionButtonText?: string;
-  fieldsNameFormatter?: (fieldName: string) => string;
+  fieldDisplayNameFormatter?: (fieldName: string) => string;
 	onSaveCallback: (data: DocumentLabelerOutputDataDto) => void
 };
 
