@@ -1,7 +1,7 @@
-import { createContext, useContext, useReducer } from 'react';
+import { createContext, useContext, useEffect, useReducer } from 'react';
 import { DocumentLabelerDispatch, documentLabelerReducer } from 'documentLabeler/state/DocumentLabelerReducer';
 import { DocumentLabelerData, DocumentLabelerInternalState, DocumentLabelerState } from 'documentLabeler/state/DocumentLabelerState';
-import { DocumentLabelerOutputDataDto } from 'common/types/DocumentLabelerTypes';
+import { useBBConfiguration } from 'documentLabeler/context/BBConfigurationProvider';
 
 export const DocumentLabelerStateContext = createContext<DocumentLabelerInternalState | null>(null);
 
@@ -9,7 +9,6 @@ export const DocumentLabelerDispatchContext = createContext<DocumentLabelerDispa
 
   type Props = {
    data: DocumentLabelerData;
-   onSaveCallback: (outputData: DocumentLabelerOutputDataDto) => void;
    rootRef: HTMLDivElement | null;
    children: React.ReactNode;
   };
@@ -22,14 +21,21 @@ export const DocumentLabelerDispatchContext = createContext<DocumentLabelerDispa
   */
   export const DocumentLabelerProvider: React.FC<Props> = ({
    data,
-   onSaveCallback,
    rootRef,
    children,
   }) => {
+
+   const { onLabelUpdate } = useBBConfiguration();
    const [state, dispatch] = useReducer(
      documentLabelerReducer,
-     DocumentLabelerState.generateInitialState(data, onSaveCallback, rootRef),
+     DocumentLabelerState.generateInitialState(data, rootRef),
    );
+
+   useEffect(() => {
+    if (onLabelUpdate) {
+      onLabelUpdate(DocumentLabelerState.convertInternalStateToOutputData(state));
+    }
+  }, [state.docInfo]);
 
    return (
      <DocumentLabelerStateContext.Provider value={state}>

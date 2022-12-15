@@ -44,13 +44,11 @@ export type DocumentLabelerLocalState = {
 export type DocumentLabelerInternalState = {
   docInfo: DocumentLabelerData;
   localState: DocumentLabelerLocalState;
-  onSaveCallback: (outputData: DocumentLabelerOutputDataDto) => void;
 };
 
 /** Generates initial state from initializer data */
 const generateInitialState = (
  data: DocumentLabelerData,
- onSaveCallback: (outputData: DocumentLabelerOutputDataDto) => void,
  rootRef: HTMLDivElement | null,
 ): DocumentLabelerInternalState => {
   return {
@@ -60,7 +58,6 @@ const generateInitialState = (
       selectionType: LabelingSelectionType.Block,
       rootRef: rootRef,
     },
-    onSaveCallback: onSaveCallback,
   };
 };
 

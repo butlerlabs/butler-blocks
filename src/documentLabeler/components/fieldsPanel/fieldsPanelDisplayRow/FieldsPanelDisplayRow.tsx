@@ -1,4 +1,4 @@
-import { alpha, Box, Button, IconButton, makeStyles, Theme, Typography } from '@material-ui/core';
+import { alpha, Box, Button, IconButton, makeStyles, Theme } from '@material-ui/core';
 import { Close, Create } from '@material-ui/icons';
 import { OutlinedTextField } from 'common/display/OutlinedTextField/OutlinedTextField';
 import { TruncatableTypography } from 'common/display/TruncatableTypography/TruncatableTypography';
@@ -6,6 +6,7 @@ import { useDocumentLabeler } from 'documentLabeler/DocumentLabelerProvider';
 import { FieldType } from 'common/types/DocumentLabelerTypes';
 import React, { useState } from 'react';
 import clsx from 'clsx';
+import { useBBConfiguration } from "documentLabeler/context/BBConfigurationProvider";
 
 const SAVE = 'Save';
 
@@ -13,7 +14,7 @@ const EMPTY_VALUE = 'No Value Specified';
 
 type Props = {
   id: string;
-  type: FieldType,
+  type: FieldType;
   name: string;
   value: string;
   color: string;
@@ -62,6 +63,9 @@ const useStyles = makeStyles((theme: Theme) => ({
       color: theme.palette.text.disabled,
     },
   },
+  Button: {
+    textTransform: "none",
+  },
   IconButton: {
     padding: 0,
     marginRight: theme.spacing(1),
@@ -88,12 +92,17 @@ export const FieldsPanelDisplayRow: React.FC<Props> = ({
 }) => {
   const classes = useStyles();
 
+  const { fieldDisplayNameFormatter, displayOnly } = useBBConfiguration();
   const { state, dispatch } = useDocumentLabeler();
 
   const [editingText, setEditingText] = useState<boolean>(false);
   const [localValue, setLocalValue] = useState<string>(value);
 
   const fieldIsActive = state.localState.activeField?.id === id;
+
+  const displayFieldName = fieldDisplayNameFormatter
+    ? fieldDisplayNameFormatter(name)
+    : name;
 
   const handleFieldClick = () => {
     if (fieldIsActive) {
@@ -141,7 +150,7 @@ export const FieldsPanelDisplayRow: React.FC<Props> = ({
           fieldIsActive
             ? alpha(color, 0.1)
             : 'transparent',
-      }}
+          }}
     >
       <Box className={classes.FieldInfoContainer}>
         {editingText ? (
@@ -154,7 +163,7 @@ export const FieldsPanelDisplayRow: React.FC<Props> = ({
           <>
             <Box className={classes.TopRowContainer}>
               <TruncatableTypography
-                value={name}
+                value={displayFieldName}
                 paragraph={false}
                 typographyProps={{
                   variant: 'caption',
@@ -172,44 +181,50 @@ export const FieldsPanelDisplayRow: React.FC<Props> = ({
           </>
         )}
       </Box>
-        {editingText ? (
-          <Button
-            variant='text'
-            color='primary'
-            onClick={(event) => {
-              event.stopPropagation();
-              handleSaveValue();
-            }}
-          >
-            {SAVE}
-          </Button>
-        ) : (
-          <Box className={classes.FieldActionContainer}>
-            <IconButton
-              className={clsx(classes.IconButton, {
-                Hide: type === FieldType.Table,
-              })}
-                onClick={(event) => {
-                event.stopPropagation();
-                setLocalValue(value);
-                setEditingText(true);
-              }}
-            >
-              <Create fontSize='small' />
-            </IconButton>
-            <IconButton
-              className={clsx(classes.IconButton, {
-                Hide: !hasValue,
-              })}
+      {!displayOnly && (
+        <>
+          {editingText ? (
+            <Button
+              variant='text'
+              color='primary'
+              className={classes.Button}
+              disableElevation
               onClick={(event) => {
                 event.stopPropagation();
-                handleClearLabels();
+                handleSaveValue();
               }}
             >
-              <Close fontSize='small' />
-            </IconButton>
-          </Box>
-        )}
+              {SAVE}
+            </Button>
+          ) : (
+            <Box className={classes.FieldActionContainer}>
+              <IconButton
+                className={clsx(classes.IconButton, {
+                  Hide: type === FieldType.Table,
+                })}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  setLocalValue(value);
+                  setEditingText(true);
+                }}
+              >
+                <Create fontSize='small' />
+              </IconButton>
+              <IconButton
+                className={clsx(classes.IconButton, {
+                  Hide: !hasValue,
+                })}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleClearLabels();
+                }}
+              >
+                <Close fontSize='small' />
+              </IconButton>
+            </Box>
+          )}
+        </>
+      )}
     </Box>
   );
 };
