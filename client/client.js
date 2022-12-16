@@ -12,7 +12,7 @@ saveBtn.addEventListener('click', () => {
 // Step 1: Initialize Butler Blocks with your API Key
 
 // Get this API key from your Butler Account!
-const myApiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnb29nbGUtb2F1dGgyfDExNzI0MjgwNTUyNzczMTE1MTkzMyIsImVtYWlsIjoiYW5pa2VzaEBidXRsZXJsYWJzLmFpIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImlhdCI6MTY0NjgzODUxMjc2OX0.vOiBwdg41b3653AgGQc0-HKImZAwNdLYuaKh428ZZaU';
+const myApiKey = 'MY_API_KEY';
 
 const butlerBlocks = loadButlerBlocks(myApiKey);
 
@@ -20,8 +20,8 @@ const butlerBlocks = loadButlerBlocks(myApiKey);
 
 // Get this info from the API response when you upload your documents!
 const myDocument = {
-  modelId: 'fd742066-f143-451d-ba73-b75c3340b670',
-  documentId: '3a06ddf2-23b2-4027-ac39-a8756577fe1b',
+  modelId: '<MODEL_ID>',
+  documentId: '<DOCUMENT_ID>',
 };
 
 // Step 3: Fetch data about your document from Butler
