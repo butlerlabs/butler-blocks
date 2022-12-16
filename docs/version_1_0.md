@@ -1,22 +1,11 @@
-# Butler Blocks
-<b>Butler Blocks is a JavaScript library that helps developers build incredible document processing and review experiences into their apps.</b>
+# Butler Blocks v1.0
 
-![Butler Blocks gif](https://butler-public-assets.s3.amazonaws.com/butler_blocks.gif)
-
-Combined with Butler's [document extraction APIs](https://www.butlerlabs.ai/landing-pages/document-ai-ocr?), developers can use this library to eliminate manual data entry for their users. 
-
----
-
-## Reference to past releases
-* [butler-block v1.0](https://github.com/butlerlabs/butler-blocks/blob/master/docs/version_1_0.md)
-
-
-## Install Butler Blocks (latest v1.1)
+## Install Butler Blocks
 
 ```bash
-npm install butler-blocks
+npm install butler-blocks@1.0.6
 // OR
-yarn add butler-blocks
+yarn add butler-blocks@1.0.6
 ```
 
 ## Using Butler Blocks
@@ -117,30 +106,9 @@ const initializeDocLabeler = async ({ modelId, documentId }) => {
 
   // Note: the first parameter for this function should be the Id
   // that you specified in your html div element
-  butlerBlocks.createDocLabeler('ButlerDocumentLabeler', data, {
-    onSaveCallback,
-    // saveActionButtonText: 'Confirm',
-    // fieldDisplayNameFormatter: (fieldName) => fieldName.toUpperCase(),
-    // displayOnly: true,
-    // hideSaveButton: true,
-    // onLabelUpdate: (docInfo: DocumentLabelerOutputDataDto) => {
-    //  console.log('Label changed', docInfo)
-    // }
-  });
+  butlerBlocks.createDocLabeler('ButlerDocumentLabeler', data, onSaveCallback);
 };
 
 // Call this function when you want to display the labeler!
 initializeDocLabeler(myDocument);
 ```
-
-
-### Configuration Option Api
-
-
-| Param          | Type     | Required | Default | Description                                                                               |
-|----------------|----------|----------|---------|----------------------------------------------------------------------------------|
-| onSaveCallback | Function | <li> [x] </li>     | None |Method called after clicking the save button with latest label changes |
-| onLabelUpdate  | Function | <li> [ ]  </li>    | undefined | Callback method used to listen for label changes. can be used to implement custom save UI |
-| hideSaveButton | Boolean  | <li> [ ] </li>     | false | Removes the save button from the UI |
-| displayOnly    | Boolean  | <li> [ ] </li>     | false | Toggle display only model which removes all the edit and save UI elements |
-| fieldDisplayNameFormatter | Function  | <li> [ ] </li>  | undefined    | Used to format or change the field name display |
