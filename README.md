@@ -137,8 +137,8 @@ initializeDocLabeler(myDocument);
 
 | Param          | Type     | Required | Default | Description                                                                               |
 |----------------|----------|----------|---------|----------------------------------------------------------------------------------|
-| onSaveCallback | Function | <li> [x] </li>      | None |Method called after clicking the save button with latest label changes |
-| onLabelUpdate  | Function | [ ]      | undefined | Callback method used to listen for label changes. can be used to implement custom save UI |
-| hideSaveButton | Boolean  | [ ]      | false | Removes the save button from the UI |
-| displayOnly    | Boolean  | [ ]      | false | Toggle display only model which removes all the edit and save UI elements |
-| fieldDisplayNameFormatter | Function  | [ ]  | undefined    | Used to format or change the field name display |
+| onSaveCallback | Function | <li> [x] </li>     | None |Method called after clicking the save button with latest label changes |
+| onLabelUpdate  | Function | <li> [ ]  </li>    | undefined | Callback method used to listen for label changes. can be used to implement custom save UI |
+| hideSaveButton | Boolean  | <li> [ ] </li>     | false | Removes the save button from the UI |
+| displayOnly    | Boolean  | <li> [ ] </li>     | false | Toggle display only model which removes all the edit and save UI elements |
+| fieldDisplayNameFormatter | Function  | <li> [ ] </li>  | undefined    | Used to format or change the field name display |
