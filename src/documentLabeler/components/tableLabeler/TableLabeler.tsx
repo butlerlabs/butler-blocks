@@ -10,6 +10,7 @@ import { ExtractedDataTableContainer } from 'common/dataTable/ExtractedDataTable
 import { DataTableFtux } from 'common/dataTable/ftux/DataTableFtux';
 import { DeleteRowIconCell } from 'common/dataTable/IconCell/deleteRowIconCell/DeleteRowIconCell';
 import { FieldsPanelDisplayUtils } from 'documentLabeler/common/util/FieldsPanelDisplayUtils';
+import { useBBConfiguration } from 'documentLabeler/context/BBConfigurationProvider';
 
 const COLUMN_NAME = 'Column Name';
 const DRAG_OR_CLICK = 'Drag (or click) on value';
@@ -21,6 +22,8 @@ const GET_TABLE_FTUX_TEXT = () =>
  */
 export const TableLabeler: React.FC = () => {
   const { state, dispatch } = useDocumentLabeler();
+
+  const { fieldDisplayNameFormatter } = useBBConfiguration();
 
   if (
     !state.localState.activeField ||
@@ -91,12 +94,16 @@ export const TableLabeler: React.FC = () => {
     })
   }
 
+  const getColumnDisplayName = (column: string): string => {
+    return fieldDisplayNameFormatter ? fieldDisplayNameFormatter(column) : column;
+  }
+
   const columnHeaderDisplay = columns
     .map((column, index) => (
       <DocumentLabelerTableCell
         key={index}
         placeholder={COLUMN_NAME}
-        textValue={column.name}
+        textValue={getColumnDisplayName(column.name)}
         header
       />
     ))

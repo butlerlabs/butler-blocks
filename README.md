@@ -120,7 +120,18 @@ const initializeDocLabeler = async ({ modelId, documentId }) => {
   butlerBlocks.createDocLabeler('ButlerDocumentLabeler', data, {
     onSaveCallback,
     // saveActionButtonText: 'Confirm',
-    // fieldDisplayNameFormatter: (fieldName) => fieldName.toUpperCase(),
+    // fieldDisplayNameFormatter: (fieldName) => {
+    //   switch (fieldName) {
+    //     case 'po_number':
+    //       return 'PO Number';
+    //     case 'shipped_date':
+    //       return 'Shipped Date';
+    //     case 'part_number':
+    //       return 'Part Number';
+    //     default:
+    //       return fieldName;
+    //   }
+    // },
     // displayOnly: true,
     // hideSaveButton: true,
     // onLabelUpdate: (docInfo: DocumentLabelerOutputDataDto) => {
