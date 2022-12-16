@@ -1,12 +1,12 @@
 import React from 'react';
-import { Box, makeStyles, TableCell, Theme } from '@material-ui/core';
+import { Box, makeStyles, TableCell } from '@material-ui/core';
 
 type Props = {
   children: React.ReactNode;
   className?: string;
 };
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   Box: { display: 'flex', alignItems: 'center', justifyContent: 'flex-end' },
 }));
 

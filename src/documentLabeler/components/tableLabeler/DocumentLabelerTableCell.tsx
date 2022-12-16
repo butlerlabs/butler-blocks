@@ -90,7 +90,6 @@ export const DocumentLabelerTableCell: React.FC<Props> = ({
   // state variable used to conditionally render either
   // the display row or the editable name display
   const [editingValue, setEditingValue] = useState<boolean>(showEdit);
-  const [menuAnchorEl, setMenuAnchorEl] = useState<Element | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {

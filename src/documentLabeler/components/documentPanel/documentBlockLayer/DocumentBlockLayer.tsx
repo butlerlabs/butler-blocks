@@ -7,7 +7,7 @@ import { EndUserBlockRenderUtils } from "documentLabeler/components/documentPane
 import { useDocumentLabeler } from "documentLabeler/DocumentLabelerProvider";
 import { DocumentLabelerReducerUtils } from "documentLabeler/state/DocumentLabelerReducerUtils";
 import { LabelingSelectionType } from "documentLabeler/state/DocumentLabelerState";
-import { BlockDto, BlockType, BoundingBoxDto, FieldType } from "common/types/DocumentLabelerTypes";
+import { BlockDto, BlockType, FieldType } from "common/types/DocumentLabelerTypes";
 import { useRef, useState } from "react";
 
 type Props = {

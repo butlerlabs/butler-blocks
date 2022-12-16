@@ -4,7 +4,6 @@ import clsx from 'clsx';
 import {
   createStyles,
   makeStyles,
-  Theme,
   Tooltip,
   Typography,
   TypographyProps,
@@ -20,7 +19,7 @@ type Props = {
   paragraph?: boolean;
 };
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     Truncate: {
       whiteSpace: 'nowrap',
