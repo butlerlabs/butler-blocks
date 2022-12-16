@@ -47,6 +47,7 @@ export const DocumentDisplayer: React.FC<Props> = ({
   const isPdf = mimeType === MimeType.Pdf;
   const classes = useStyles();
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onImgLoad = (event: any) => {
     loaders.onImgDocumentLoadSuccess(event.target.offsetHeight);
   };

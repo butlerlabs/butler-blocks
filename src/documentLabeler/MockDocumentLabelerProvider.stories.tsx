@@ -1,8 +1,8 @@
+import React, { useReducer } from 'react';
 import { DocumentLabelerDispatchContext, DocumentLabelerStateContext } from 'documentLabeler/DocumentLabelerProvider';
 import { MockDocumentLabelerData } from 'documentLabeler/MockDocumentLabelerData.stories';
 import { documentLabelerReducer } from 'documentLabeler/state/DocumentLabelerReducer';
 import { DocumentLabelerInternalState, DocumentLabelerState } from 'documentLabeler/state/DocumentLabelerState';
-import React, { useReducer } from 'react';
 
 type Props = {
   children?: React.ReactNode;
@@ -22,8 +22,7 @@ export const MockDocumentLabelerProvider: React.FC<Props> = ({
     internalState === undefined
       ? DocumentLabelerState.generateInitialState(
         MockDocumentLabelerData.documentLabelerData,
-        (outputData: object) => null,
-        null,
+        null
       )
       : internalState,
   );

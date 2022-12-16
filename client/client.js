@@ -1,9 +1,18 @@
-import { loadButlerBlocks } from 'butler-blocks';
+import { loadButlerBlocks } from '../src/butlerBlocks';
+
+let docInfoState;
+// Example of custom Save UI
+const saveBtn = document.querySelector('#saveBtn');
+saveBtn.addEventListener('click', () => {
+  if (docInfoState) {
+    submitLabels(docInfoState.trainingDocumentLabels);
+  }
+});
 
 // Step 1: Initialize Butler Blocks with your API Key
 
 // Get this API key from your Butler Account!
-const myApiKey = 'MY_API_KEY';
+const myApiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnb29nbGUtb2F1dGgyfDExNzI0MjgwNTUyNzczMTE1MTkzMyIsImVtYWlsIjoiYW5pa2VzaEBidXRsZXJsYWJzLmFpIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImlhdCI6MTY0NjgzODUxMjc2OX0.vOiBwdg41b3653AgGQc0-HKImZAwNdLYuaKh428ZZaU';
 
 const butlerBlocks = loadButlerBlocks(myApiKey);
 
@@ -11,8 +20,8 @@ const butlerBlocks = loadButlerBlocks(myApiKey);
 
 // Get this info from the API response when you upload your documents!
 const myDocument = {
-  modelId: 'MY_MODEL_ID',
-  documentId: 'MY_DOCUMENT_ID',
+  modelId: 'fd742066-f143-451d-ba73-b75c3340b670',
+  documentId: '3a06ddf2-23b2-4027-ac39-a8756577fe1b',
 };
 
 // Step 3: Fetch data about your document from Butler
@@ -51,7 +60,17 @@ const initializeDocLabeler = async ({ modelId, documentId }) => {
 
   // Note: the first parameter for this function should be the Id
   // that you specified in your html div element
-  butlerBlocks.createDocLabeler('ButlerDocumentLabeler', data, onSaveCallback);
+  butlerBlocks.createDocLabeler('ButlerDocumentLabeler', data, {
+    saveActionButtonText: 'Confirm',
+    fieldsNameFormatter: (fieldName) => fieldName.split('').join(' '),
+    // displayOnly: true,
+    // hideSaveButton: true,
+    onSaveCallback,
+    onLabelUpdate: (_docInfo) => {
+      console.log('DEBUG: onLabelUpdate', _docInfo);
+      docInfoState = _docInfo;
+    }
+  });
 };
 
 // Call this function when you want to display the labeler!

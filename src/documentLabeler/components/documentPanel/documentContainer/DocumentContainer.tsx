@@ -1,13 +1,13 @@
 import React from 'react';
 import clsx from 'clsx';
-import { Card, makeStyles, Theme } from '@material-ui/core';
+import { Card, makeStyles } from '@material-ui/core';
 
 type Props = {
   children: React.ReactNode;
   className?: string;
 };
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   PreviewPaneContainer: {
     flex: 1,
     height: '100%',

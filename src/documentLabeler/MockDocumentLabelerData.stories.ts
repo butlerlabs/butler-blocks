@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-loss-of-precision */
 /**
  * This file contains mock data that can be used in storybook tests for the purposes of testing
  * the embedded document labeler

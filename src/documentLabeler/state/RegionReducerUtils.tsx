@@ -1,6 +1,6 @@
 import { DocumentLabelerReducerUtils } from "documentLabeler/state/DocumentLabelerReducerUtils";
 import { ActiveField, ActiveTable, DocumentLabelerInternalState } from "documentLabeler/state/DocumentLabelerState"
-import { BoundingBoxDto, FieldType, TableLabelDto } from "common/types/DocumentLabelerTypes";
+import { BoundingBoxDto, FieldType } from "common/types/DocumentLabelerTypes";
 
 export type ClearRegionFromFieldAction = {
   type: 'clearRegionFromField',
@@ -132,7 +132,7 @@ const addRegionToActiveField = (
     return addRegionToActiveTableCell(state, action, state.localState.activeField);
   } else {
     return addRegionToActiveFormField(state, action, state.localState.activeField);
-  };
+  }
 }
 
 export const RegionReducerUtils = {

@@ -2,13 +2,13 @@ import React, { useRef } from 'react';
 import { DocumentLabelerProvider } from 'documentLabeler/DocumentLabelerProvider';
 import { DocumentLabelerData } from 'documentLabeler/state/DocumentLabelerState';
 import { DocumentLabelerContent } from 'documentLabeler/DocumentLabelerContent';
-import { makeStyles, Theme } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 
 type Props = {
   data: DocumentLabelerData;
 };
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   Root: {
     display: 'flex',
     width: '100%',

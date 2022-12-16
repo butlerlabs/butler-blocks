@@ -4,15 +4,16 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   ...commonWebpackConfig,
   mode: "development",
-  entry: "./index.js",
+  entry: "./client/client.js",
   devServer: {
-    static: "./",
+    static: "./client",
     hot: true,
   },
   plugins: [
+    ...commonWebpackConfig.plugins,
     new HtmlWebpackPlugin({
       filename: "index.html",
-      template: "./index.html",
+      template: "./client/index.html",
       chunks: ["main"],
     }),
   ],
