@@ -13,8 +13,10 @@ Combined with Butler's [document extraction APIs](https://www.butlerlabs.ai/land
 
 ## Install Butler Blocks (latest v1.1)
 
-```cli
-npm install butler-blocks --save
+```bash
+npm install butler-blocks
+// OR
+yarn add butler-blocks
 ```
 
 ## Using Butler Blocks
@@ -132,7 +134,7 @@ initializeDocLabeler(myDocument);
 ```
 
 
-### New config object api
+### Configuration Option Api
 
 
 | Param          | Type     | Required | Default | Description                                                                               |

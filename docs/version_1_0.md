@@ -2,8 +2,10 @@
 
 ## Install Butler Blocks
 
-```cli
-npm install butler-blocks@1.0.6 --save
+```bash
+npm install butler-blocks@1.0.6
+// OR
+yarn add butler-blocks@1.0.6
 ```
 
 ## Using Butler Blocks
