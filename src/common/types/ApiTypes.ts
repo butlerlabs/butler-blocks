@@ -1,4 +1,4 @@
-import { ColumnDto, FieldType } from "common/types/DocumentLabelerTypes";
+import { ColumnDto, FieldType } from 'common/types/DocumentLabelerTypes';
 
 export type CreateModelDto = {
 	/**
@@ -36,32 +36,21 @@ export type CreateModelDto = {
 };
 
 export enum ModelStatus {
-	NeedsTraining = "NeedsTraining",
-	Training = "Training",
-	Active = "Active",
+	NeedsTraining = 'NeedsTraining',
+	Training = 'Training',
+	Active = 'Active',
 }
 
 export enum TrainingDisabledReason {
-	NotEnoughDocumentsLabeled = "NotEnoughDocumentsLabeled",
+	NotEnoughDocumentsLabeled = 'NotEnoughDocumentsLabeled',
+	NotSupported = 'NotSupported',
+	SupportTrainingOnly = 'SupportTrainingOnly',
 }
 
-export enum BaseModelType {
-	InvoiceV2 = "InvoiceV2",
-	Invoice = "Invoice",
-	Passport = "Passport",
-	Receipt = "Receipt",
-	USDriversLicense = "USDriversLicense",
-	HealthInsuranceCard = "HealthInsuranceCard",
-	IdCard = "IdCard",
-	BankStatement = "BankStatement",
-	PaySlip = "PaySlip",
-	W2 = "W2",
-	W9 = "W9",
-	Mortgage = "Mortgage",
-	Utility = "Utility",
-	LegacyCustom = "LegacyCustom",
-	CustomForm = "CustomForm",
-	Composed = "Composed",
+export enum DocExtractionModelType {
+	Custom = 'Custom',
+	Pretrained = 'Pretrained',
+	Legacy = 'Legacy',
 }
 
 export type ModelFieldDto = {
@@ -113,7 +102,9 @@ export type ModelTableDto = {
 };
 
 export enum SubmitTrainingDocumentsDisabledReason {
-	MaximumTrainingDocumentsReached = "MaximumTrainingDocumentsReached",
+	MaximumTrainingDocumentsReached = 'MaximumTrainingDocumentsReached',
+	NotSupported = 'NotSupported',
+	PendingSchemaChanges = 'PendingSchemaChanges',
 }
 
 export type ModelInfoDto = {
@@ -143,10 +134,10 @@ export type ModelInfoDto = {
 	trainingDisabledReason?: TrainingDisabledReason;
 	/**
 	 *
-	 * @type {BaseModelType}
+	 * @type {DocExtractionModelType}
 	 * @memberof ModelInfoDto
 	 */
-	modelType: BaseModelType;
+	modelType: DocExtractionModelType;
 	/**
 	 * The text, checkbox, and signature fields for this model
 	 * @type {Array<ModelFieldDto>}
