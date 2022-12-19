@@ -6,12 +6,12 @@ import { ButlerBlockApi, ButlerApiCallFactory } from 'api/apiCalls';
 import {
   BBConfigurationProvider,
   BBConfigurations,
-} from "documentLabeler/context/BBConfigurationProvider";
+} from 'documentLabeler/context/BBConfigurationProvider';
 
 type CreateDocLabelerFn = (
   id: string,
   data: DocumentLabelerData,
-  config: BBConfigurations
+  config: BBConfigurations,
 ) => void;
 
 /**
@@ -21,12 +21,12 @@ type CreateDocLabelerFn = (
 const createDocLabeler = (
   id: string,
   data: DocumentLabelerData,
-  config: BBConfigurations
+  config: BBConfigurations,
 ) => {
   const docLabelerContainer = document.getElementById(id);
 
   if (!docLabelerContainer) {
-    throw new Error(`Could not find container element with id ${id}`)
+    throw new Error(`Could not find container element with id ${id}`);
   }
 
   ReactDOM.render(
@@ -35,23 +35,20 @@ const createDocLabeler = (
         <DocumentLabeler data={data} />
       </ButlerProvider>
     </BBConfigurationProvider>,
-    docLabelerContainer
+    docLabelerContainer,
   );
 };
 
 type LoadedButlerBlocksSdk = {
   createDocLabeler: CreateDocLabelerFn;
   api: ButlerBlockApi;
-}
+};
 
 const loadButlerBlocks = (apiKey: string): LoadedButlerBlocksSdk => {
-
   return {
     createDocLabeler,
     api: ButlerApiCallFactory.create(apiKey),
-  }
-}
-
-export {
-  loadButlerBlocks,
+  };
 };
+
+export { loadButlerBlocks };

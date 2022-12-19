@@ -1,14 +1,22 @@
-import { Box, makeStyles } from "@material-ui/core";
-import { ColoredBlock } from "documentLabeler/components/documentPanel/documentBlockLayer/ColoredBlock/ColoredBlock";
-import { DragRectangle } from "documentLabeler/components/documentPanel/documentBlockLayer/useDragBlockSelect/DragRectangle";
-import { useDragBlockSelect } from "documentLabeler/components/documentPanel/documentBlockLayer/useDragBlockSelect/useDragBlockSelect";
-import { BlockUtils, ColoredBlockType, RegionColoredBlock } from "documentLabeler/components/documentPanel/documentBlockLayer/utils/BlockUtils";
-import { EndUserBlockRenderUtils } from "documentLabeler/components/documentPanel/documentBlockLayer/utils/EndUserBlockRenderUtils";
-import { useDocumentLabeler } from "documentLabeler/DocumentLabelerProvider";
-import { DocumentLabelerReducerUtils } from "documentLabeler/state/DocumentLabelerReducerUtils";
-import { LabelingSelectionType } from "documentLabeler/state/DocumentLabelerState";
-import { BlockDto, BlockType, FieldType } from "common/types/DocumentLabelerTypes";
-import { useRef, useState } from "react";
+import { Box, makeStyles } from '@material-ui/core';
+import { ColoredBlock } from 'documentLabeler/components/documentPanel/documentBlockLayer/ColoredBlock/ColoredBlock';
+import { DragRectangle } from 'documentLabeler/components/documentPanel/documentBlockLayer/useDragBlockSelect/DragRectangle';
+import { useDragBlockSelect } from 'documentLabeler/components/documentPanel/documentBlockLayer/useDragBlockSelect/useDragBlockSelect';
+import {
+  BlockUtils,
+  ColoredBlockType,
+  RegionColoredBlock,
+} from 'documentLabeler/components/documentPanel/documentBlockLayer/utils/BlockUtils';
+import { EndUserBlockRenderUtils } from 'documentLabeler/components/documentPanel/documentBlockLayer/utils/EndUserBlockRenderUtils';
+import { useDocumentLabeler } from 'documentLabeler/DocumentLabelerProvider';
+import { DocumentLabelerReducerUtils } from 'documentLabeler/state/DocumentLabelerReducerUtils';
+import { LabelingSelectionType } from 'documentLabeler/state/DocumentLabelerState';
+import {
+  BlockDto,
+  BlockType,
+  FieldType,
+} from 'common/types/DocumentLabelerTypes';
+import { useRef, useState } from 'react';
 
 type Props = {
   width: number;
@@ -44,18 +52,12 @@ export const DocumentBlockLayer: React.FC<Props> = ({
   const { docInfo } = state;
 
   const blockRootRef = useRef<HTMLDivElement>(null);
-  const [
-    unhighlightedBlocksToDisplay,
-    setUnhighlightedBlocksToDisplay,
-  ] = useState<Array<BlockDto>>([]);
+  const [unhighlightedBlocksToDisplay, setUnhighlightedBlocksToDisplay] =
+    useState<Array<BlockDto>>([]);
 
   // Used to render a rectangle when dragging
-  const {
-    onDragStart,
-    onDrag,
-    onDragEnd,
-    dragRectangle,
-  } = useDragBlockSelect();
+  const { onDragStart, onDrag, onDragEnd, dragRectangle } =
+    useDragBlockSelect();
 
   const isDragging = dragRectangle !== undefined;
 
@@ -66,13 +68,19 @@ export const DocumentBlockLayer: React.FC<Props> = ({
       )
     : null;
 
-  const coloredBlocks = BlockUtils.getColoredBlocks(state)
+  const coloredBlocks = BlockUtils.getColoredBlocks(state);
 
-  const coloredBlocksToDisplay = BlockUtils.getColoredBlocksToDisplay(state, coloredBlocks);
+  const coloredBlocksToDisplay = BlockUtils.getColoredBlocksToDisplay(
+    state,
+    coloredBlocks,
+  );
 
   const regions = BlockUtils.getColoredRegions(state);
 
-  const regionsToDisplay = BlockUtils.getColoredRegionsToDisplay(state, regions);
+  const regionsToDisplay = BlockUtils.getColoredRegionsToDisplay(
+    state,
+    regions,
+  );
 
   const filteredUnhighlightedBlocks = BlockUtils.getFilteredUnhighlightedBlocks(
     state.localState.activeField,
@@ -81,7 +89,8 @@ export const DocumentBlockLayer: React.FC<Props> = ({
     state.localState.selectionType,
   );
 
-  const hasActiveFormField = state.localState.activeField?.type !== FieldType.Table;
+  const hasActiveFormField =
+    state.localState.activeField?.type !== FieldType.Table;
 
   const hasActiveTableWithActiveCell =
     state.localState.activeField?.type === FieldType.Table &&
@@ -112,8 +121,10 @@ export const DocumentBlockLayer: React.FC<Props> = ({
       });
     } else if (
       BlockUtils.isCellLabel(block) &&
-      !(state.localState.activeField.type === FieldType.Table &&
-        state.localState.activeField.activeCell)
+      !(
+        state.localState.activeField.type === FieldType.Table &&
+        state.localState.activeField.activeCell
+      )
     ) {
       dispatch({
         type: 'setActiveField',
@@ -123,7 +134,7 @@ export const DocumentBlockLayer: React.FC<Props> = ({
           activeCell: {
             rowId: block.rowId,
             columnId: block.columnId,
-          }
+          },
         },
       });
     }
@@ -139,16 +150,14 @@ export const DocumentBlockLayer: React.FC<Props> = ({
       payload: {
         id: region.sourceFieldId,
         type: region.sourceFieldType,
-        activeCell: BlockUtils.isCellLabel(region) ? {...region} : undefined,
+        activeCell: BlockUtils.isCellLabel(region) ? { ...region } : undefined,
       },
     });
   };
 
   const handleOnMouseDown = (evt: React.MouseEvent) => {
-    const convertedMouseCoords = EndUserBlockRenderUtils.convertEventCoordsToRefSpace(
-      blockRootRef,
-      evt,
-    );
+    const convertedMouseCoords =
+      EndUserBlockRenderUtils.convertEventCoordsToRefSpace(blockRootRef, evt);
 
     const isHoveringOnWordBlock = unhighlightedBlocksToDisplay.length !== 0;
     const isHoveringOnFieldBlock =
@@ -185,7 +194,12 @@ export const DocumentBlockLayer: React.FC<Props> = ({
       state.localState.activeField &&
       (state.localState.selectionType === LabelingSelectionType.Region ||
         state.localState.activeField.type === FieldType.Signature);
-    if (state.localState.activeField && shouldLabelRegion && dragRectangle && canLabel) {
+    if (
+      state.localState.activeField &&
+      shouldLabelRegion &&
+      dragRectangle &&
+      canLabel
+    ) {
       const region = BlockUtils.getRegionFromRectangle(
         dragRectangle,
         width,
@@ -219,9 +233,7 @@ export const DocumentBlockLayer: React.FC<Props> = ({
     }
 
     if (unhighlightedBlocksToDisplay.length > 0) {
-      if (
-        state.localState.activeField && canLabel
-      ) {
+      if (state.localState.activeField && canLabel) {
         dispatch({
           type: 'addBlocksToActiveField',
           payload: {
@@ -232,10 +244,8 @@ export const DocumentBlockLayer: React.FC<Props> = ({
       // Reset the unhighlighted blocks
       setUnhighlightedBlocksToDisplay([]);
     } else {
-      const newMouseCoords = EndUserBlockRenderUtils.convertEventCoordsToRefSpace(
-        blockRootRef,
-        evt,
-      );
+      const newMouseCoords =
+        EndUserBlockRenderUtils.convertEventCoordsToRefSpace(blockRootRef, evt);
 
       const blocks = EndUserBlockRenderUtils.getBlocksUnderMouse(
         coloredBlocksToDisplay.map((block) => block.block),
@@ -337,7 +347,8 @@ export const DocumentBlockLayer: React.FC<Props> = ({
           />
         ))}
 
-        {canLabel && selectedFieldColor &&
+        {canLabel &&
+          selectedFieldColor &&
           unhighlightedBlocksToDisplay.map((block) => (
             <ColoredBlock
               key={block.id}

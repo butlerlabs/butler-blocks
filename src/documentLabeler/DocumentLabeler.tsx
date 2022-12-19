@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
  * as the data property, Handles positioning and rendering of the sub components
  * @param Props
  */
-export const DocumentLabeler: React.FC<Props> = ({data}) => {
+export const DocumentLabeler: React.FC<Props> = ({ data }) => {
   const classes = useStyles();
 
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -32,5 +32,5 @@ export const DocumentLabeler: React.FC<Props> = ({data}) => {
         <DocumentLabelerContent />
       </div>
     </DocumentLabelerProvider>
-  )
- }
+  );
+};

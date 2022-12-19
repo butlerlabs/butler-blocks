@@ -11,11 +11,12 @@ export const ButlerColorSet = [
  * Given a color set, returns the appropriate color for an item of the given index
  * @returns string
  */
-const getColorFromColorSet = 
-  (index: number, colorSet: Array<string> = ButlerColorSet): string =>
-    colorSet[index % colorSet.length];
+const getColorFromColorSet = (
+  index: number,
+  colorSet: Array<string> = ButlerColorSet,
+): string => colorSet[index % colorSet.length];
 
 export const ColorUtils = {
   ButlerColorSet,
   getColorFromColorSet,
-}
+};

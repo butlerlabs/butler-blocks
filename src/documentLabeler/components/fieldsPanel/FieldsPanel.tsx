@@ -35,7 +35,9 @@ export const FieldsPanel: React.FC = () => {
 
   const { state } = useDocumentLabeler();
 
-  const { fields, tables } = DocumentLabelerReducerUtils.getAllColoredFields(state.docInfo);
+  const { fields, tables } = DocumentLabelerReducerUtils.getAllColoredFields(
+    state.docInfo,
+  );
 
   return (
     <Box className={classes.Root}>

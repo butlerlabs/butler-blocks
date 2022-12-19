@@ -21,14 +21,14 @@ const useStyles = makeStyles(() => ({
  *
  * @param props
  */
-export const DocumentContainer: React.FC<Props> = ({
-  children,
-  className,
-}) => {
+export const DocumentContainer: React.FC<Props> = ({ children, className }) => {
   const classes = useStyles();
 
   return (
-    <Card className={clsx(classes.PreviewPaneContainer, className)} elevation={1}>
+    <Card
+      className={clsx(classes.PreviewPaneContainer, className)}
+      elevation={1}
+    >
       {children}
     </Card>
   );

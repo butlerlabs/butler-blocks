@@ -11,15 +11,13 @@ import {
 // Props
 type Props = TextFieldProps;
 
-const useStyles = makeStyles((theme: Theme) =>
-  ({
-    Root: {
-      '& .MuiInputLabel-root': {
-        color: theme.palette.text.secondary,
-      },
+const useStyles = makeStyles((theme: Theme) => ({
+  Root: {
+    '& .MuiInputLabel-root': {
+      color: theme.palette.text.secondary,
     },
-  }),
-);
+  },
+}));
 
 /**
  * Common button used to display an outlined text field

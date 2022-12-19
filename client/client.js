@@ -62,7 +62,7 @@ const initializeDocLabeler = async ({ modelId, documentId }) => {
   // that you specified in your html div element
   butlerBlocks.createDocLabeler('ButlerDocumentLabeler', data, {
     saveActionButtonText: 'Confirm',
-    fieldsNameFormatter: (fieldName) => fieldName.split('').join(' '),
+    fieldDisplayNameFormatter: (fieldName) => fieldName.toUpperCase(),
     // displayOnly: true,
     // hideSaveButton: true,
     onSaveCallback,

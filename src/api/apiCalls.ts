@@ -6,14 +6,23 @@ import { DocumentLabelerData } from 'documentLabeler/state/DocumentLabelerState'
 
 const API_BASE_URL = 'https://app.butlerlabs.ai/api';
 
-type GetModelApiCall = (modelId: string) => Promise<AxiosResponse<ModelInfoDto>>;
-type CreateNewCustomModelApiCall = (model: CreateModelDto) => Promise<AxiosResponse<ModelInfoDto>>;
-type TrainCustomModelApiCall = (modelId: string) => Promise<AxiosResponse<void>>;
-type GetExtractionResultsApiCall = (modelId: string, documentId: string) => Promise<AxiosResponse<DocumentLabelerData>>;
+type GetModelApiCall = (
+  modelId: string,
+) => Promise<AxiosResponse<ModelInfoDto>>;
+type CreateNewCustomModelApiCall = (
+  model: CreateModelDto,
+) => Promise<AxiosResponse<ModelInfoDto>>;
+type TrainCustomModelApiCall = (
+  modelId: string,
+) => Promise<AxiosResponse<void>>;
+type GetExtractionResultsApiCall = (
+  modelId: string,
+  documentId: string,
+) => Promise<AxiosResponse<DocumentLabelerData>>;
 type SubmitDocumentLabelsApiCall = (
-  modelId: string, 
-  documentId: string, 
-  labels: TrainingDocumentResultDto
+  modelId: string,
+  documentId: string,
+  labels: TrainingDocumentResultDto,
 ) => Promise<AxiosResponse<void>>;
 
 export type ButlerBlockApi = {
@@ -22,11 +31,11 @@ export type ButlerBlockApi = {
   getModel: GetModelApiCall;
   createCustomModel: CreateNewCustomModelApiCall;
   trainCustomModel: TrainCustomModelApiCall;
-}
+};
 
 const getAuthHeaders = (apiKey: string) => ({
-  'Authorization': `Bearer ${apiKey}`
-})
+  Authorization: `Bearer ${apiKey}`,
+});
 
 /**
  * Creates the Get Model Details API call for the API key
@@ -36,21 +45,16 @@ const getAuthHeaders = (apiKey: string) => ({
  */
 const createGetModelApiCall = (
   apiKey: string,
-  apiBaseUrl: string
+  apiBaseUrl: string,
 ): GetModelApiCall => {
-  return (
-    modelId: string
-  ) => {
+  return (modelId: string) => {
     const authHeaders = getAuthHeaders(apiKey);
 
     const getModelUrl = `${apiBaseUrl}/models/${modelId}`;
 
-    return axios.get(
-      getModelUrl,
-      { headers: { ...authHeaders } }
-    );
-  }
-}
+    return axios.get(getModelUrl, { headers: { ...authHeaders } });
+  };
+};
 
 /**
  * Creates the Create New Custom Model API call for the API key
@@ -60,22 +64,18 @@ const createGetModelApiCall = (
  */
 const createNewCustomModelApiCall = (
   apiKey: string,
-  apiBaseUrl: string
+  apiBaseUrl: string,
 ): CreateNewCustomModelApiCall => {
-  return (
-    model: CreateModelDto
-  ) => {
+  return (model: CreateModelDto) => {
     const authHeaders = getAuthHeaders(apiKey);
 
     const createCustomModelUrl = `${apiBaseUrl}/models`;
 
-    return axios.post(
-      createCustomModelUrl,
-      model,
-      { headers: { ...authHeaders } }
-    );
-  }
-}
+    return axios.post(createCustomModelUrl, model, {
+      headers: { ...authHeaders },
+    });
+  };
+};
 
 /**
  * Creates the Train Custom Model API call for the API key
@@ -85,42 +85,29 @@ const createNewCustomModelApiCall = (
  */
 const createTrainCustomModelApiCall = (
   apiKey: string,
-  apiBaseUrl: string
+  apiBaseUrl: string,
 ): TrainCustomModelApiCall => {
-  return (
-    modelId: string
-  ) => {
+  return (modelId: string) => {
     const authHeaders = getAuthHeaders(apiKey);
 
     const trainCustomModelUrl = `${apiBaseUrl}/models/${modelId}/train`;
 
-    return axios.post(
-      trainCustomModelUrl,
-      {},
-      { headers: { ...authHeaders } }
-    );
-  }
-}
+    return axios.post(trainCustomModelUrl, {}, { headers: { ...authHeaders } });
+  };
+};
 
 const createGetExtractionResultsApiCall = (
   apiKey: string,
-  apiBaseUrl: string
+  apiBaseUrl: string,
 ): GetExtractionResultsApiCall => {
-  return (
-    modelId: string,
-    documentId: string
-  ) => {
+  return (modelId: string, documentId: string) => {
     const authHeaders = getAuthHeaders(apiKey);
 
-    const extractionResultsUrl =
-      `${apiBaseUrl}/models/${modelId}/documents/${documentId}/enhanced_results`;
+    const extractionResultsUrl = `${apiBaseUrl}/models/${modelId}/documents/${documentId}/enhanced_results`;
 
-    return axios.get(
-      extractionResultsUrl,
-      { headers: { ...authHeaders } }
-    );
-  }
-}
+    return axios.get(extractionResultsUrl, { headers: { ...authHeaders } });
+  };
+};
 
 /**
  * Creates the Submit Document Labels API call for the API key
@@ -131,25 +118,20 @@ const createGetExtractionResultsApiCall = (
  */
 const createSubmitDocumentLabelsApiCall = (
   apiKey: string,
-  apiBaseUrl: string
+  apiBaseUrl: string,
 ): SubmitDocumentLabelsApiCall => {
   return (
     modelId: string,
     documentId: string,
-    labels: TrainingDocumentResultDto 
+    labels: TrainingDocumentResultDto,
   ) => {
     const authHeaders = getAuthHeaders(apiKey);
 
-    const submitLabelsUrl =
-      `${apiBaseUrl}/models/${modelId}/documents/${documentId}/labels`;
-    
-    return axios.put(
-      submitLabelsUrl,
-      labels,
-      { headers: { ...authHeaders }  }
-    );
-  }
-}
+    const submitLabelsUrl = `${apiBaseUrl}/models/${modelId}/documents/${documentId}/labels`;
+
+    return axios.put(submitLabelsUrl, labels, { headers: { ...authHeaders } });
+  };
+};
 
 /**
  * Factory used to initialize the Butler REST API using the provided API key.
@@ -160,14 +142,20 @@ const createSubmitDocumentLabelsApiCall = (
 export const ButlerApiCallFactory = {
   create: (
     apiKey: string,
-    apiBaseUrl: string = API_BASE_URL
+    apiBaseUrl: string = API_BASE_URL,
   ): ButlerBlockApi => {
     return {
-      getExtractionResults: createGetExtractionResultsApiCall(apiKey, apiBaseUrl),
-      submitDocumentLabels: createSubmitDocumentLabelsApiCall(apiKey, apiBaseUrl),
+      getExtractionResults: createGetExtractionResultsApiCall(
+        apiKey,
+        apiBaseUrl,
+      ),
+      submitDocumentLabels: createSubmitDocumentLabelsApiCall(
+        apiKey,
+        apiBaseUrl,
+      ),
       getModel: createGetModelApiCall(apiKey, apiBaseUrl),
       createCustomModel: createNewCustomModelApiCall(apiKey, apiBaseUrl),
       trainCustomModel: createTrainCustomModelApiCall(apiKey, apiBaseUrl),
-    }
-  }
-}
+    };
+  },
+};

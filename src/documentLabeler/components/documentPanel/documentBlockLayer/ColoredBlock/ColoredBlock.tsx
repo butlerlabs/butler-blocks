@@ -59,16 +59,24 @@ export const ColoredBlock: React.FC<Props> = ({
       state.localState.activeField &&
       autoScroll &&
       state.localState.rootRef &&
-      !HtmlVisibilityUtil.isInContainer(blockRef.current, state.localState.rootRef, {
-        bottomOffset,
-      })
+      !HtmlVisibilityUtil.isInContainer(
+        blockRef.current,
+        state.localState.rootRef,
+        {
+          bottomOffset,
+        },
+      )
     ) {
       blockRef.current.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
       });
     }
-  }, [state.localState.activeField, blockRef.current, state.localState.rootRef]);
+  }, [
+    state.localState.activeField,
+    blockRef.current,
+    state.localState.rootRef,
+  ]);
 
   useEffect(() => {
     setBGColor(alpha(color, 0.2));

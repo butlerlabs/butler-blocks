@@ -30,30 +30,30 @@ export type BoundingBoxDto = {
    */
   width: number;
   /**
-  * Relative height of this bounding box to page height
-  * @type {number}
-  * @memberof BoundingBoxDto
-  */
+   * Relative height of this bounding box to page height
+   * @type {number}
+   * @memberof BoundingBoxDto
+   */
   height: number;
   /**
-  * Relative position of leftmost point of this bounding box on the page
-  * @type {number}
-  * @memberof BoundingBoxDto
-  */
+   * Relative position of leftmost point of this bounding box on the page
+   * @type {number}
+   * @memberof BoundingBoxDto
+   */
   left: number;
   /**
-  * Relative position of uppermost point of this bounding box on the page
-  * @type {number}
-  * @memberof BoundingBoxDto
-  */
+   * Relative position of uppermost point of this bounding box on the page
+   * @type {number}
+   * @memberof BoundingBoxDto
+   */
   top: number;
   /**
-  * Page number
-  * @type {number}
-  * @memberof BoundingBoxDto
-  */
+   * Page number
+   * @type {number}
+   * @memberof BoundingBoxDto
+   */
   page: number;
-}
+};
 
 export type BlockDto = {
   /**
@@ -80,7 +80,7 @@ export type BlockDto = {
    * @memberof BlockDto
    */
   boundingBox: BoundingBoxDto;
-}
+};
 
 export type FieldLabelDto = {
   /**
@@ -125,7 +125,7 @@ export type FieldLabelDto = {
    * @memberof FieldLabelDto
    */
   textOverride?: string;
-}
+};
 
 export type CellLabelDto = {
   /**
@@ -135,30 +135,30 @@ export type CellLabelDto = {
    */
   columnId: string;
   /**
-  * Extraction Confidence Score for the cell label
-  * @type {Confidence}
-  * @memberof CellLabelDto
-  */
+   * Extraction Confidence Score for the cell label
+   * @type {Confidence}
+   * @memberof CellLabelDto
+   */
   confidenceScore: Confidence;
   /**
-  * Blocks that have been labeled for this cell
-  * @type {[BlockDto]}
-  * @memberof CellLabelDto
-  */
+   * Blocks that have been labeled for this cell
+   * @type {[BlockDto]}
+   * @memberof CellLabelDto
+   */
   blocks: Array<BlockDto>;
   /**
-  * Region that has been labeled for this cell
-  * @type {BoundingBoxDto}
-  * @memberof CellLabelDto
-  */
+   * Region that has been labeled for this cell
+   * @type {BoundingBoxDto}
+   * @memberof CellLabelDto
+   */
   region?: BoundingBoxDto;
   /**
-  * Manual text override that was inputted by a user
-  * @type {string}
-  * @memberof CellLabelDto
-  */
+   * Manual text override that was inputted by a user
+   * @type {string}
+   * @memberof CellLabelDto
+   */
   textOverride?: string;
-}
+};
 
 export type RowLabelDto = {
   /**
@@ -172,8 +172,8 @@ export type RowLabelDto = {
    * @type {[CellLabelDto]}
    * @memberof RowLabelDto
    */
-   cells: Array<CellLabelDto>;
-}
+  cells: Array<CellLabelDto>;
+};
 
 export type ColumnDto = {
   /**
@@ -183,12 +183,12 @@ export type ColumnDto = {
    */
   id: string;
   /**
-  * Name of the column within the table
-  * @type {string}
-  * @memberof ColumnDto
-  */
+   * Name of the column within the table
+   * @type {string}
+   * @memberof ColumnDto
+   */
   name: string;
-}
+};
 
 export type TableLabelDto = {
   /**
@@ -198,37 +198,37 @@ export type TableLabelDto = {
    */
   id: string;
   /**
-  * Name of the table that the label corresponds to
-  * @type {string}
-  * @memberof TableLabelDto
-  */
+   * Name of the table that the label corresponds to
+   * @type {string}
+   * @memberof TableLabelDto
+   */
   name: string;
   /**
-  * Extraction Confidence Score for the table label
-  * @type {Confidence}
-  * @memberof TableLabelDto
-  */
-   confidenceScore: Confidence;
+   * Extraction Confidence Score for the table label
+   * @type {Confidence}
+   * @memberof TableLabelDto
+   */
+  confidenceScore: Confidence;
   /**
-  * Column names for this table label
-  * @type {[ColumnDto]}
-  * @memberof TableLabelDto
-  */
+   * Column names for this table label
+   * @type {[ColumnDto]}
+   * @memberof TableLabelDto
+   */
   columns: Array<ColumnDto>;
   /**
-  * Array of row labels for this table label
-  * @type {[RowLabelDto]}
-  * @memberof TableLabelDto
-  */
+   * Array of row labels for this table label
+   * @type {[RowLabelDto]}
+   * @memberof TableLabelDto
+   */
   rows: Array<RowLabelDto>;
-}
+};
 
 export type LabelDto = {
   /**
-  * Array of field labels for this document label
-  * @type {[FieldLabelDto]}
-  * @memberof LabelDto
-  */
+   * Array of field labels for this document label
+   * @type {[FieldLabelDto]}
+   * @memberof LabelDto
+   */
   fields: Array<FieldLabelDto>;
   /**
    * Array of table labels for this document label
@@ -236,74 +236,74 @@ export type LabelDto = {
    * @memberof LabelDto
    */
   tables: Array<TableLabelDto>;
-}
+};
 
 type SharedLabelOutputDto = {
   id: string;
   name: string;
   confidenceScore: Confidence;
   type: FieldType;
-}
+};
 
 export type FieldLabelOutputDto = SharedLabelOutputDto & {
   blocks: Array<BlockDto>;
   region?: BoundingBoxDto;
-}
+};
 
 export type SignatureLabelOutputDto = SharedLabelOutputDto & {
   region?: BoundingBoxDto;
-}
+};
 
 export type CellLabelOutputDto = {
   columnId: string;
   confidenceScore: Confidence;
   blocks: Array<BlockDto>;
   region?: BoundingBoxDto;
-}
+};
 
 export type RowLabelOutputDto = {
   id: string;
   cells: Array<CellLabelOutputDto>;
-}
+};
 
 export type TableLabelOutputDto = SharedLabelOutputDto & {
   columns: Array<ColumnDto>;
   rows: Array<RowLabelOutputDto>;
-}
+};
 
 export type TrainingDocumentResultDto = {
   fields: Array<FieldLabelOutputDto>;
   signatures: Array<SignatureLabelOutputDto>;
   tables: Array<TableLabelOutputDto>;
-}
+};
 
 export type TrainingDocumentLabelsDto = {
   modelId: string;
   docId: string;
   results: TrainingDocumentResultDto;
-}
+};
 
 export type ExtractedFieldDto = {
   fieldName: string;
   value: string;
   confidenceScore: Confidence;
-}
+};
 
 export type ExtractedTableCellDto = {
   columnName: string;
   value: string;
   confidenceScore: Confidence;
-}
+};
 
 export type ExtractedTableRowDto = {
   cells: Array<ExtractedTableCellDto>;
-}
+};
 
 export type ExtractedTableDto = {
   tableName: string;
   rows: Array<ExtractedTableRowDto>;
   confidenceScore: Confidence;
-}
+};
 
 export type ExtractionResultDto = {
   documentId: string;
@@ -313,9 +313,9 @@ export type ExtractionResultDto = {
   confidenceScore: Confidence;
   formFields: Array<ExtractedFieldDto>;
   tables: Array<ExtractedTableDto>;
-}
+};
 
 export type DocumentLabelerOutputDataDto = {
   extractionResult: ExtractionResultDto;
   trainingDocumentLabels: TrainingDocumentLabelsDto;
-}
+};

@@ -1,4 +1,4 @@
-import { ColumnSpecs } from "common/dataTable/DataTable";
+import { ColumnSpecs } from 'common/dataTable/DataTable';
 
 const ICON_COLUMN_WIDTH = 24;
 

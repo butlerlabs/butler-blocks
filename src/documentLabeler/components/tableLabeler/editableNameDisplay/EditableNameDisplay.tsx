@@ -51,8 +51,8 @@ export const EditableNameDisplay: React.FC<Props> = ({
       />
       <Button
         onClick={(): void => onSave(currentName)}
-        variant='text'
-        color='primary'
+        variant="text"
+        color="primary"
       >
         {SAVE}
       </Button>

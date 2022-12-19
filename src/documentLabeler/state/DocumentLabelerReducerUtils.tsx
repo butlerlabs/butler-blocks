@@ -1,7 +1,15 @@
-import { ListUtil } from "common/util/ListUtil/ListUtil";
-import { ColorUtils } from "documentLabeler/color/ColorUtils";
-import { ActiveCell, DocumentLabelerData, DocumentLabelerInternalState } from "documentLabeler/state/DocumentLabelerState";
-import { CellLabelDto, FieldLabelDto, TableLabelDto } from "common/types/DocumentLabelerTypes";
+import { ListUtil } from 'common/util/ListUtil/ListUtil';
+import { ColorUtils } from 'documentLabeler/color/ColorUtils';
+import {
+  ActiveCell,
+  DocumentLabelerData,
+  DocumentLabelerInternalState,
+} from 'documentLabeler/state/DocumentLabelerState';
+import {
+  CellLabelDto,
+  FieldLabelDto,
+  TableLabelDto,
+} from 'common/types/DocumentLabelerTypes';
 
 /**
  * Helper function to look up active field information for a specified
@@ -12,21 +20,23 @@ import { CellLabelDto, FieldLabelDto, TableLabelDto } from "common/types/Documen
  */
 const getFieldFromState = (
   state: DocumentLabelerInternalState,
-  fieldId: string
+  fieldId: string,
 ): {
-  field: FieldLabelDto,
-  idx: number,
+  field: FieldLabelDto;
+  idx: number;
 } => {
   const { fields } = state.docInfo.results;
   const idx = fields.findIndex((field) => field.id === fieldId);
   if (idx === -1) {
-    throw new Error(`Did not find unique field info in document labels when looking up field id ${fieldId}`)
+    throw new Error(
+      `Did not find unique field info in document labels when looking up field id ${fieldId}`,
+    );
   }
   return {
     field: fields[idx],
     idx: idx,
-  }
-}
+  };
+};
 
 /**
  * Helper function to look up table information for a specified
@@ -35,23 +45,25 @@ const getFieldFromState = (
  * @param fieldId
  * @returns the table information and its index in the tables list
  */
- const getTableFromState = (
+const getTableFromState = (
   state: DocumentLabelerInternalState,
-  fieldId: string
+  fieldId: string,
 ): {
-  table: TableLabelDto,
-  idx: number,
+  table: TableLabelDto;
+  idx: number;
 } => {
   const { tables } = state.docInfo.results;
   const idx = tables.findIndex((table) => table.id === fieldId);
   if (idx === -1) {
-    throw new Error(`Did not find unique field info in document labels when looking up field id ${fieldId}`)
+    throw new Error(
+      `Did not find unique field info in document labels when looking up field id ${fieldId}`,
+    );
   }
   return {
     table: tables[idx],
     idx: idx,
-  }
-}
+  };
+};
 
 const updateStateWithNewField = (
   state: DocumentLabelerInternalState,
@@ -59,7 +71,11 @@ const updateStateWithNewField = (
   fieldIdx: number,
 ): DocumentLabelerInternalState => {
   const { fields } = state.docInfo.results;
-  const updatedFields = ListUtil.replaceElementAtIndex(updatedField, fieldIdx, fields);
+  const updatedFields = ListUtil.replaceElementAtIndex(
+    updatedField,
+    fieldIdx,
+    fields,
+  );
   return {
     ...state,
     docInfo: {
@@ -70,7 +86,7 @@ const updateStateWithNewField = (
       },
     },
   };
-}
+};
 
 const updateStateWithNewTable = (
   state: DocumentLabelerInternalState,
@@ -78,7 +94,11 @@ const updateStateWithNewTable = (
   fieldIdx: number,
 ): DocumentLabelerInternalState => {
   const { tables } = state.docInfo.results;
-  const updatedTables = ListUtil.replaceElementAtIndex(updatedTable, fieldIdx, tables);
+  const updatedTables = ListUtil.replaceElementAtIndex(
+    updatedTable,
+    fieldIdx,
+    tables,
+  );
   return {
     ...state,
     docInfo: {
@@ -89,17 +109,17 @@ const updateStateWithNewTable = (
       },
     },
   };
-}
+};
 
 type FieldWithColor = {
   info: FieldLabelDto;
   color: string;
-}
+};
 
 type TableWithColor = {
   info: TableLabelDto;
   color: string;
-}
+};
 
 /**
  * Function used to get all fields for the current document, with associated colors
@@ -108,8 +128,8 @@ type TableWithColor = {
 const getAllColoredFields = (
   data: DocumentLabelerData,
 ): {
-  fields: Array<FieldWithColor>
-  tables: Array<TableWithColor>
+  fields: Array<FieldWithColor>;
+  tables: Array<TableWithColor>;
 } => ({
   fields: data.results.fields.map((field, index) => ({
     info: field,
@@ -127,13 +147,15 @@ const getAllColoredFields = (
  * @param fieldId: string
  * @returns Color(string)
  */
- const getColorFromFieldId = (
+const getColorFromFieldId = (
   state: DocumentLabelerInternalState,
   fieldId: string,
 ): string => {
   const { fields, tables } = getAllColoredFields(state.docInfo);
 
-  const idx = [...fields, ...tables].findIndex((field) => field.info.id === fieldId);
+  const idx = [...fields, ...tables].findIndex(
+    (field) => field.info.id === fieldId,
+  );
   if (idx === -1) {
     throw new Error(
       `No Field found for Field Id ${fieldId} when looking up field color`,
@@ -148,21 +170,19 @@ const getAllColoredFields = (
  * @param state: ModelDetailsInternalState
  * @returns
  */
- const getSelectedTable = (
+const getSelectedTable = (
   state: DocumentLabelerInternalState,
 ): TableLabelDto => {
   // if ModelFieldType is table, then field is guaranteed to be
   // of type TrainingTableLabeledResultDto
-  const selectedTable = getAllColoredFields(state.docInfo).tables
-    .find(
-      (table) => table.info.id === state.localState.activeField?.id,
-    );
+  const selectedTable = getAllColoredFields(state.docInfo).tables.find(
+    (table) => table.info.id === state.localState.activeField?.id,
+  );
   if (!selectedTable) {
     throw new Error('Could not field selected table in state');
   }
   return selectedTable.info;
 };
-
 
 const getCellInfoFromTable = (
   table: TableLabelDto,
@@ -200,13 +220,12 @@ const updateTableWithNewCell = (
   const updatedRow = {
     ...row,
     cells: ListUtil.replaceElementAtIndex(cell, columnIdx, row.cells),
-  }
+  };
   return {
     ...table,
     rows: ListUtil.replaceElementAtIndex(updatedRow, rowIdx, table.rows),
-  }
-}
-
+  };
+};
 
 export const DocumentLabelerReducerUtils = {
   getFieldFromState,

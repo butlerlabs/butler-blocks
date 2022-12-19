@@ -6,31 +6,33 @@ module.exports = {
     jest: true,
   },
   extends: [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
   ],
   overrides: [],
-  parser: "@typescript-eslint/parser",
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
+    ecmaVersion: 'latest',
+    sourceType: 'module',
     ecmaFeatures: {
       jsx: true, // Allows for the parsing of JSX
     },
   },
-  plugins: ["react", "react-hooks", "@typescript-eslint"],
+  plugins: ['react', 'react-hooks', '@typescript-eslint', 'prettier'],
   rules: {
-    "react/prop-types": "off",
-    "react/react-in-jsx-scope": "off",
-    "@typescript-eslint/no-var-requires": "off",
+    'react/prop-types': 'off',
+    'react/react-in-jsx-scope': 'off',
+    '@typescript-eslint/no-var-requires': 'off',
+    'prettier/prettier': 'error',
   },
   settings: {
-    "import/resolver": {
+    'import/resolver': {
       typescript: {},
     },
     react: {
-      version: "detect",
+      version: 'detect',
     },
   },
 };

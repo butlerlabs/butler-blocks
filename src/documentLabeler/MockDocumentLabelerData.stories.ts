@@ -4,8 +4,17 @@
  * the embedded document labeler
  */
 
-import { DocumentLabelerData } from "documentLabeler/state/DocumentLabelerState";
-import { BlockDto, BlockType, Confidence, FieldLabelDto, FieldType, LabelDto, MimeType, TableLabelDto } from "common/types/DocumentLabelerTypes";
+import { DocumentLabelerData } from 'documentLabeler/state/DocumentLabelerState';
+import {
+  BlockDto,
+  BlockType,
+  Confidence,
+  FieldLabelDto,
+  FieldType,
+  LabelDto,
+  MimeType,
+  TableLabelDto,
+} from 'common/types/DocumentLabelerTypes';
 
 const modelId = 'modelId';
 
@@ -33,7 +42,7 @@ const block1: BlockDto = {
 
 const block2: BlockDto = {
   id: 'block2',
-  blockType:  BlockType.Word,
+  blockType: BlockType.Word,
   text: '27-Apr-2018',
   boundingBox: {
     width: 0.1307841944694519,
@@ -73,7 +82,7 @@ const checkboxBlock: BlockDto = {
 
 const blockCell1: BlockDto = {
   id: 'blockCell1',
-  blockType:  BlockType.Word,
+  blockType: BlockType.Word,
   text: '$59.00',
   boundingBox: {
     left: 0.74676061391830444,
@@ -86,7 +95,7 @@ const blockCell1: BlockDto = {
 
 const blockCell2: BlockDto = {
   id: 'blockCell2',
-  blockType:  BlockType.Word,
+  blockType: BlockType.Word,
   text: '1 x individual - per user monthly plan',
   boundingBox: {
     left: 0.07676061391830444,
@@ -170,7 +179,14 @@ const tableField1: TableLabelDto = {
   ],
 };
 
-const wordBlocks: Array<BlockDto> = [block1, block2, block3, checkboxBlock, blockCell1, blockCell2];
+const wordBlocks: Array<BlockDto> = [
+  block1,
+  block2,
+  block3,
+  checkboxBlock,
+  blockCell1,
+  blockCell2,
+];
 
 const labels: LabelDto = {
   fields: [textField1, textField2, checkboxField, signatureField],
@@ -185,8 +201,7 @@ const documentLabelerData: DocumentLabelerData = {
   mimeType,
   wordBlocks,
   results: labels,
-}
-
+};
 
 export const MockDocumentLabelerData = {
   modelId,

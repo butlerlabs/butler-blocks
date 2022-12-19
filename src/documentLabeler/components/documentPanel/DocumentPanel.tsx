@@ -1,10 +1,10 @@
-import { Box, makeStyles, Theme } from "@material-ui/core";
-import { DocumentDisplayer } from "documentLabeler/components/documentPanel/displayer/DocumentDisplayer";
-import { useDocumentDisplayer } from "documentLabeler/components/documentPanel/displayer/useDocumentDisplayer";
-import { DocumentBlockLayer } from "documentLabeler/components/documentPanel/documentBlockLayer/DocumentBlockLayer";
-import { DocumentContainer } from "documentLabeler/components/documentPanel/documentContainer/DocumentContainer";
-import { useDocumentLabeler } from "documentLabeler/DocumentLabelerProvider";
-import { FieldType } from "common/types/DocumentLabelerTypes";
+import { Box, makeStyles, Theme } from '@material-ui/core';
+import { DocumentDisplayer } from 'documentLabeler/components/documentPanel/displayer/DocumentDisplayer';
+import { useDocumentDisplayer } from 'documentLabeler/components/documentPanel/displayer/useDocumentDisplayer';
+import { DocumentBlockLayer } from 'documentLabeler/components/documentPanel/documentBlockLayer/DocumentBlockLayer';
+import { DocumentContainer } from 'documentLabeler/components/documentPanel/documentContainer/DocumentContainer';
+import { useDocumentLabeler } from 'documentLabeler/DocumentLabelerProvider';
+import { FieldType } from 'common/types/DocumentLabelerTypes';
 import { withSize, SizeMeProps } from 'react-sizeme';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -44,7 +44,6 @@ const DocumentPanelInternal = withSize({
   const classes = useStyles();
 
   const { state } = useDocumentLabeler();
-
 
   const width = size?.width ?? 0;
   const height = size?.height ?? 0;

@@ -1,4 +1,11 @@
-import { alpha, Box, Button, IconButton, makeStyles, Theme } from '@material-ui/core';
+import {
+  alpha,
+  Box,
+  Button,
+  IconButton,
+  makeStyles,
+  Theme,
+} from '@material-ui/core';
 import { Close, Create } from '@material-ui/icons';
 import { OutlinedTextField } from 'common/display/OutlinedTextField/OutlinedTextField';
 import { TruncatableTypography } from 'common/display/TruncatableTypography/TruncatableTypography';
@@ -6,7 +13,7 @@ import { useDocumentLabeler } from 'documentLabeler/DocumentLabelerProvider';
 import { FieldType } from 'common/types/DocumentLabelerTypes';
 import React, { useState } from 'react';
 import clsx from 'clsx';
-import { useBBConfiguration } from "documentLabeler/context/BBConfigurationProvider";
+import { useBBConfiguration } from 'documentLabeler/context/BBConfigurationProvider';
 
 const SAVE = 'Save';
 
@@ -19,7 +26,7 @@ type Props = {
   value: string;
   color: string;
   hasValue?: boolean;
-}
+};
 
 const useStyles = makeStyles((theme: Theme) => ({
   Root: {
@@ -64,7 +71,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   Button: {
-    textTransform: "none",
+    textTransform: 'none',
   },
   IconButton: {
     padding: 0,
@@ -121,13 +128,14 @@ export const FieldsPanelDisplayRow: React.FC<Props> = ({
     }
   };
 
-  const handleClearLabels = () => dispatch({
-    type: 'removeAllBlocksFromField',
-    payload: {
-      fieldId: id,
-      fieldType: type,
-    }
-  });
+  const handleClearLabels = () =>
+    dispatch({
+      type: 'removeAllBlocksFromField',
+      payload: {
+        fieldId: id,
+        fieldType: type,
+      },
+    });
 
   const handleSaveValue = () => {
     dispatch({
@@ -135,8 +143,8 @@ export const FieldsPanelDisplayRow: React.FC<Props> = ({
       payload: {
         fieldId: id,
         textOverride: localValue,
-      }
-    })
+      },
+    });
     setEditingText(false);
   };
 
@@ -146,11 +154,8 @@ export const FieldsPanelDisplayRow: React.FC<Props> = ({
       onClick={handleFieldClick}
       style={{
         borderLeft: `4px solid ${color}`,
-        backgroundColor:
-          fieldIsActive
-            ? alpha(color, 0.1)
-            : 'transparent',
-          }}
+        backgroundColor: fieldIsActive ? alpha(color, 0.1) : 'transparent',
+      }}
     >
       <Box className={classes.FieldInfoContainer}>
         {editingText ? (
@@ -175,7 +180,7 @@ export const FieldsPanelDisplayRow: React.FC<Props> = ({
               value={value}
               paragraph={false}
               typographyProps={{
-                variant: 'subtitle2'
+                variant: 'subtitle2',
               }}
             />
           </>
@@ -185,8 +190,8 @@ export const FieldsPanelDisplayRow: React.FC<Props> = ({
         <>
           {editingText ? (
             <Button
-              variant='text'
-              color='primary'
+              variant="text"
+              color="primary"
               className={classes.Button}
               disableElevation
               onClick={(event) => {
@@ -208,7 +213,7 @@ export const FieldsPanelDisplayRow: React.FC<Props> = ({
                   setEditingText(true);
                 }}
               >
-                <Create fontSize='small' />
+                <Create fontSize="small" />
               </IconButton>
               <IconButton
                 className={clsx(classes.IconButton, {
@@ -219,7 +224,7 @@ export const FieldsPanelDisplayRow: React.FC<Props> = ({
                   handleClearLabels();
                 }}
               >
-                <Close fontSize='small' />
+                <Close fontSize="small" />
               </IconButton>
             </Box>
           )}
