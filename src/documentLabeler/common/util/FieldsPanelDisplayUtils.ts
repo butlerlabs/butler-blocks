@@ -1,8 +1,14 @@
-import { CheckboxUtil } from "common/checkbox/CheckboxUtil";
-import { TypesafeUnreachableError } from "common/util/error";
-import { DocumentLabelerConstants } from "documentLabeler/constants/DocumentLabelerConstants";
-import { BlockType, CellLabelDto, FieldLabelDto, FieldType, TableLabelDto } from "common/types/DocumentLabelerTypes";
-import pluralize from "pluralize";
+import { CheckboxUtil } from 'common/checkbox/CheckboxUtil';
+import { TypesafeUnreachableError } from 'common/util/error';
+import { DocumentLabelerConstants } from 'documentLabeler/constants/DocumentLabelerConstants';
+import {
+  BlockType,
+  CellLabelDto,
+  FieldLabelDto,
+  FieldType,
+  TableLabelDto,
+} from 'common/types/DocumentLabelerTypes';
+import pluralize from 'pluralize';
 
 const getCheckboxFieldDisplay = (field: FieldLabelDto) => {
   const firstCheckboxBox = field.blocks.find(
@@ -41,11 +47,13 @@ const getTextValueFromField = (field: FieldLabelDto): string => {
     case FieldType.Checkbox:
       return getCheckboxFieldDisplay(field);
     case FieldType.Signature:
-      return field.region ?
-        DocumentLabelerConstants.REGION_SELECTED :
-        DocumentLabelerConstants.EMPTY;
+      return field.region
+        ? DocumentLabelerConstants.REGION_SELECTED
+        : DocumentLabelerConstants.EMPTY;
     case FieldType.Table:
-      throw new Error('Field Labels cannot be of type table (tables are stored in Table Labels)');
+      throw new Error(
+        'Field Labels cannot be of type table (tables are stored in Table Labels)',
+      );
     default:
       throw new TypesafeUnreachableError(field.type);
   }
@@ -55,8 +63,8 @@ const getTextValueFromCell = (cell: CellLabelDto): string =>
   cell.textOverride
     ? cell.textOverride
     : cell.region
-      ? DocumentLabelerConstants.REGION_SELECTED
-      : cell.blocks.map((block) => block.text).join(' ');
+    ? DocumentLabelerConstants.REGION_SELECTED
+    : cell.blocks.map((block) => block.text).join(' ');
 
 /**
  * Returns the text value from a table to display in the fields panel

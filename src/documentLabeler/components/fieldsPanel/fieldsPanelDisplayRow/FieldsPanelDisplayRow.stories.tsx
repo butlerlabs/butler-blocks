@@ -3,7 +3,10 @@ import { ButlerColorPalette } from 'common/theme/color';
 import { FieldsPanelDisplayRow } from 'documentLabeler/components/fieldsPanel/fieldsPanelDisplayRow/FieldsPanelDisplayRow';
 import { MockDocumentLabelerData } from 'documentLabeler/MockDocumentLabelerData.stories';
 import { MockDocumentLabelerProvider } from 'documentLabeler/MockDocumentLabelerProvider.stories';
-import { DocumentLabelerInternalState, LabelingSelectionType } from 'documentLabeler/state/DocumentLabelerState';
+import {
+  DocumentLabelerInternalState,
+  LabelingSelectionType,
+} from 'documentLabeler/state/DocumentLabelerState';
 import { FieldType } from 'common/types/DocumentLabelerTypes';
 import React from 'react';
 
@@ -11,17 +14,17 @@ export default {
   component: FieldsPanelDisplayRow,
   title: 'FieldsPanelDisplayRow',
   parameters: {
-   fileName: __filename,
- },
- decorators: [
-  (Story: React.FC): React.ReactElement => (
-    <div style={{width: '360px'}}>
-      <Card>
-        <Story />
-      </Card>
-    </div>
-  ),
-],
+    fileName: __filename,
+  },
+  decorators: [
+    (Story: React.FC): React.ReactElement => (
+      <div style={{ width: '360px' }}>
+        <Card>
+          <Story />
+        </Card>
+      </div>
+    ),
+  ],
 };
 
 const defaultParams = {
@@ -30,12 +33,12 @@ const defaultParams = {
   value: '1048151768',
   type: FieldType.Text,
   color: ButlerColorPalette.primary.main,
-}
+};
 
 export const Default = () => (
-    <MockDocumentLabelerProvider>
-      <FieldsPanelDisplayRow {...defaultParams} />
-    </MockDocumentLabelerProvider>
+  <MockDocumentLabelerProvider>
+    <FieldsPanelDisplayRow {...defaultParams} />
+  </MockDocumentLabelerProvider>
 );
 
 const selectedState: DocumentLabelerInternalState = {
@@ -48,7 +51,7 @@ const selectedState: DocumentLabelerInternalState = {
     selectionType: LabelingSelectionType.Block,
     rootRef: null,
   },
-}
+};
 
 export const Selected = () => (
   <MockDocumentLabelerProvider internalState={selectedState}>
@@ -59,7 +62,7 @@ export const Selected = () => (
 const longNameParams = {
   ...defaultParams,
   name: 'Account Nuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuumber',
-}
+};
 
 export const LongName = () => (
   <MockDocumentLabelerProvider>
@@ -70,7 +73,7 @@ export const LongName = () => (
 const longValueParams = {
   ...defaultParams,
   value: '1000000000000000000000000000000000000000000000000000048151768',
-}
+};
 
 export const LongValue = () => (
   <MockDocumentLabelerProvider>

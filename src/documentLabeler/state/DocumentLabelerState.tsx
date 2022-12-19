@@ -1,4 +1,18 @@
-import { BlockDto, Confidence, TrainingDocumentLabelsDto, DocumentLabelerOutputDataDto, ExtractedFieldDto, ExtractedTableDto, ExtractionResultDto, FieldLabelOutputDto, FieldType, LabelDto, MimeType, SignatureLabelOutputDto, TableLabelOutputDto } from 'common/types/DocumentLabelerTypes';
+import {
+  BlockDto,
+  Confidence,
+  TrainingDocumentLabelsDto,
+  DocumentLabelerOutputDataDto,
+  ExtractedFieldDto,
+  ExtractedTableDto,
+  ExtractionResultDto,
+  FieldLabelOutputDto,
+  FieldType,
+  LabelDto,
+  MimeType,
+  SignatureLabelOutputDto,
+  TableLabelOutputDto,
+} from 'common/types/DocumentLabelerTypes';
 import { FieldsPanelDisplayUtils } from 'documentLabeler/common/util/FieldsPanelDisplayUtils';
 
 // Initial data passed in from external api calls to generate Internal State.
@@ -15,7 +29,7 @@ export type DocumentLabelerData = {
 export type ActiveCell = {
   columnId: string;
   rowId: string;
-}
+};
 
 export type ActiveTable = {
   id: string;
@@ -23,10 +37,12 @@ export type ActiveTable = {
   activeCell?: ActiveCell;
 };
 
-export type ActiveField = {
-  id: string;
-  type: FieldType.Text | FieldType.Checkbox | FieldType.Signature;
-} | ActiveTable;
+export type ActiveField =
+  | {
+      id: string;
+      type: FieldType.Text | FieldType.Checkbox | FieldType.Signature;
+    }
+  | ActiveTable;
 
 export enum LabelingSelectionType {
   Block = 'Block',
@@ -37,7 +53,7 @@ export enum LabelingSelectionType {
 export type DocumentLabelerLocalState = {
   activeField?: ActiveField;
   selectionType: LabelingSelectionType;
-  rootRef: HTMLDivElement | null,
+  rootRef: HTMLDivElement | null;
 };
 
 // Internal State, used to maintain local state within the Document Labeler
@@ -48,8 +64,8 @@ export type DocumentLabelerInternalState = {
 
 /** Generates initial state from initializer data */
 const generateInitialState = (
- data: DocumentLabelerData,
- rootRef: HTMLDivElement | null,
+  data: DocumentLabelerData,
+  rootRef: HTMLDivElement | null,
 ): DocumentLabelerInternalState => {
   return {
     docInfo: data,
@@ -67,19 +83,17 @@ const convertInternalStateToOutputData = (
   const trainingSimpleFields: Array<FieldLabelOutputDto> =
     state.docInfo.results.fields.filter(
       (field) =>
-        field.type === FieldType.Text
-        || field.type === FieldType.Checkbox
-      );
+        field.type === FieldType.Text || field.type === FieldType.Checkbox,
+    );
   const trainingSignatureFields: Array<SignatureLabelOutputDto> =
     state.docInfo.results.fields.filter(
-      (field) =>
-        field.type === FieldType.Signature
-      );
+      (field) => field.type === FieldType.Signature,
+    );
   const trainingTables: Array<TableLabelOutputDto> =
     state.docInfo.results.tables.map((table) => ({
       ...table,
       type: FieldType.Table,
-      rows: table.rows
+      rows: table.rows,
     }));
   const trainingDocumentLabels: TrainingDocumentLabelsDto = {
     modelId: state.docInfo.modelId,
@@ -88,7 +102,7 @@ const convertInternalStateToOutputData = (
       fields: trainingSimpleFields,
       signatures: trainingSignatureFields,
       tables: trainingTables,
-    }
+    },
   };
   const extractedFormFields: Array<ExtractedFieldDto> =
     state.docInfo.results.fields.map((field) => ({
@@ -107,10 +121,10 @@ const convertInternalStateToOutputData = (
           columnName: table.columns[idx].name,
           value: FieldsPanelDisplayUtils.getTextValueFromCell(cell),
           confidenceScore: cell.confidenceScore,
-        }))
-      }))
+        })),
+      })),
     }));
-  const extractionResult: ExtractionResultDto ={
+  const extractionResult: ExtractionResultDto = {
     ...state.docInfo,
     documentId: state.docInfo.docId,
     documentStatus: 'Completed',
@@ -122,7 +136,7 @@ const convertInternalStateToOutputData = (
     trainingDocumentLabels,
     extractionResult,
   };
-}
+};
 
 export const DocumentLabelerState = {
   generateInitialState,

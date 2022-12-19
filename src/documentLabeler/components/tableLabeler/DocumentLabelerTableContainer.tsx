@@ -30,7 +30,7 @@ export const DocumentLabelerTableContainer: React.FC<Props> = ({
   const classes = useStyles();
 
   return (
-    <Slide direction='up' in>
+    <Slide direction="up" in>
       <Card className={classes.Root} elevation={4}>
         {children}
       </Card>

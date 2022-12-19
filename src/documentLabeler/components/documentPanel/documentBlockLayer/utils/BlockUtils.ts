@@ -1,7 +1,19 @@
-import { EndUserBlockRenderUtils, RectCoords } from "documentLabeler/components/documentPanel/documentBlockLayer/utils/EndUserBlockRenderUtils";
-import { DocumentLabelerReducerUtils } from "documentLabeler/state/DocumentLabelerReducerUtils";
-import { ActiveField, DocumentLabelerInternalState, LabelingSelectionType } from "documentLabeler/state/DocumentLabelerState";
-import { BlockDto, BlockType, BoundingBoxDto, FieldType } from "common/types/DocumentLabelerTypes";
+import {
+  EndUserBlockRenderUtils,
+  RectCoords,
+} from 'documentLabeler/components/documentPanel/documentBlockLayer/utils/EndUserBlockRenderUtils';
+import { DocumentLabelerReducerUtils } from 'documentLabeler/state/DocumentLabelerReducerUtils';
+import {
+  ActiveField,
+  DocumentLabelerInternalState,
+  LabelingSelectionType,
+} from 'documentLabeler/state/DocumentLabelerState';
+import {
+  BlockDto,
+  BlockType,
+  BoundingBoxDto,
+  FieldType,
+} from 'common/types/DocumentLabelerTypes';
 
 export type FieldColoredBlock = {
   color: string;
@@ -58,9 +70,8 @@ const getRegionFromRectangle = (
   pageWidth: number,
   docPageHeights: Array<number>,
 ): BoundingBoxDto => {
-  const { minX, maxX, minY, maxY } = EndUserBlockRenderUtils.toMinMax(
-    rectangle,
-  );
+  const { minX, maxX, minY, maxY } =
+    EndUserBlockRenderUtils.toMinMax(rectangle);
 
   // Increase page number until the Cumulative height of pages before
   // this page is greater than the beginning of the region
@@ -86,13 +97,16 @@ const getRegionFromRectangle = (
 const getColoredRegions = (
   state: DocumentLabelerInternalState,
 ): Array<RegionColoredBlock> => {
-  const { fields, tables } = DocumentLabelerReducerUtils.getAllColoredFields(state.docInfo);
+  const { fields, tables } = DocumentLabelerReducerUtils.getAllColoredFields(
+    state.docInfo,
+  );
 
   const simpleRegionsToDisplay: Array<RegionColoredBlock> = fields
     .filter(
       // Only display selected field region if a selected field exists
       (field) =>
-        !state.localState.activeField || field.info.id === state.localState.activeField.id
+        !state.localState.activeField ||
+        field.info.id === state.localState.activeField.id,
     )
     .filter((field) => field.info.region !== undefined)
     .map((field) => ({
@@ -108,7 +122,8 @@ const getColoredRegions = (
     .filter(
       // Only display selected field region if a selected field exists
       (table) =>
-        !state.localState.activeField || table.info.id === state.localState.activeField.id
+        !state.localState.activeField ||
+        table.info.id === state.localState.activeField.id,
     )
     // convert each table into a flat array of their cells
     .map((table) =>
@@ -149,21 +164,22 @@ const getColoredRegionsToDisplay = (
       return true;
     }
   });
-}
+};
 
 const getColoredBlocks = (
   state: DocumentLabelerInternalState,
 ): Array<ColoredBlockType> => {
-  const { fields, tables } = DocumentLabelerReducerUtils.getAllColoredFields(state.docInfo);
+  const { fields, tables } = DocumentLabelerReducerUtils.getAllColoredFields(
+    state.docInfo,
+  );
 
-  const fieldColoredBlocks: Array<ColoredBlockType> = fields.flatMap(
-    (field) =>
-      field.info.blocks.map((block) => ({
-        color: field.color,
-        block,
-        sourceFieldId: field.info.id,
-        sourceFieldType: field.info.type,
-      })),
+  const fieldColoredBlocks: Array<ColoredBlockType> = fields.flatMap((field) =>
+    field.info.blocks.map((block) => ({
+      color: field.color,
+      block,
+      sourceFieldId: field.info.id,
+      sourceFieldType: field.info.type,
+    })),
   );
 
   const tableCellColoredBlocks: Array<ColoredBlockType> = tables.flatMap(
@@ -183,7 +199,7 @@ const getColoredBlocks = (
   );
 
   return fieldColoredBlocks.concat(tableCellColoredBlocks);
-}
+};
 
 const getColoredBlocksToDisplay = (
   state: DocumentLabelerInternalState,
@@ -202,7 +218,7 @@ const getColoredBlocksToDisplay = (
       return true;
     }
   });
-}
+};
 
 const getFilteredUnhighlightedBlocks = (
   selectedField: ActiveField | undefined,
@@ -362,7 +378,7 @@ const getActiveRegion = (
   } else {
     return regionsToDisplay[0]?.region;
   }
-}
+};
 
 export const BlockUtils = {
   isTextOrCheckBoxBlock,

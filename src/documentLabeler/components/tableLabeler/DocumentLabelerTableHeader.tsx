@@ -89,10 +89,7 @@ export const DocumentLabelerTableHeader: React.FC = () => {
         </Typography>
       </Box>
       <Box className={classes.Expanded} />
-      <Button
-        color="primary"
-        onClick={handleAddRow}
-      >
+      <Button color="primary" onClick={handleAddRow}>
         {ADD_ROW}
       </Button>
       <IconButton

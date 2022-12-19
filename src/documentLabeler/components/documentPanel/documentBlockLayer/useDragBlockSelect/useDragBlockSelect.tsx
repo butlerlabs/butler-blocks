@@ -1,4 +1,7 @@
-import { Coords, RectCoords } from 'documentLabeler/components/documentPanel/documentBlockLayer/utils/EndUserBlockRenderUtils';
+import {
+  Coords,
+  RectCoords,
+} from 'documentLabeler/components/documentPanel/documentBlockLayer/utils/EndUserBlockRenderUtils';
 import { useCallback, useState } from 'react';
 
 type ExternalHookState = {

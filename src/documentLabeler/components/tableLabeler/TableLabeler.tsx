@@ -15,7 +15,7 @@ import { useBBConfiguration } from 'documentLabeler/context/BBConfigurationProvi
 const COLUMN_NAME = 'Column Name';
 const DRAG_OR_CLICK = 'Drag (or click) on value';
 const GET_TABLE_FTUX_TEXT = () =>
-    'Try adding a row to begin annotating your table!';
+  'Try adding a row to begin annotating your table!';
 
 /**
  * Component Responsible for Displaying the Table Labeler in the Document Labeler
@@ -76,7 +76,7 @@ export const TableLabeler: React.FC = () => {
   const handleCellTextOverride = (
     rowId: string,
     columnId: string,
-    textOverride: string
+    textOverride: string,
   ) => {
     dispatch({
       type: 'setTableCellTextOverride',
@@ -88,15 +88,17 @@ export const TableLabeler: React.FC = () => {
           activeCell: {
             rowId: rowId,
             columnId: columnId,
-          }
-        }
-      }
-    })
-  }
+          },
+        },
+      },
+    });
+  };
 
   const getColumnDisplayName = (column: string): string => {
-    return fieldDisplayNameFormatter ? fieldDisplayNameFormatter(column) : column;
-  }
+    return fieldDisplayNameFormatter
+      ? fieldDisplayNameFormatter(column)
+      : column;
+  };
 
   const columnHeaderDisplay = columns
     .map((column, index) => (
@@ -136,10 +138,9 @@ export const TableLabeler: React.FC = () => {
               activeRow?.id === row.id
             }
             displayActions
-            onSaveValue=
-              {(value) =>
-                handleCellTextOverride(row.id, cell.columnId, value)
-              }
+            onSaveValue={(value) =>
+              handleCellTextOverride(row.id, cell.columnId, value)
+            }
             onClick={() => handleOnCellClick(cell.columnId, row.id)}
           />
         ))
@@ -158,9 +159,7 @@ export const TableLabeler: React.FC = () => {
       <Divider />
       <ExtractedDataTableContainer numColumns={columns.length}>
         <TableHead>
-          <TableRow>
-            {columnHeaderDisplay}
-          </TableRow>
+          <TableRow>{columnHeaderDisplay}</TableRow>
         </TableHead>
         {rowsToDisplay.length !== 0 && rowsToDisplay}
         {rowsToDisplay.length === 0 && (

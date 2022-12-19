@@ -1,32 +1,52 @@
 import { TypesafeUnreachableError } from 'common/util/error';
-import { ActiveFieldReducerUtils, SetActiveFieldAction } from 'documentLabeler/state/ActiveFieldReducerUtils';
-import { AddBlockToActiveFieldAction, BlockReducerUtils, RemoveBlockFromFieldAction } from 'documentLabeler/state/BlockReducerUtils';
+import {
+  ActiveFieldReducerUtils,
+  SetActiveFieldAction,
+} from 'documentLabeler/state/ActiveFieldReducerUtils';
+import {
+  AddBlockToActiveFieldAction,
+  BlockReducerUtils,
+  RemoveBlockFromFieldAction,
+} from 'documentLabeler/state/BlockReducerUtils';
 import { DocumentLabelerInternalState } from 'documentLabeler/state/DocumentLabelerState';
-import { AddRowToTableAction, FieldReducerUtils, RemoveAllBlocksFromFieldAction, RemoveRowFromTableAction, SetTableCellTextOverrideAction, SetTextFieldOverrideAction } from 'documentLabeler/state/FieldReducerUtils';
-import { AddRegionToActiveFieldAction, ClearRegionFromFieldAction, RegionReducerUtils } from 'documentLabeler/state/RegionReducerUtils';
+import {
+  AddRowToTableAction,
+  FieldReducerUtils,
+  RemoveAllBlocksFromFieldAction,
+  RemoveRowFromTableAction,
+  SetTableCellTextOverrideAction,
+  SetTextFieldOverrideAction,
+} from 'documentLabeler/state/FieldReducerUtils';
+import {
+  AddRegionToActiveFieldAction,
+  ClearRegionFromFieldAction,
+  RegionReducerUtils,
+} from 'documentLabeler/state/RegionReducerUtils';
 
 type DocumentLabelerDispatchAction =
-  SetActiveFieldAction |
-  AddBlockToActiveFieldAction |
-  RemoveBlockFromFieldAction |
-  AddRegionToActiveFieldAction |
-  ClearRegionFromFieldAction |
-  RemoveAllBlocksFromFieldAction |
-  SetTextFieldOverrideAction |
-  SetTableCellTextOverrideAction |
-  AddRowToTableAction |
-  RemoveRowFromTableAction;
+  | SetActiveFieldAction
+  | AddBlockToActiveFieldAction
+  | RemoveBlockFromFieldAction
+  | AddRegionToActiveFieldAction
+  | ClearRegionFromFieldAction
+  | RemoveAllBlocksFromFieldAction
+  | SetTextFieldOverrideAction
+  | SetTableCellTextOverrideAction
+  | AddRowToTableAction
+  | RemoveRowFromTableAction;
 
- export type DocumentLabelerDispatch = (action: DocumentLabelerDispatchAction) => void;
+export type DocumentLabelerDispatch = (
+  action: DocumentLabelerDispatchAction,
+) => void;
 
- /**
+/**
  * Reducer for handling new state generation in response
  * to a new action with a current state.
  */
- export const documentLabelerReducer = (
+export const documentLabelerReducer = (
   state: DocumentLabelerInternalState,
   action: DocumentLabelerDispatchAction,
- ): DocumentLabelerInternalState => {
+): DocumentLabelerInternalState => {
   switch (action.type) {
     case 'setActiveField':
       return ActiveFieldReducerUtils.setActiveField(state, action);
@@ -51,4 +71,4 @@ type DocumentLabelerDispatchAction =
     default:
       throw new TypesafeUnreachableError(action);
   }
- };
+};

@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   DocumentDisplayerContainer: {
     flex: 1,
     display: 'flex',
-  }
- }));
+  },
+}));
 
 /**
  * Top level component containing the Embedded Document Labeler.  Takes in document info
@@ -46,5 +46,5 @@ export const DocumentLabelerContent: React.FC = () => {
           <TableLabeler />
         )}
     </Box>
-  )
- }
+  );
+};

@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Button, makeStyles, Theme, Typography } from '@material-ui/core';
 import { useDocumentLabeler } from 'documentLabeler/DocumentLabelerProvider';
 import { DocumentLabelerState } from 'documentLabeler/state/DocumentLabelerState';
-import { useBBConfiguration } from "documentLabeler/context/BBConfigurationProvider";
+import { useBBConfiguration } from 'documentLabeler/context/BBConfigurationProvider';
 
 const useStyles = makeStyles((theme: Theme) => ({
   Root: {
@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   Button: {
     width: theme.spacing(12),
-    textTransform: "none",
+    textTransform: 'none',
   },
 }));
 
@@ -28,23 +28,24 @@ const SAVE = 'Save';
 export const FieldsPanelHeader: React.FC = () => {
   const classes = useStyles();
 
-  const { saveActionButtonText, displayOnly, hideSaveButton, onSaveCallback } = useBBConfiguration();
+  const { saveActionButtonText, displayOnly, hideSaveButton, onSaveCallback } =
+    useBBConfiguration();
   const { state } = useDocumentLabeler();
 
   const onSaveClick = () =>
     onSaveCallback(
-      DocumentLabelerState.convertInternalStateToOutputData(state)
+      DocumentLabelerState.convertInternalStateToOutputData(state),
     );
 
-    const shouldShowSaveButton = !hideSaveButton && !displayOnly;
+  const shouldShowSaveButton = !hideSaveButton && !displayOnly;
 
   return (
     <Box className={classes.Root}>
-      <Typography variant='subtitle2'>{FIELDS}</Typography>
+      <Typography variant="subtitle2">{FIELDS}</Typography>
       {shouldShowSaveButton && (
         <Button
-          variant='contained'
-          color='primary'
+          variant="contained"
+          color="primary"
           className={classes.Button}
           onClick={onSaveClick}
           disableElevation

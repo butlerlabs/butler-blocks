@@ -1,9 +1,21 @@
-import { ColorUtils } from "documentLabeler/color/ColorUtils";
-import { BlockUtils, CellColoredBlock, ColoredBlockType, FieldColoredBlock } from "documentLabeler/components/documentPanel/documentBlockLayer/utils/BlockUtils";
-import { RectCoords } from "documentLabeler/components/documentPanel/documentBlockLayer/utils/EndUserBlockRenderUtils";
-import { MockDocumentLabelerData } from "documentLabeler/MockDocumentLabelerData.stories";
-import { ActiveField, LabelingSelectionType } from "documentLabeler/state/DocumentLabelerState";
-import { BlockType, BoundingBoxDto, FieldType } from "common/types/DocumentLabelerTypes";
+import { ColorUtils } from 'documentLabeler/color/ColorUtils';
+import {
+  BlockUtils,
+  CellColoredBlock,
+  ColoredBlockType,
+  FieldColoredBlock,
+} from 'documentLabeler/components/documentPanel/documentBlockLayer/utils/BlockUtils';
+import { RectCoords } from 'documentLabeler/components/documentPanel/documentBlockLayer/utils/EndUserBlockRenderUtils';
+import { MockDocumentLabelerData } from 'documentLabeler/MockDocumentLabelerData.stories';
+import {
+  ActiveField,
+  LabelingSelectionType,
+} from 'documentLabeler/state/DocumentLabelerState';
+import {
+  BlockType,
+  BoundingBoxDto,
+  FieldType,
+} from 'common/types/DocumentLabelerTypes';
 
 const mockPageHeights = [500, 400, 500, 300];
 const mockWidth = 400;
@@ -296,4 +308,3 @@ describe('sortBlocks', () => {
     expect(sortedBlocks).toStrictEqual(SORTED_BLOCK_RESULT);
   });
 });
-

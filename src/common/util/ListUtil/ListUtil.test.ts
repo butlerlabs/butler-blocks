@@ -1,4 +1,4 @@
-import { ListUtil } from "common/util/ListUtil/ListUtil";
+import { ListUtil } from 'common/util/ListUtil/ListUtil';
 
 const startArray = [1, 2, 3];
 
@@ -29,6 +29,6 @@ describe('ListUtil', () => {
     it('should work for one element', () => {
       const oneItemSplice = ListUtil.replaceElementAtIndex(1, 0, [0]);
       expect(oneItemSplice).toMatchObject([1]);
-    })
+    });
   });
 });

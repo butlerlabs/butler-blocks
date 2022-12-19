@@ -1,5 +1,5 @@
-import { RegionColoredBlock } from "documentLabeler/components/documentPanel/documentBlockLayer/utils/BlockUtils";
-import { BlockDto, BoundingBoxDto } from "common/types/DocumentLabelerTypes";
+import { RegionColoredBlock } from 'documentLabeler/components/documentPanel/documentBlockLayer/utils/BlockUtils';
+import { BlockDto, BoundingBoxDto } from 'common/types/DocumentLabelerTypes';
 
 type DomRectangle = {
   left: number;

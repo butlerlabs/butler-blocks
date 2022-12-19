@@ -1,4 +1,4 @@
-import { ColumnSpecsUtil } from "common/dataTable/columnSpecsUtil/ColumnSpecsUtil";
+import { ColumnSpecsUtil } from 'common/dataTable/columnSpecsUtil/ColumnSpecsUtil';
 
 describe('Column Specs Util', () => {
   describe('calcColumnSpecs', () => {

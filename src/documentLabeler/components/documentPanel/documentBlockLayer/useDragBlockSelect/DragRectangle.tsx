@@ -1,6 +1,9 @@
 import React from 'react';
 import { alpha, Box, makeStyles, Theme } from '@material-ui/core';
-import { EndUserBlockRenderUtils, RectCoords } from 'documentLabeler/components/documentPanel/documentBlockLayer/utils/EndUserBlockRenderUtils';
+import {
+  EndUserBlockRenderUtils,
+  RectCoords,
+} from 'documentLabeler/components/documentPanel/documentBlockLayer/utils/EndUserBlockRenderUtils';
 
 type Props = {
   dragCoords: RectCoords;
