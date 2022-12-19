@@ -17,6 +17,7 @@ import {
   FieldType,
 } from 'common/types/DocumentLabelerTypes';
 import { useRef, useState } from 'react';
+import { useBBConfiguration } from 'documentLabeler/context/BBConfigurationProvider';
 
 type Props = {
   width: number;
@@ -68,6 +69,7 @@ export const DocumentBlockLayer: React.FC<Props> = ({
       )
     : null;
 
+  const { displayOnly } = useBBConfiguration();
   const coloredBlocks = BlockUtils.getColoredBlocks(state);
 
   const coloredBlocksToDisplay = BlockUtils.getColoredBlocksToDisplay(
@@ -96,7 +98,8 @@ export const DocumentBlockLayer: React.FC<Props> = ({
     state.localState.activeField?.type === FieldType.Table &&
     Boolean(state.localState.activeField.activeCell);
 
-  const canLabel = hasActiveFormField || hasActiveTableWithActiveCell;
+  const canLabel =
+    (hasActiveFormField || hasActiveTableWithActiveCell) && !displayOnly;
 
   /**
    * Responsible for handling the case of unselected field/cell.

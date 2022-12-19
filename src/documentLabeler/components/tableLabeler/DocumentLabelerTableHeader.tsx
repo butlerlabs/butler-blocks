@@ -11,6 +11,7 @@ import { Close } from '@material-ui/icons';
 import { useDocumentLabeler } from 'documentLabeler/DocumentLabelerProvider';
 import { DocumentLabelerReducerUtils } from 'documentLabeler/state/DocumentLabelerReducerUtils';
 import { FieldType } from 'common/types/DocumentLabelerTypes';
+import { useBBConfiguration } from 'documentLabeler/context/BBConfigurationProvider';
 
 const ADD_ROW = 'Add Row';
 
@@ -52,6 +53,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const DocumentLabelerTableHeader: React.FC = () => {
   const classes = useStyles();
 
+  const { displayOnly } = useBBConfiguration();
   const { state, dispatch } = useDocumentLabeler();
 
   const selectedTable = DocumentLabelerReducerUtils.getSelectedTable(state);
@@ -89,9 +91,11 @@ export const DocumentLabelerTableHeader: React.FC = () => {
         </Typography>
       </Box>
       <Box className={classes.Expanded} />
-      <Button color="primary" onClick={handleAddRow}>
-        {ADD_ROW}
-      </Button>
+      {!displayOnly && (
+        <Button color="primary" onClick={handleAddRow}>
+          {ADD_ROW}
+        </Button>
+      )}
       <IconButton
         className={classes.IconButton}
         onClick={handleOnTableViewClose}

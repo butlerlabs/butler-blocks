@@ -23,7 +23,7 @@ const GET_TABLE_FTUX_TEXT = () =>
 export const TableLabeler: React.FC = () => {
   const { state, dispatch } = useDocumentLabeler();
 
-  const { fieldDisplayNameFormatter } = useBBConfiguration();
+  const { fieldDisplayNameFormatter, displayOnly } = useBBConfiguration();
 
   if (
     !state.localState.activeField ||
@@ -100,6 +100,8 @@ export const TableLabeler: React.FC = () => {
       : column;
   };
 
+  const shouldAddPlaceholderCell = columns.length > 0 && !displayOnly;
+
   const columnHeaderDisplay = columns
     .map((column, index) => (
       <DocumentLabelerTableCell
@@ -111,7 +113,7 @@ export const TableLabeler: React.FC = () => {
     ))
     // placeholder column header for column of delete icons in table
     .concat(
-      columns.length > 0
+      shouldAddPlaceholderCell
         ? [
             <DocumentLabelerTableCell
               key={columns.length}
@@ -137,19 +139,23 @@ export const TableLabeler: React.FC = () => {
               cell.columnId === activeCell.columnId &&
               activeRow?.id === row.id
             }
-            displayActions
+            displayActions={!displayOnly}
             onSaveValue={(value) =>
               handleCellTextOverride(row.id, cell.columnId, value)
             }
             onClick={() => handleOnCellClick(cell.columnId, row.id)}
           />
         ))
-        .concat([
-          <DeleteRowIconCell
-            key={row.id}
-            deleteRow={(): void => handleOnDeleteRow(row.id)}
-          />,
-        ])}
+        .concat(
+          shouldAddPlaceholderCell
+            ? [
+                <DeleteRowIconCell
+                  key={row.id}
+                  deleteRow={(): void => handleOnDeleteRow(row.id)}
+                />,
+              ]
+            : [],
+        )}
     </TableRow>
   ));
 
