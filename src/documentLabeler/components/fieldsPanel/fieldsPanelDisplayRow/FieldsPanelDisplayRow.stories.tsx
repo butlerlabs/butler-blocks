@@ -9,6 +9,8 @@ import {
 } from 'documentLabeler/state/DocumentLabelerState';
 import { FieldType } from 'common/types/DocumentLabelerTypes';
 import React from 'react';
+import { BBConfigurationProvider } from 'documentLabeler/context/BBConfigurationProvider';
+import { action } from '@storybook/addon-actions';
 
 export default {
   component: FieldsPanelDisplayRow,
@@ -19,9 +21,15 @@ export default {
   decorators: [
     (Story: React.FC): React.ReactElement => (
       <div style={{ width: '360px' }}>
-        <Card>
-          <Story />
-        </Card>
+        <BBConfigurationProvider
+          config={{
+            onSaveCallback: action('onSaveCallback'),
+          }}
+        >
+          <Card>
+            <Story />
+          </Card>
+        </BBConfigurationProvider>
       </div>
     ),
   ],
