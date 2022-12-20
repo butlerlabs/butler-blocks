@@ -1,3 +1,5 @@
+/* eslint-disable storybook/default-exports */
+
 import React, { useReducer } from 'react';
 import {
   DocumentLabelerDispatchContext,

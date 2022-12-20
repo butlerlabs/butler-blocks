@@ -1,4 +1,6 @@
+import { action } from '@storybook/addon-actions';
 import { FieldsPanel } from 'documentLabeler/components/fieldsPanel/FieldsPanel';
+import { BBConfigurationProvider } from 'documentLabeler/context/BBConfigurationProvider';
 import { MockDocumentLabelerProvider } from 'documentLabeler/MockDocumentLabelerProvider.stories';
 
 export default {
@@ -10,7 +12,13 @@ export default {
   decorators: [
     (Story: React.FC): React.ReactElement => (
       <div style={{ width: '360px' }}>
-        <Story />
+        <BBConfigurationProvider
+          config={{
+            onSaveCallback: action('onSaveCallback'),
+          }}
+        >
+          <Story />
+        </BBConfigurationProvider>
       </div>
     ),
   ],
