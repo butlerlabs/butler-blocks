@@ -18,7 +18,7 @@ import { FieldsPanelDisplayUtils } from 'documentLabeler/common/util/FieldsPanel
 // Initial data passed in from external api calls to generate Internal State.
 export type DocumentLabelerData = {
   modelId: string;
-  docId: string;
+  documentId: string;
   fileName: string;
   mimeType: MimeType;
   tempDocUrl: string;
@@ -97,7 +97,7 @@ const convertInternalStateToOutputData = (
     }));
   const trainingDocumentLabels: TrainingDocumentLabelsDto = {
     modelId: state.docInfo.modelId,
-    docId: state.docInfo.docId,
+    docId: state.docInfo.documentId,
     results: {
       fields: trainingSimpleFields,
       signatures: trainingSignatureFields,
@@ -126,7 +126,7 @@ const convertInternalStateToOutputData = (
     }));
   const extractionResult: ExtractionResultDto = {
     ...state.docInfo,
-    documentId: state.docInfo.docId,
+    documentId: state.docInfo.documentId,
     documentStatus: 'Completed',
     confidenceScore: Confidence.UserReviewed,
     formFields: extractedFormFields,
