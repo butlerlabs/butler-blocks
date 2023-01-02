@@ -18,7 +18,7 @@ import {
 
 const modelId = 'modelId';
 
-const docId = 'docId';
+const documentId = 'docId';
 
 const tempDocUrl =
   'https://matt-public-bucket.s3.amazonaws.com/productboard-berhgzumndn1jyt1apsq7wey-1.pdf';
@@ -195,7 +195,7 @@ const labels: LabelDto = {
 
 const documentLabelerData: DocumentLabelerData = {
   modelId,
-  docId,
+  documentId,
   tempDocUrl,
   fileName,
   mimeType,
@@ -205,7 +205,7 @@ const documentLabelerData: DocumentLabelerData = {
 
 export const MockDocumentLabelerData = {
   modelId,
-  docId,
+  documentId,
   tempDocUrl,
   fileName,
   mimeType,
