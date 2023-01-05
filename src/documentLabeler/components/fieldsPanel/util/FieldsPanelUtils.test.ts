@@ -46,11 +46,11 @@ describe('fieldHasLabeledValue', () => {
     expect(output).toBe(false);
   });
   /** Checkbox Field Tests */
-  it('should return true for a field with blocks', () => {
+  it('should return true for a checkbox field with blocks', () => {
     const output = FieldsPanelUtils.fieldHasLabeledValue(checkboxField);
     expect(output).toBe(true);
   });
-  it('should return true for a field with a selected region', () => {
+  it('should return true for a checkbox field with a selected region', () => {
     const regionLabeledCheckboxField: FieldLabelDto = {
       ...checkboxField,
       blocks: [],
@@ -61,7 +61,7 @@ describe('fieldHasLabeledValue', () => {
     );
     expect(output).toBe(true);
   });
-  it('should return true for a field with a text override', () => {
+  it('should return true for a checkbox field with a text override', () => {
     const textOverrideCheckboxField: FieldLabelDto = {
       ...checkboxField,
       blocks: [],
@@ -72,7 +72,7 @@ describe('fieldHasLabeledValue', () => {
     );
     expect(output).toBe(true);
   });
-  it('should return false for an unlabeled field', () => {
+  it('should return false for an unlabeled checkbox field', () => {
     const unlabeledCheckboxField: FieldLabelDto = {
       ...checkboxField,
       blocks: [],
@@ -85,11 +85,11 @@ describe('fieldHasLabeledValue', () => {
     expect(output).toBe(false);
   });
   /** Signature Field Tests */
-  it('should return true for a field with a selected region', () => {
+  it('should return true for a signature field with a selected region', () => {
     const output = FieldsPanelUtils.fieldHasLabeledValue(signatureField);
     expect(output).toBe(true);
   });
-  it('should return true for a field with a text override', () => {
+  it('should return true for a signature field with a text override', () => {
     const textOverrideSignatureField: FieldLabelDto = {
       ...signatureField,
       region: undefined,
@@ -100,7 +100,7 @@ describe('fieldHasLabeledValue', () => {
     );
     expect(output).toBe(true);
   });
-  it('should return false for an unlabeled field', () => {
+  it('should return false for an signature unlabeled field', () => {
     const unlabeledSignatureField: FieldLabelDto = {
       ...signatureField,
       blocks: [],

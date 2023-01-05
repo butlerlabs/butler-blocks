@@ -56,7 +56,7 @@ const DocumentPanelInternal = withSize({
 
   return (
     <Box className={classes.Root}>
-      <Box className={classes.DocumentContainer}>
+      <Box className={classes.DocumentContainer} data-testid="document-labeler">
         <DocumentContainer className={classes.PreviewCard}>
           <DocumentBlockLayer
             docPageHeights={docDisplayerState.pageHeights}

@@ -120,7 +120,7 @@ describe('getRegionFromRectangle', () => {
     expect(convertedBbx).toMatchObject(page1BoundingBox);
   });
 
-  it('should correctly convert simple rectangles', () => {
+  it('should correctly convert backwards rectangles', () => {
     const convertedBbx = BlockUtils.getRegionFromRectangle(
       backwardsRectangle,
       mockWidth,
@@ -267,11 +267,11 @@ describe('getColoredBlockOpacity', () => {
 
   it("should return opacity 1 for cell block if it's active cell's block", () => {
     const selectedTableField = {
-      id: 'tableId',
+      id: 'table1',
       type: FieldType.Table,
       activeCell: {
-        rowId: 'rowId',
-        columnId: 'columnId',
+        rowId: 'row1',
+        columnId: 'col1',
       },
     };
     const opacity1 = BlockUtils.getColoredBlockOpacity(

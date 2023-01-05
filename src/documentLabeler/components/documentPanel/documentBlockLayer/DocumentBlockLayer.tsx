@@ -310,6 +310,7 @@ export const DocumentBlockLayer: React.FC<Props> = ({
       onMouseDown={handleOnMouseDown}
       onMouseMove={handleOnMouseMove}
       onMouseUp={handleOnMouseUp}
+      data-testid="document-block-layer"
     >
       <Box className={classes.EndUserBlockLayerRoot}>
         {coloredBlocksToDisplay.map((coloredBlock, index) => (
