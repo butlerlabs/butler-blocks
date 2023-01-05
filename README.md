@@ -1,4 +1,6 @@
 # Butler Blocks
+[![butler-blocks CI](https://github.com/butlerlabs/butler-blocks/actions/workflows/build_n_test.yml/badge.svg?branch=master&event=push)](https://github.com/butlerlabs/butler-blocks/actions/workflows/build_n_test.yml)
+
 <b>Butler Blocks is a JavaScript library that helps developers build incredible document processing and review experiences into their apps.</b>
 
 ![Butler Blocks gif](https://butler-public-assets.s3.amazonaws.com/butler_blocks.gif)
