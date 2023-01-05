@@ -156,6 +156,7 @@ export const FieldsPanelDisplayRow: React.FC<Props> = ({
         borderLeft: `4px solid ${color}`,
         backgroundColor: fieldIsActive ? alpha(color, 0.1) : 'transparent',
       }}
+      data-testid={`field-${name}`}
     >
       <Box className={classes.FieldInfoContainer}>
         {editingText ? (
@@ -163,6 +164,9 @@ export const FieldsPanelDisplayRow: React.FC<Props> = ({
             value={localValue}
             placeholder={EMPTY_VALUE}
             onChange={(e) => setLocalValue(e.target.value)}
+            inputProps={{
+              'data-testid': 'field-value-input',
+            }}
           />
         ) : (
           <>
@@ -198,6 +202,7 @@ export const FieldsPanelDisplayRow: React.FC<Props> = ({
                 event.stopPropagation();
                 handleSaveValue();
               }}
+              data-testid="save-field-value-btn"
             >
               {SAVE}
             </Button>
@@ -212,6 +217,7 @@ export const FieldsPanelDisplayRow: React.FC<Props> = ({
                   setLocalValue(value);
                   setEditingText(true);
                 }}
+                data-testid="edit-field-icon"
               >
                 <Create fontSize="small" />
               </IconButton>
@@ -223,6 +229,7 @@ export const FieldsPanelDisplayRow: React.FC<Props> = ({
                   event.stopPropagation();
                   handleClearLabels();
                 }}
+                data-testid="clear-field-label-icon"
               >
                 <Close fontSize="small" />
               </IconButton>

@@ -31,7 +31,7 @@ export const DocumentLabelerTableContainer: React.FC<Props> = ({
 
   return (
     <Slide direction="up" in>
-      <Card className={classes.Root} elevation={4}>
+      <Card className={classes.Root} elevation={4} data-testid="table-labeler">
         {children}
       </Card>
     </Slide>
