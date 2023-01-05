@@ -141,6 +141,7 @@ describe('getFilteredUnhighlightedBlocks', () => {
     );
     expect(displayBlocks).toMatchObject(wordBlocks);
   });
+
   it('should display no word blocks when selection type is region', () => {
     const displayBlocks = BlockUtils.getFilteredUnhighlightedBlocks(
       undefined,
@@ -150,6 +151,7 @@ describe('getFilteredUnhighlightedBlocks', () => {
     );
     expect(displayBlocks).toMatchObject([]);
   });
+
   it('should display no blocks with a signature field selected', () => {
     const selectedSignatureField: ActiveField = {
       id: 'signatureId',
@@ -163,6 +165,7 @@ describe('getFilteredUnhighlightedBlocks', () => {
     );
     expect(displayBlocks).toMatchObject([]);
   });
+
   it('should display only word blocks with a text field selected', () => {
     const selectedTextField: ActiveField = {
       id: 'textId',
@@ -179,6 +182,7 @@ describe('getFilteredUnhighlightedBlocks', () => {
     );
     expect(displayBlocks).toMatchObject(expectedBlocks);
   });
+
   it('should display only checkbox blocks with a checkbox field selected', () => {
     const selectedCheckboxField: ActiveField = {
       id: 'checkboxId',
@@ -195,6 +199,7 @@ describe('getFilteredUnhighlightedBlocks', () => {
     );
     expect(displayBlocks).toMatchObject(expectedBlocks);
   });
+
   it('should filter out blocks from an active text field', () => {
     const selectedTextField: ActiveField = {
       id: 'textId',
@@ -222,6 +227,7 @@ describe('getFilteredUnhighlightedBlocks', () => {
       .filter((block) => block.blockType !== BlockType.Checkbox);
     expect(displayBlocks).toMatchObject(expectedBlocks);
   });
+
   it('should filter out blocks from an active table field', () => {
     const selectedTableField: ActiveField = {
       id: 'tableId',
