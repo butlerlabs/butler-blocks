@@ -45,6 +45,7 @@ export const DeleteRowIconCell: React.FC<Props> = ({
           Disabled: disabled,
         })}
         disabled={disabled}
+        data-testid="delete-row-btn"
       >
         <DeleteOutlined className={classes.Icon} />
       </IconButton>

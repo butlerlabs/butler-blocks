@@ -92,13 +92,18 @@ export const DocumentLabelerTableHeader: React.FC = () => {
       </Box>
       <Box className={classes.Expanded} />
       {!displayOnly && (
-        <Button color="primary" onClick={handleAddRow}>
+        <Button
+          color="primary"
+          onClick={handleAddRow}
+          data-testid="add-row-btn"
+        >
           {ADD_ROW}
         </Button>
       )}
       <IconButton
         className={classes.IconButton}
         onClick={handleOnTableViewClose}
+        data-testid="close-table-btn"
       >
         <Close className={classes.Close} />
       </IconButton>
