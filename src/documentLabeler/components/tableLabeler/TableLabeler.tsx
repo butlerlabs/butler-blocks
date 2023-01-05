@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, TableHead, TableRow } from '@material-ui/core';
+import { Divider, TableBody, TableHead, TableRow } from '@material-ui/core';
 import { useDocumentLabeler } from 'documentLabeler/DocumentLabelerProvider';
 import { FieldType } from 'common/types/DocumentLabelerTypes';
 import { DocumentLabelerReducerUtils } from 'documentLabeler/state/DocumentLabelerReducerUtils';
@@ -167,7 +167,7 @@ export const TableLabeler: React.FC = () => {
         <TableHead>
           <TableRow>{columnHeaderDisplay}</TableRow>
         </TableHead>
-        {rowsToDisplay.length !== 0 && rowsToDisplay}
+        <TableBody>{rowsToDisplay.length !== 0 && rowsToDisplay}</TableBody>
         {rowsToDisplay.length === 0 && (
           <DataTableFtux
             ftuxText={GET_TABLE_FTUX_TEXT()}
