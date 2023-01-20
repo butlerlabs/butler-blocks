@@ -173,6 +173,24 @@ export type RemoveBlockFromFieldAction = {
   };
 };
 
+export type SetShowHidePdf = {
+  type: 'setShowHidePdf';
+  payload: boolean;
+};
+
+export type SetPdfScale = {
+  type: 'setPdfScale';
+  payload: number;
+};
+
+export type IncreasePdfScale = {
+  type: 'increasePdfScale';
+};
+
+export type DecreasePdfScale = {
+  type: 'decreasePdfScale';
+};
+
 const removeBlockFromTableCell = (
   state: DocumentLabelerInternalState,
   action: RemoveBlockFromFieldAction,

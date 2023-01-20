@@ -1,7 +1,8 @@
 import React from 'react';
-import { Box, Button, makeStyles, Theme, Typography } from '@material-ui/core';
+import { Box, Button, makeStyles, Theme } from '@material-ui/core';
 import { useDocumentLabeler } from 'documentLabeler/DocumentLabelerProvider';
 import { DocumentLabelerState } from 'documentLabeler/state/DocumentLabelerState';
+import { DocumentPanelToolbar } from 'documentLabeler/components/documentPanel/documentPanelToolbar/DocumentPanelToolbar';
 import { useBBConfiguration } from 'documentLabeler/context/BBConfigurationProvider';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -17,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const FIELDS = 'Fields';
+// const FIELDS = 'Fields';
 
 const SAVE = 'Save';
 
@@ -30,6 +31,7 @@ export const FieldsPanelHeader: React.FC = () => {
 
   const { saveActionButtonText, displayOnly, hideSaveButton, onSaveCallback } =
     useBBConfiguration();
+
   const { state } = useDocumentLabeler();
 
   const onSaveClick = () =>
@@ -41,7 +43,7 @@ export const FieldsPanelHeader: React.FC = () => {
 
   return (
     <Box className={classes.Root}>
-      <Typography variant="subtitle2">{FIELDS}</Typography>
+      <DocumentPanelToolbar />
       {shouldShowSaveButton && (
         <Button
           variant="contained"

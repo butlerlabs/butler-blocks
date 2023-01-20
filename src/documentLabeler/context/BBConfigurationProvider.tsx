@@ -10,6 +10,7 @@ export type BBConfigurations = {
   fieldDisplayNameFormatter?: (fieldName: string) => string;
   onLabelUpdate?: (docInfo: DocumentLabelerOutputDataDto) => void;
   onSaveCallback: (data: DocumentLabelerOutputDataDto) => void;
+  showToolbar?: boolean; // default = false
 };
 
 type Props = {

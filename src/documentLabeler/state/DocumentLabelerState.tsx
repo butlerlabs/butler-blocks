@@ -54,6 +54,8 @@ export type DocumentLabelerLocalState = {
   activeField?: ActiveField;
   selectionType: LabelingSelectionType;
   rootRef: HTMLDivElement | null;
+  showPdf: boolean;
+  pdfScale: number;
 };
 
 // Internal State, used to maintain local state within the Document Labeler
@@ -73,6 +75,8 @@ const generateInitialState = (
       activeField: undefined,
       selectionType: LabelingSelectionType.Block,
       rootRef: rootRef,
+      showPdf: true,
+      pdfScale: 0.9,
     },
   };
 };

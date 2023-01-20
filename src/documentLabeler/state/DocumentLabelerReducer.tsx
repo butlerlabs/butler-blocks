@@ -7,6 +7,10 @@ import {
   AddBlockToActiveFieldAction,
   BlockReducerUtils,
   RemoveBlockFromFieldAction,
+  SetShowHidePdf,
+  SetPdfScale,
+  IncreasePdfScale,
+  DecreasePdfScale,
 } from 'documentLabeler/state/BlockReducerUtils';
 import { DocumentLabelerInternalState } from 'documentLabeler/state/DocumentLabelerState';
 import {
@@ -33,7 +37,11 @@ type DocumentLabelerDispatchAction =
   | SetTextFieldOverrideAction
   | SetTableCellTextOverrideAction
   | AddRowToTableAction
-  | RemoveRowFromTableAction;
+  | RemoveRowFromTableAction
+  | SetShowHidePdf
+  | SetPdfScale
+  | IncreasePdfScale
+  | DecreasePdfScale;
 
 export type DocumentLabelerDispatch = (
   action: DocumentLabelerDispatchAction,
@@ -68,6 +76,52 @@ export const documentLabelerReducer = (
       return FieldReducerUtils.addRowToTable(state, action);
     case 'removeRowFromTable':
       return FieldReducerUtils.removeRowFromTable(state, action);
+    case 'setShowHidePdf':
+      return {
+        ...state,
+        localState: {
+          ...state.localState,
+          showPdf: action.payload,
+        },
+      };
+    case 'setPdfScale': {
+      return {
+        ...state,
+        localState: {
+          ...state.localState,
+          pdfScale: action.payload,
+        },
+      };
+    }
+    case 'increasePdfScale': {
+      const { pdfScale } = state.localState;
+      const newPdfScale = pdfScale + 0.1;
+      if (newPdfScale >= 2.1) {
+        return state;
+      }
+      return {
+        ...state,
+        localState: {
+          ...state.localState,
+          pdfScale: newPdfScale,
+        },
+      };
+    }
+
+    case 'decreasePdfScale': {
+      const { pdfScale } = state.localState;
+      const newPdfScale = pdfScale - 0.1;
+      if (newPdfScale <= 0.4) {
+        return state;
+      }
+      return {
+        ...state,
+        localState: {
+          ...state.localState,
+          pdfScale: newPdfScale,
+        },
+      };
+    }
     default:
       throw new TypesafeUnreachableError(action);
   }
