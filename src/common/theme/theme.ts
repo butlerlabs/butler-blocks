@@ -28,6 +28,16 @@ export const ButlerTheme = createTheme({
         backgroundColor: ButlerColorPalette.background.paper,
       },
     },
+    MuiOutlinedInput: {
+      input: {
+        padding: 0,
+        height: '100%',
+        border: 'none',
+      },
+      notchedOutline: {
+        border: 'none',
+      },
+    },
   },
   props: {
     MuiSvgIcon: {

@@ -161,6 +161,7 @@ export const FieldsPanelDisplayRow: React.FC<Props> = ({
       <Box className={classes.FieldInfoContainer}>
         {editingText ? (
           <OutlinedTextField
+            className="FieldsPanelDisplayRow__textField"
             value={localValue}
             placeholder={EMPTY_VALUE}
             onChange={(e) => setLocalValue(e.target.value)}
