@@ -58,6 +58,8 @@ const selectedState: DocumentLabelerInternalState = {
     },
     selectionType: LabelingSelectionType.Block,
     rootRef: null,
+    showPdf: false,
+    pdfScale: 1,
   },
 };
 

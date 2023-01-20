@@ -13,6 +13,7 @@ const useStyles = makeStyles(() => ({
     height: '100%',
     padding: 0,
     position: 'relative',
+    background: 'transparent',
   },
 }));
 

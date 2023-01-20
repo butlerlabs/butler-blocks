@@ -4,9 +4,9 @@ import { useDocumentLabeler } from 'documentLabeler/DocumentLabelerProvider';
 import { FieldsPanelDisplayRow } from 'documentLabeler/components/fieldsPanel/fieldsPanelDisplayRow/FieldsPanelDisplayRow';
 import { FieldType } from 'common/types/DocumentLabelerTypes';
 import { FieldsPanelUtils } from 'documentLabeler/components/fieldsPanel/util/FieldsPanelUtils';
-import { FieldsPanelHeader } from 'documentLabeler/components/fieldsPanel/fieldsPanelHeader/FieldsPanelHeader';
 import { DocumentLabelerReducerUtils } from 'documentLabeler/state/DocumentLabelerReducerUtils';
 import { FieldsPanelDisplayUtils } from 'documentLabeler/common/util/FieldsPanelDisplayUtils';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) => ({
   Root: {
@@ -41,9 +41,14 @@ export const FieldsPanel: React.FC = () => {
 
   return (
     <Box className={classes.Root}>
-      <FieldsPanelHeader />
+      {/* <FieldsPanelHeader /> */}
       <Divider />
-      <Box className={classes.FieldsContainer}>
+      <Box
+        className={clsx(
+          classes.FieldsContainer,
+          'FieldsPanel__fieldsContainer',
+        )}
+      >
         {fields.map((field) => (
           <Box key={field.info.id}>
             <FieldsPanelDisplayRow

@@ -74,6 +74,7 @@ export const useDocumentDisplayer = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onPdfDocumentLoadSuccess = (pdf: any): void => {
     const newPages = [];
+
     for (let pageIndex = 0; pageIndex < pdf.numPages; ++pageIndex) {
       // The onRenderSuccess prop is typed incorrectly for the react-pdf
       // Page component as a function with no arguments.

@@ -5,19 +5,27 @@ import { FieldsPanel } from 'documentLabeler/components/fieldsPanel/FieldsPanel'
 import { DocumentPanel } from 'documentLabeler/components/documentPanel/DocumentPanel';
 import { FieldType } from 'common/types/DocumentLabelerTypes';
 import { TableLabeler } from 'documentLabeler/components/tableLabeler/TableLabeler';
+import { FieldsPanelHeader } from 'documentLabeler/components/fieldsPanel/fieldsPanelHeader/FieldsPanelHeader';
+import clsx from 'clsx';
 
-const useStyles = makeStyles((theme: Theme) => ({
+import type { DocumentLabelerInternalState } from 'documentLabeler/state/DocumentLabelerState';
+
+const useStyles = makeStyles<Theme, DocumentLabelerInternalState>((theme) => ({
   Root: {
     backgroundColor: theme.palette.background.default,
-    display: 'flex',
-    flex: 1,
+    width: '100%',
+    overflow: 'auto',
   },
   FieldsPanelContainer: {
-    width: theme.spacing(45),
+    width: (props) => (props.localState.showPdf ? theme.spacing(45) : '100%'),
     display: 'flex',
   },
   DocumentDisplayerContainer: {
     flex: 1,
+    display: 'flex',
+    padding: theme.spacing(0, 2),
+  },
+  Content: {
     display: 'flex',
   },
 }));
@@ -29,22 +37,38 @@ const useStyles = makeStyles((theme: Theme) => ({
  * @param Props
  */
 export const DocumentLabelerContent: React.FC = () => {
-  const classes = useStyles();
-
   const { state } = useDocumentLabeler();
+  const classes = useStyles(state);
 
   return (
-    <Box className={classes.Root}>
-      <Box className={classes.DocumentDisplayerContainer}>
-        <DocumentPanel />
-      </Box>
-      <Box className={classes.FieldsPanelContainer}>
-        <FieldsPanel />
-      </Box>
-      {state.localState.activeField &&
-        state.localState.activeField.type === FieldType.Table && (
-          <TableLabeler />
+    <Box className={clsx(classes.Root, 'DocumentLabelerContent__root')}>
+      <FieldsPanelHeader />
+
+      <Box className={clsx(classes.Content, 'DocumentLabelerContent__content')}>
+        {state.localState.showPdf && (
+          <Box
+            className={clsx(
+              classes.DocumentDisplayerContainer,
+              'DocumentLabelerContent__documentDisplayerContainer',
+            )}
+          >
+            <DocumentPanel />
+          </Box>
         )}
+
+        <Box
+          className={clsx(
+            classes.FieldsPanelContainer,
+            'DocumentLabelerContent__fieldsPanelContainer',
+          )}
+        >
+          <FieldsPanel />
+        </Box>
+        {state.localState.activeField &&
+          state.localState.activeField.type === FieldType.Table && (
+            <TableLabeler />
+          )}
+      </Box>
     </Box>
   );
 };

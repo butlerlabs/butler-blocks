@@ -150,7 +150,7 @@ export const FieldsPanelDisplayRow: React.FC<Props> = ({
 
   return (
     <Box
-      className={classes.Root}
+      className={clsx(classes.Root, 'FieldsPanelDisplayRow__root')}
       onClick={handleFieldClick}
       style={{
         borderLeft: `4px solid ${color}`,
@@ -207,7 +207,12 @@ export const FieldsPanelDisplayRow: React.FC<Props> = ({
               {SAVE}
             </Button>
           ) : (
-            <Box className={classes.FieldActionContainer}>
+            <Box
+              className={clsx(
+                classes.FieldActionContainer,
+                'FieldsPanelDisplayRow__fieldActionContainer',
+              )}
+            >
               <IconButton
                 className={clsx(classes.IconButton, {
                   Hide: type === FieldType.Table,

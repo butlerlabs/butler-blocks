@@ -6,6 +6,7 @@ import { DocumentContainer } from 'documentLabeler/components/documentPanel/docu
 import { useDocumentLabeler } from 'documentLabeler/DocumentLabelerProvider';
 import { FieldType } from 'common/types/DocumentLabelerTypes';
 import { withSize, SizeMeProps } from 'react-sizeme';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) => ({
   Root: {
@@ -84,7 +85,7 @@ const useExternalStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     flex: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing(2),
+    // padding: theme.spacing(2),
     overflow: 'scroll',
     maxHeight: '100%',
   },
@@ -96,7 +97,7 @@ const useExternalStyles = makeStyles((theme: Theme) => ({
 export const DocumentPanel: React.FC = () => {
   const classes = useExternalStyles();
   return (
-    <Box className={classes.Root}>
+    <Box className={clsx(classes.Root, 'DocumentPanel__root')}>
       <DocumentPanelInternal />
     </Box>
   );
