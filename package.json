@@ -19,12 +19,16 @@
     "lint": "eslint src/'*/**/*.{js,ts,tsx}'",
     "lint:fix": "eslint src/'*/**/*.{js,ts,tsx}' --fix",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.js",
-    "clean": "shx rm -rf lib dist"
+    "clean": "shx rm -rf lib dist",
+    "prepare": "npm run build"
   },
   "author": "Butler Labs Inc.",
   "license": "MIT",
   "engines": {
     "npm": "^8.3.0"
+  },
+  "resolutions": {
+    "@types/react": "17.0.38"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
