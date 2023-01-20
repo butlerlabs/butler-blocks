@@ -23,5 +23,8 @@ export default {
 };
 
 export const Default = () => (
-  <DocumentLabeler data={MockDocumentLabelerData.documentLabelerData} />
+  <DocumentLabeler
+    data={MockDocumentLabelerData.documentLabelerData}
+    config={{ onSaveCallback: action('onSaveCallback') }}
+  />
 );

@@ -14,6 +14,7 @@ import {
   TableLabelOutputDto,
 } from 'common/types/DocumentLabelerTypes';
 import { FieldsPanelDisplayUtils } from 'documentLabeler/common/util/FieldsPanelDisplayUtils';
+import { BBConfigurations } from 'documentLabeler/context/BBConfigurationProvider';
 
 // Initial data passed in from external api calls to generate Internal State.
 export type DocumentLabelerData = {
@@ -66,16 +67,16 @@ export type DocumentLabelerInternalState = {
 
 /** Generates initial state from initializer data */
 const generateInitialState = (
-  data: DocumentLabelerData,
+  data: { data: DocumentLabelerData; config: BBConfigurations },
   rootRef: HTMLDivElement | null,
 ): DocumentLabelerInternalState => {
   return {
-    docInfo: data,
+    docInfo: data.data,
     localState: {
       activeField: undefined,
       selectionType: LabelingSelectionType.Block,
       rootRef: rootRef,
-      showPdf: true,
+      showPdf: data.config.toolbarProps?.showPdf || false,
       pdfScale: 0.9,
     },
   };

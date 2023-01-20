@@ -64,18 +64,20 @@ const useStyles = makeStyles((theme) => {
 
 function DocumentPanelToolbar() {
   const classes = useStyles();
-  const { showToolbar } = useBBConfiguration();
+  const { showToolbar, toolbarProps } = useBBConfiguration();
   const { state, dispatch } = useDocumentLabeler();
-  const { showPdf, pdfScale } = state.localState;
+  const { showPdf } = state.localState;
 
-  const handleChangeShowHidePdf = useCallback((_, checked: boolean) => {
-    dispatch({
-      type: 'setShowHidePdf',
-      payload: checked,
-    });
-  }, []);
-
-  console.log('pdfScale', pdfScale);
+  const handleChangeShowHidePdf = useCallback(
+    (_, checked: boolean) => {
+      dispatch({
+        type: 'setShowHidePdf',
+        payload: checked,
+      });
+      toolbarProps?.onToggleShowPdf && toolbarProps.onToggleShowPdf(checked);
+    },
+    [toolbarProps],
+  );
 
   // const handleIncreaseScale = useCallback(() => {
   //   dispatch({

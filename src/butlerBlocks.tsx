@@ -32,7 +32,7 @@ const createDocLabeler = (
   ReactDOM.render(
     <BBConfigurationProvider config={config}>
       <ButlerProvider>
-        <DocumentLabeler data={data} />
+        <DocumentLabeler data={data} config={config} />
       </ButlerProvider>
     </BBConfigurationProvider>,
     docLabelerContainer,

@@ -39,7 +39,12 @@ describe('DocumentLabeler', () => {
           onSaveCallback: jest.fn(),
         }}
       >
-        <DocumentLabeler data={MockDocumentLabelerData.documentLabelerData} />
+        <DocumentLabeler
+          data={MockDocumentLabelerData.documentLabelerData}
+          config={{
+            onSaveCallback: jest.fn(),
+          }}
+        />
       </BBConfigurationProvider>,
     );
 
@@ -70,7 +75,12 @@ describe('DocumentLabeler', () => {
           hideSaveButton: true,
         }}
       >
-        <DocumentLabeler data={MockDocumentLabelerData.documentLabelerData} />
+        <DocumentLabeler
+          data={MockDocumentLabelerData.documentLabelerData}
+          config={{
+            onSaveCallback: jest.fn(),
+          }}
+        />
       </BBConfigurationProvider>,
     );
 
@@ -85,7 +95,12 @@ describe('DocumentLabeler', () => {
           displayOnly: true,
         }}
       >
-        <DocumentLabeler data={MockDocumentLabelerData.documentLabelerData} />
+        <DocumentLabeler
+          data={MockDocumentLabelerData.documentLabelerData}
+          config={{
+            onSaveCallback: jest.fn(),
+          }}
+        />
       </BBConfigurationProvider>,
     );
 
@@ -103,7 +118,12 @@ describe('DocumentLabeler', () => {
             fieldName.toUpperCase(),
         }}
       >
-        <DocumentLabeler data={MockDocumentLabelerData.documentLabelerData} />
+        <DocumentLabeler
+          data={MockDocumentLabelerData.documentLabelerData}
+          config={{
+            onSaveCallback: jest.fn(),
+          }}
+        />
       </BBConfigurationProvider>,
     );
 
@@ -122,7 +142,12 @@ describe('DocumentLabeler', () => {
           onSaveCallback,
         }}
       >
-        <DocumentLabeler data={MockDocumentLabelerData.documentLabelerData} />
+        <DocumentLabeler
+          data={MockDocumentLabelerData.documentLabelerData}
+          config={{
+            onSaveCallback: jest.fn(),
+          }}
+        />
       </BBConfigurationProvider>,
     );
 
@@ -142,7 +167,12 @@ describe('DocumentLabeler', () => {
           onLabelUpdate,
         }}
       >
-        <DocumentLabeler data={MockDocumentLabelerData.documentLabelerData} />
+        <DocumentLabeler
+          data={MockDocumentLabelerData.documentLabelerData}
+          config={{
+            onSaveCallback: jest.fn(),
+          }}
+        />
       </BBConfigurationProvider>,
     );
 
@@ -169,7 +199,12 @@ describe('DocumentLabeler', () => {
           onSaveCallback: jest.fn(),
         }}
       >
-        <DocumentLabeler data={MockDocumentLabelerData.documentLabelerData} />
+        <DocumentLabeler
+          data={MockDocumentLabelerData.documentLabelerData}
+          config={{
+            onSaveCallback: jest.fn(),
+          }}
+        />
       </BBConfigurationProvider>,
     );
 
@@ -198,7 +233,12 @@ describe('DocumentLabeler', () => {
           onSaveCallback,
         }}
       >
-        <DocumentLabeler data={MockDocumentLabelerData.documentLabelerData} />
+        <DocumentLabeler
+          data={MockDocumentLabelerData.documentLabelerData}
+          config={{
+            onSaveCallback: jest.fn(),
+          }}
+        />
       </BBConfigurationProvider>,
     );
 
@@ -249,7 +289,12 @@ describe('DocumentLabeler', () => {
           onSaveCallback: jest.fn(),
         }}
       >
-        <DocumentLabeler data={MockDocumentLabelerData.documentLabelerData} />
+        <DocumentLabeler
+          data={MockDocumentLabelerData.documentLabelerData}
+          config={{
+            onSaveCallback: jest.fn(),
+          }}
+        />
       </BBConfigurationProvider>,
     );
 

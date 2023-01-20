@@ -29,7 +29,10 @@ export const MockDocumentLabelerProvider: React.FC<Props> = ({
     documentLabelerReducer,
     internalState === undefined
       ? DocumentLabelerState.generateInitialState(
-          MockDocumentLabelerData.documentLabelerData,
+          {
+            data: MockDocumentLabelerData.documentLabelerData,
+            config: {} as any,
+          },
           null,
         )
       : internalState,

@@ -9,6 +9,7 @@ import {
   DocumentLabelerState,
 } from 'documentLabeler/state/DocumentLabelerState';
 import { useBBConfiguration } from 'documentLabeler/context/BBConfigurationProvider';
+import { BBConfigurations } from 'documentLabeler/context/BBConfigurationProvider';
 
 export const DocumentLabelerStateContext =
   createContext<DocumentLabelerInternalState | null>(null);
@@ -17,7 +18,7 @@ export const DocumentLabelerDispatchContext =
   createContext<DocumentLabelerDispatch | null>(null);
 
 type Props = {
-  data: DocumentLabelerData;
+  data: { data: DocumentLabelerData; config: BBConfigurations };
   rootRef: HTMLDivElement | null;
   children: React.ReactNode;
 };

@@ -11,6 +11,10 @@ export type BBConfigurations = {
   onLabelUpdate?: (docInfo: DocumentLabelerOutputDataDto) => void;
   onSaveCallback: (data: DocumentLabelerOutputDataDto) => void;
   showToolbar?: boolean; // default = false
+  toolbarProps?: {
+    showPdf?: boolean;
+    onToggleShowPdf?: (nextValue: boolean) => void;
+  };
 };
 
 type Props = {
