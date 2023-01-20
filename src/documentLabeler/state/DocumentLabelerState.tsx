@@ -76,7 +76,7 @@ const generateInitialState = (
       activeField: undefined,
       selectionType: LabelingSelectionType.Block,
       rootRef: rootRef,
-      showPdf: data.config.toolbarProps?.showPdf || true,
+      showPdf: Boolean(data.config.toolbarProps?.showPdf),
       pdfScale: 0.9,
     },
   };
