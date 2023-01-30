@@ -29,7 +29,10 @@ export const DocumentLabeler: React.FC<Props> = ({ data, config }) => {
   const rootRef = useRef<HTMLDivElement | null>(null);
 
   return (
-    <DocumentLabelerProvider data={{ data, config }} rootRef={rootRef.current}>
+    <DocumentLabelerProvider
+      initialState={{ data, config }}
+      rootRef={rootRef.current}
+    >
       <div ref={rootRef} className={classes.Root}>
         <DocumentLabelerContent />
       </div>

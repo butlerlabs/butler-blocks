@@ -2,11 +2,18 @@ import { useCallback } from 'react';
 import { useDocumentLabeler } from 'documentLabeler/DocumentLabelerProvider';
 import { useBBConfiguration } from 'documentLabeler/context/BBConfigurationProvider';
 
-import { Box, makeStyles, FormControlLabel, Checkbox } from '@material-ui/core';
-// import {
-//   ArrowDropUp as ArrowDropUpIcon,
-//   ArrowDropDown as ArrowDropDownIcon,
-// } from '@material-ui/icons';
+import {
+  Box,
+  makeStyles,
+  FormControlLabel,
+  Checkbox,
+  Button,
+  ButtonGroup,
+} from '@material-ui/core';
+import {
+  ArrowDropUp as ArrowDropUpIcon,
+  ArrowDropDown as ArrowDropDownIcon,
+} from '@material-ui/icons';
 
 import clsx from 'clsx';
 
@@ -25,29 +32,30 @@ const useStyles = makeStyles((theme) => {
     ZoomTitle: {
       marginTop: theme.spacing(0.5),
     },
-    ZoomButtons: {
-      '& .DocumentPanelToolbar__zoomButton': {
+    ZoomButtonsContainer: {},
+    ZoomButton: {
+      padding: 0,
+      display: 'block',
+      height: theme.spacing(2),
+      minWidth: 35,
+      border: 'none',
+      '&:hover': {
+        background: 'transparent',
+        border: 'none',
+      },
+      '&:ntn-child(2)': {
+        marginBottom: theme.spacing(0.5),
+      },
+      '& .DocumentPanelToolbar__zoomIcon': {
+        cursor: 'pointer',
+        color: theme.palette.common.black,
         padding: 0,
-        display: 'block',
-        height: theme.spacing(2),
-        minWidth: 35,
-        '&:hover': {
-          background: 'transparent',
-        },
-        '&:ntn-child(2)': {
-          marginBottom: theme.spacing(0.5),
-        },
-        '& .DocumentPanelToolbar__zoomIcon': {
-          cursor: 'pointer',
-          color: theme.palette.common.black,
-          padding: 0,
-        },
+      },
 
-        '&.disabled': {
-          opacity: 0.5,
-          userSelect: 'none',
-          pointerEvents: 'none',
-        },
+      '&.disabled': {
+        opacity: 0.5,
+        userSelect: 'none',
+        pointerEvents: 'none',
       },
     },
     ShowHidePdf: {
@@ -66,7 +74,7 @@ function DocumentPanelToolbar() {
   const classes = useStyles();
   const { showToolbar, toolbarProps } = useBBConfiguration();
   const { state, dispatch } = useDocumentLabeler();
-  const { showPdf } = state.localState;
+  const { showPdf, pdfScale } = state.localState;
 
   const handleChangeShowHidePdf = useCallback(
     (_, checked: boolean) => {
@@ -79,22 +87,29 @@ function DocumentPanelToolbar() {
     [toolbarProps],
   );
 
-  // const handleIncreaseScale = useCallback(() => {
-  //   dispatch({
-  //     type: 'increasePdfScale',
-  //   });
-  // }, []);
+  const handleIncreaseScale = useCallback((event) => {
+    event.stopPropagation();
+    dispatch({
+      type: 'increasePdfScale',
+    });
+  }, []);
 
-  // const handleDecreaseScale = useCallback(() => {
-  //   dispatch({
-  //     type: 'decreasePdfScale',
-  //   });
-  // }, []);
+  const handleDecreaseScale = useCallback((event) => {
+    event.stopPropagation();
+    dispatch({
+      type: 'decreasePdfScale',
+    });
+  }, []);
+
+  console.log(
+    'parseFloat(pdfScale.toFixed(1))',
+    parseFloat(pdfScale.toFixed(1)),
+  );
 
   if (showToolbar) {
     return (
       <Box className={clsx(classes.Root, 'DocumentPanelToolbar__root')}>
-        {/* <Box
+        <Box
           className={clsx(
             classes.ZoomContainer,
             'DocumentPanelToolbar__zoomContainer',
@@ -103,34 +118,39 @@ function DocumentPanelToolbar() {
           <span className={classes.ZoomTitle}>Zoom: </span>
           <Box
             className={clsx(
-              classes.ZoomButtons,
+              classes.ZoomButtonsContainer,
               'DocumentPanelToolbar__zoomButtons',
             )}
           >
-            <Tooltip title="Zoom in" placement="top">
+            <ButtonGroup
+              orientation="vertical"
+              color="primary"
+              disableRipple
+              aria-label="vertical outlined primary button group"
+            >
               <Button
                 disableRipple
+                className={clsx(
+                  'DocumentPanelToolbar__zoomButton',
+                  classes.ZoomButton,
+                )}
                 onClick={handleIncreaseScale}
-                className={clsx('DocumentPanelToolbar__zoomButton', {
-                  disabled: pdfScale >= 2,
-                })}
               >
                 <ArrowDropUpIcon className="DocumentPanelToolbar__zoomIcon DocumentPanelToolbar__zoomUpIcon" />
               </Button>
-            </Tooltip>
-            <Tooltip title="Zoom out" placement="bottom">
               <Button
                 disableRipple
                 onClick={handleDecreaseScale}
-                className={clsx('DocumentPanelToolbar__zoomButton', {
-                  disabled: pdfScale <= 0.3,
-                })}
+                className={clsx(
+                  'DocumentPanelToolbar__zoomButton',
+                  classes.ZoomButton,
+                )}
               >
                 <ArrowDropDownIcon className="DocumentPanelToolbar__zoomIcon DocumentPanelToolbar__zoomDownIcon" />
               </Button>
-            </Tooltip>
+            </ButtonGroup>
           </Box>
-        </Box> */}
+        </Box>
         <Box>
           <FormControlLabel
             className={classes.ShowHidePdf}

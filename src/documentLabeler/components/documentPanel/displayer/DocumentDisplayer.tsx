@@ -5,13 +5,14 @@ import { Document } from 'react-pdf';
 import { Box, makeStyles } from '@material-ui/core';
 import { MimeType } from 'common/types/DocumentLabelerTypes';
 
+import type { PDFDocumentProxy } from 'pdfjs-dist/types/src/display/api';
+
 // State Properties
 type Props = {
   document: string;
-  pages: Array<JSX.Element>;
+  pages: JSX.Element[];
   loaders: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    onPdfDocumentLoadSuccess: (pdf: any) => void;
+    onPdfDocumentLoadSuccess: (pdf: PDFDocumentProxy) => void;
     onImgDocumentLoadSuccess: (pageHeight: number) => void;
   };
   width: number;

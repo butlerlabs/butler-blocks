@@ -18,7 +18,7 @@ export const DocumentLabelerDispatchContext =
   createContext<DocumentLabelerDispatch | null>(null);
 
 type Props = {
-  data: { data: DocumentLabelerData; config: BBConfigurations };
+  initialState: { data: DocumentLabelerData; config: BBConfigurations };
   rootRef: HTMLDivElement | null;
   children: React.ReactNode;
 };
@@ -30,14 +30,14 @@ type Props = {
  * Action reducer is handled in DocumentLabelerReducer.tsx
  */
 export const DocumentLabelerProvider: React.FC<Props> = ({
-  data,
+  initialState,
   rootRef,
   children,
 }) => {
   const { onLabelUpdate } = useBBConfiguration();
   const [state, dispatch] = useReducer(
     documentLabelerReducer,
-    DocumentLabelerState.generateInitialState(data, rootRef),
+    DocumentLabelerState.generateInitialState(initialState, rootRef),
   );
 
   useEffect(() => {

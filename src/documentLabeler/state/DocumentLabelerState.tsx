@@ -67,17 +67,22 @@ export type DocumentLabelerInternalState = {
 
 /** Generates initial state from initializer data */
 const generateInitialState = (
-  data: { data: DocumentLabelerData; config: BBConfigurations },
+  initialState: { data: DocumentLabelerData; config: BBConfigurations },
   rootRef: HTMLDivElement | null,
 ): DocumentLabelerInternalState => {
+  let showPdf = true;
+  if (typeof initialState.config?.toolbarProps?.showPdf === 'boolean') {
+    showPdf = initialState.config.toolbarProps?.showPdf;
+  }
+
   return {
-    docInfo: data.data,
+    docInfo: initialState.data,
     localState: {
       activeField: undefined,
       selectionType: LabelingSelectionType.Block,
       rootRef: rootRef,
-      showPdf: Boolean(data.config.toolbarProps?.showPdf),
-      pdfScale: 0.9,
+      showPdf,
+      pdfScale: 1,
     },
   };
 };

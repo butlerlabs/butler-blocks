@@ -1,6 +1,9 @@
 import { MimeType } from 'common/types/DocumentLabelerTypes';
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback, useMemo } from 'react';
 import { Page, pdfjs } from 'react-pdf';
+import { useDocumentLabeler } from 'documentLabeler/DocumentLabelerProvider';
+
+import type { PDFDocumentProxy } from 'pdfjs-dist/types/src/display/api';
 
 // Serve pdf worker from CDN because the CRA build
 // does not work properly for this dependency.
@@ -49,33 +52,38 @@ export const useDocumentDisplayer = (
   // State for PDF rendering
   // - pages: array of Page components for the PDF
   // - renderedHeights: map of page index to rendered height
-  const [pages, setPages] = React.useState<Array<JSX.Element>>([]);
-  const [renderedHeights, setRenderedHeights] = React.useState<Array<number>>(
-    [],
-  );
+  const [numPages, setNumPages] = React.useState(0);
+  const [renderedHeights, setRenderedHeights] = React.useState<number[]>([]);
+
+  const { state } = useDocumentLabeler();
 
   // When a new document is loaded, we clear out the existing pages and page heights
   // To ensure that the newly rendered pages generate correctly
   useEffect(() => {
-    setPages([]);
     setRenderedHeights([]);
   }, [docUri]);
 
   // Get heights for each page
   // - PDF: then convert renderedHeights map to an array
   // - image: assume single page with component height
-  const pageHeights: Array<number> = isPdf
-    ? renderedHeights
-    : [renderedImgHeight];
+  const pageHeights = isPdf ? renderedHeights : [renderedImgHeight];
 
   // When the document data is successfully loaded
   // - render a Page component for each page of fixed width
   // - on render success save the rendered height
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onPdfDocumentLoadSuccess = (pdf: any): void => {
-    const newPages = [];
 
-    for (let pageIndex = 0; pageIndex < pdf.numPages; ++pageIndex) {
+  const onPdfDocumentLoadSuccess = useCallback((pdf: PDFDocumentProxy) => {
+    setNumPages(pdf.numPages);
+  }, []);
+
+  const pages = useMemo(() => {
+    if (numPages === 0) {
+      return [];
+    }
+
+    const newPages: JSX.Element[] = [];
+
+    for (let pageIndex = 0; pageIndex < numPages; ++pageIndex) {
       // The onRenderSuccess prop is typed incorrectly for the react-pdf
       // Page component as a function with no arguments.
       //
@@ -126,6 +134,7 @@ export const useDocumentDisplayer = (
       };
       newPages.push(
         <Page
+          scale={state.localState.pdfScale}
           key={pageIndex}
           pageIndex={pageIndex}
           width={size.width}
@@ -134,8 +143,9 @@ export const useDocumentDisplayer = (
         />,
       );
     }
-    setPages(newPages);
-  };
+
+    return newPages;
+  }, [numPages, docUri, state.localState.pdfScale]);
 
   // When the image is rendered successfully, render the height
   // so that the blocks are rendered correctly
