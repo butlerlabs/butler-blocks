@@ -15,6 +15,7 @@ import {
 } from 'common/types/DocumentLabelerTypes';
 import { FieldsPanelDisplayUtils } from 'documentLabeler/common/util/FieldsPanelDisplayUtils';
 import { BBConfigurations } from 'documentLabeler/context/BBConfigurationProvider';
+import { ZOOM_VALUES } from 'documentLabeler/constants/DocumentLabelerConstants';
 
 // Initial data passed in from external api calls to generate Internal State.
 export type DocumentLabelerData = {
@@ -57,6 +58,8 @@ export type DocumentLabelerLocalState = {
   rootRef: HTMLDivElement | null;
   showPdf: boolean;
   pdfScale: number;
+  zoomMaxScale: number;
+  zoomMinScale: number;
 };
 
 // Internal State, used to maintain local state within the Document Labeler
@@ -71,8 +74,18 @@ const generateInitialState = (
   rootRef: HTMLDivElement | null,
 ): DocumentLabelerInternalState => {
   let showPdf = true;
+  let zoomMaxScale = ZOOM_VALUES.max;
+  let zoomMinScale = ZOOM_VALUES.min;
   if (typeof initialState.config?.toolbarProps?.showPdf === 'boolean') {
     showPdf = initialState.config.toolbarProps?.showPdf;
+  }
+
+  if (typeof initialState.config?.toolbarProps?.zoomMaxScale === 'number') {
+    zoomMaxScale = initialState.config.toolbarProps?.zoomMaxScale;
+  }
+
+  if (typeof initialState.config?.toolbarProps?.zoomMinScale === 'number') {
+    zoomMinScale = initialState.config.toolbarProps?.zoomMinScale;
   }
 
   return {
@@ -83,6 +96,8 @@ const generateInitialState = (
       rootRef: rootRef,
       showPdf,
       pdfScale: 1,
+      zoomMaxScale,
+      zoomMinScale,
     },
   };
 };

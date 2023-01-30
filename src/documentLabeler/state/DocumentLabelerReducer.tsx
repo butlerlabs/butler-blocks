@@ -27,8 +27,6 @@ import {
   RegionReducerUtils,
 } from 'documentLabeler/state/RegionReducerUtils';
 
-import { ZOOM_VALUES } from 'documentLabeler/constants/DocumentLabelerConstants';
-
 type DocumentLabelerDispatchAction =
   | SetActiveFieldAction
   | AddBlockToActiveFieldAction
@@ -96,9 +94,10 @@ export const documentLabelerReducer = (
       };
     }
     case 'increasePdfScale': {
-      const { pdfScale } = state.localState;
+      const { pdfScale, zoomMaxScale } = state.localState;
       const newPdfScale = pdfScale + 0.1;
-      if (newPdfScale >= ZOOM_VALUES.max) {
+
+      if (newPdfScale >= zoomMaxScale) {
         return state;
       }
       return {
@@ -111,9 +110,9 @@ export const documentLabelerReducer = (
     }
 
     case 'decreasePdfScale': {
-      const { pdfScale } = state.localState;
+      const { pdfScale, zoomMinScale } = state.localState;
       const newPdfScale = pdfScale - 0.1;
-      if (newPdfScale <= ZOOM_VALUES.min) {
+      if (newPdfScale <= zoomMinScale) {
         return state;
       }
       return {

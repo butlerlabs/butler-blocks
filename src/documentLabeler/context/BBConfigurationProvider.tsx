@@ -14,6 +14,8 @@ export type BBConfigurations = {
   toolbarProps?: {
     showPdf?: boolean;
     onToggleShowPdf?: (nextValue: boolean) => void;
+    zoomMaxScale?: number;
+    zoomMinScale?: number;
   };
 };
 

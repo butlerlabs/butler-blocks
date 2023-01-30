@@ -8,6 +8,6 @@ export const DocumentLabelerConstants = {
 };
 
 export const ZOOM_VALUES = {
-  min: 0.6,
-  max: 1.6,
+  min: 0.7,
+  max: 2.1,
 };

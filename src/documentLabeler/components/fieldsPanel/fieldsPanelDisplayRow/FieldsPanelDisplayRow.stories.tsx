@@ -60,6 +60,8 @@ const selectedState: DocumentLabelerInternalState = {
     rootRef: null,
     showPdf: false,
     pdfScale: 1,
+    zoomMaxScale: 2,
+    zoomMinScale: 0.6,
   },
 };
 
