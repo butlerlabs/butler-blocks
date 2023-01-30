@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => {
     ZoomContainer: {
       display: 'flex',
       alignItems: 'center',
+      fontSize: 16,
     },
     ZoomTitle: {
       marginTop: theme.spacing(0.5),
@@ -67,6 +68,7 @@ const useStyles = makeStyles((theme) => {
       lineHeight: 'initial',
       letterSpacing: 0,
     },
+    ZoomIcon: {},
   };
 });
 
@@ -136,7 +138,12 @@ function DocumentPanelToolbar() {
                 )}
                 onClick={handleIncreaseScale}
               >
-                <ArrowDropUpIcon className="DocumentPanelToolbar__zoomIcon DocumentPanelToolbar__zoomUpIcon" />
+                <ArrowDropUpIcon
+                  className={clsx(
+                    classes.ZoomIcon,
+                    'DocumentPanelToolbar__zoomIcon DocumentPanelToolbar__zoomUpIcon',
+                  )}
+                />
               </Button>
               <Button
                 disableRipple
@@ -146,7 +153,12 @@ function DocumentPanelToolbar() {
                   classes.ZoomButton,
                 )}
               >
-                <ArrowDropDownIcon className="DocumentPanelToolbar__zoomIcon DocumentPanelToolbar__zoomDownIcon" />
+                <ArrowDropDownIcon
+                  className={clsx(
+                    classes.ZoomIcon,
+                    'DocumentPanelToolbar__zoomIcon DocumentPanelToolbar__zoomDownIcon',
+                  )}
+                />
               </Button>
             </ButtonGroup>
           </Box>
