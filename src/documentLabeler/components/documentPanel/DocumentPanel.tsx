@@ -44,6 +44,8 @@ const DocumentPanelInternal = withSize({
 })(({ size }: Props) => {
   const classes = useStyles();
 
+  console.log('size', size);
+
   const { state } = useDocumentLabeler();
 
   const width = size?.width ?? 0;
@@ -85,7 +87,6 @@ const useExternalStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     flex: 1,
     backgroundColor: theme.palette.background.default,
-    // padding: theme.spacing(2),
     overflow: 'scroll',
     maxHeight: '100%',
   },

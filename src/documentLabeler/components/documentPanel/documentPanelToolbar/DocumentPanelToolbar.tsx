@@ -76,7 +76,7 @@ function DocumentPanelToolbar() {
   const classes = useStyles();
   const { showToolbar, toolbarProps } = useBBConfiguration();
   const { state, dispatch } = useDocumentLabeler();
-  const { showPdf, pdfScale } = state.localState;
+  const { showPdf } = state.localState;
 
   const handleChangeShowHidePdf = useCallback(
     (_, checked: boolean) => {
@@ -102,11 +102,6 @@ function DocumentPanelToolbar() {
       type: 'decreasePdfScale',
     });
   }, []);
-
-  console.log(
-    'parseFloat(pdfScale.toFixed(1))',
-    parseFloat(pdfScale.toFixed(1)),
-  );
 
   if (showToolbar) {
     return (
