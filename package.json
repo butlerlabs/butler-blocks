@@ -20,7 +20,7 @@
     "lint:fix": "eslint src/'*/**/*.{js,ts,tsx}' --fix",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.js",
     "clean": "shx rm -rf lib dist",
-    "prepare": "yarn"
+    "prepare": "npm run "
   },
   "author": "Butler Labs Inc.",
   "license": "MIT",
@@ -87,14 +87,15 @@
     "@react-pdf/renderer": "^2.3.0",
     "axios": "^0.27.2",
     "clsx": "^1.2.1",
+    "npm": "^9.4.0",
     "pluralize": "^8.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-pdf": "^5.7.2",
     "react-sizeme": "^3.0.2",
     "typeface-poppins": "^1.1.13",
-    "yarn": "^1.22.19",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "yarn": "^1.22.19"
   },
   "overrides": {
     "remark-parse": {
