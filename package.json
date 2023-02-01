@@ -19,8 +19,7 @@
     "lint": "eslint src/'*/**/*.{js,ts,tsx}'",
     "lint:fix": "eslint src/'*/**/*.{js,ts,tsx}' --fix",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.js",
-    "clean": "shx rm -rf lib dist",
-    "prepare": "npm run build"
+    "clean": "shx rm -rf lib dist"
   },
   "author": "Butler Labs Inc.",
   "license": "MIT",
@@ -87,7 +86,7 @@
     "@react-pdf/renderer": "^2.3.0",
     "axios": "^0.27.2",
     "clsx": "^1.2.1",
-    "npm": "^9.4.0",
+    "npm": "^8.3.0",
     "pluralize": "^8.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
