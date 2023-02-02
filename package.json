@@ -20,7 +20,8 @@
     "lint:fix": "eslint src/'*/**/*.{js,ts,tsx}' --fix",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.js",
     "clean": "shx rm -rf lib dist",
-    "preinstall": "npm install  --legacy-peer-deps --package-lock-only --ignore-scripts && npx npm-force-resolutions"
+    "preinstall": "npm install  --legacy-peer-deps --package-lock-only --ignore-scripts && npx npm-force-resolutions",
+    "prepare": ""
   },
   "author": "Butler Labs Inc.",
   "license": "MIT",
