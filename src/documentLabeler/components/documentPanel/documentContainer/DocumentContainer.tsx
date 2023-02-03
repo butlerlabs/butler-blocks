@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { Card, makeStyles } from '@material-ui/core';
+import { Box, Card, makeStyles } from '@material-ui/core';
 
 type Props = {
   children: React.ReactNode;
@@ -26,11 +26,8 @@ export const DocumentContainer: React.FC<Props> = ({ children, className }) => {
   const classes = useStyles();
 
   return (
-    <Card
-      className={clsx(classes.PreviewPaneContainer, className)}
-      elevation={1}
-    >
+    <Box className={clsx(classes.PreviewPaneContainer, className)}>
       {children}
-    </Card>
+    </Box>
   );
 };

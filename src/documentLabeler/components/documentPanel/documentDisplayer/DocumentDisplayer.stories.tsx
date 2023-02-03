@@ -1,8 +1,8 @@
 import React from 'react';
 import { withSize, SizeMeProps } from 'react-sizeme';
 import { MimeType } from 'common/types/DocumentLabelerTypes';
-import { useDocumentDisplayer } from 'documentLabeler/components/documentPanel/displayer/useDocumentDisplayer';
-import { DocumentDisplayer } from 'documentLabeler/components/documentPanel/displayer/DocumentDisplayer';
+import { useDocumentDisplayer } from 'documentLabeler/components/documentPanel/documentDisplayer/useDocumentDisplayer';
+import { DocumentDisplayer } from 'documentLabeler/components/documentPanel/documentDisplayer/DocumentDisplayer';
 import { MockDocumentLabelerData } from 'documentLabeler/MockDocumentLabelerData.stories';
 import { DocumentContainer } from 'documentLabeler/components/documentPanel/documentContainer/DocumentContainer';
 
@@ -34,8 +34,8 @@ const TestDocumentDisplayerBase: React.FC<Props> = ({
   return (
     <DocumentContainer>
       <DocumentDisplayer
-        mimeType={mimeType}
-        width={width}
+        // mimeType={mimeType}
+        // width={width}
         document={document}
         loaders={loaders}
         pages={pages}
