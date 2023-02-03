@@ -5,7 +5,6 @@ import { FieldsPanel } from 'documentLabeler/components/fieldsPanel/FieldsPanel'
 import { DocumentPanel } from 'documentLabeler/components/documentPanel/DocumentPanel';
 import { FieldType } from 'common/types/DocumentLabelerTypes';
 import { TableLabeler } from 'documentLabeler/components/tableLabeler/TableLabeler';
-import { FieldsPanelHeader } from 'documentLabeler/components/fieldsPanel/fieldsPanelHeader/FieldsPanelHeader';
 import clsx from 'clsx';
 
 import type { DocumentLabelerInternalState } from 'documentLabeler/state/DocumentLabelerState';
@@ -17,7 +16,8 @@ const useStyles = makeStyles<Theme, DocumentLabelerInternalState>((theme) => ({
     overflow: 'auto',
   },
   FieldsPanelContainer: {
-    width: (props) => (props.localState.showPdf ? theme.spacing(45) : '100%'),
+    width: ({ localState }) =>
+      localState.showPdf ? theme.spacing(45) : '100%',
     display: 'flex',
   },
   DocumentDisplayerContainer: {
@@ -42,8 +42,6 @@ export const DocumentLabelerContent: React.FC = () => {
 
   return (
     <Box className={clsx(classes.Root, 'DocumentLabelerContent__root')}>
-      <FieldsPanelHeader />
-
       <Box className={clsx(classes.Content, 'DocumentLabelerContent__content')}>
         {state.localState.showPdf && (
           <Box

@@ -1,12 +1,19 @@
+import { useRef, useCallback } from 'react';
+import { useDocumentDisplayer } from 'documentLabeler/components/documentPanel/documentDisplayer/useDocumentDisplayer';
+import { useDocumentLabeler } from 'documentLabeler/DocumentLabelerProvider';
+
 import { Box, makeStyles, Theme } from '@material-ui/core';
-import { DocumentDisplayer } from 'documentLabeler/components/documentPanel/displayer/DocumentDisplayer';
-import { useDocumentDisplayer } from 'documentLabeler/components/documentPanel/displayer/useDocumentDisplayer';
+import { DocumentDisplayer } from 'documentLabeler/components/documentPanel/documentDisplayer/DocumentDisplayer';
+
 import { DocumentBlockLayer } from 'documentLabeler/components/documentPanel/documentBlockLayer/DocumentBlockLayer';
 import { DocumentContainer } from 'documentLabeler/components/documentPanel/documentContainer/DocumentContainer';
-import { useDocumentLabeler } from 'documentLabeler/DocumentLabelerProvider';
+import { DocumentPanelToolbar } from 'documentLabeler/components/documentPanel/documentPanelToolbar/DocumentPanelToolbar';
+import { DocumentImageDisplayer } from 'documentLabeler/components/documentPanel/documentImageDisplayer/DocumentImageDisplayer';
+
 import { FieldType } from 'common/types/DocumentLabelerTypes';
 import { withSize, SizeMeProps } from 'react-sizeme';
 import clsx from 'clsx';
+import { MimeType } from 'common/types/DocumentLabelerTypes';
 
 const useStyles = makeStyles((theme: Theme) => ({
   Root: {
@@ -55,21 +62,31 @@ const DocumentPanelInternal = withSize({
     state.docInfo.tempDocUrl,
   );
 
+  const isPdf = state.docInfo.mimeType === MimeType.Pdf;
+
   return (
     <Box className={classes.Root}>
+      <DocumentPanelToolbar />
+
       <Box className={classes.DocumentContainer} data-testid="document-labeler">
         <DocumentContainer className={classes.PreviewCard}>
           <DocumentBlockLayer
             docPageHeights={docDisplayerState.pageHeights}
             width={width}
           />
-          <DocumentDisplayer
-            mimeType={state.docInfo.mimeType}
-            width={width}
-            document={state.docInfo.tempDocUrl}
-            loaders={docDisplayerState.loaders}
-            pages={docDisplayerState.pages}
-          />
+          {isPdf && (
+            <DocumentDisplayer
+              document={state.docInfo.tempDocUrl}
+              loaders={docDisplayerState.loaders}
+              pages={docDisplayerState.pages}
+            />
+          )}
+          {!isPdf && (
+            <DocumentImageDisplayer
+              document={state.docInfo.tempDocUrl}
+              width={width}
+            />
+          )}
         </DocumentContainer>
         {state.localState.activeField &&
           state.localState.activeField.type === FieldType.Table && (
@@ -85,7 +102,6 @@ const useExternalStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     flex: 1,
     backgroundColor: theme.palette.background.default,
-    // padding: theme.spacing(2),
     overflow: 'scroll',
     maxHeight: '100%',
   },

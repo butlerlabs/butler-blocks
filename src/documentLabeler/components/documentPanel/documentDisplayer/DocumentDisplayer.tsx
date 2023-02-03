@@ -3,7 +3,6 @@ import React from 'react';
 import { Document } from 'react-pdf';
 
 import { Box, makeStyles } from '@material-ui/core';
-import { MimeType } from 'common/types/DocumentLabelerTypes';
 
 // State Properties
 type Props = {
@@ -12,10 +11,7 @@ type Props = {
   loaders: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onPdfDocumentLoadSuccess: (pdf: any) => void;
-    onImgDocumentLoadSuccess: (pageHeight: number) => void;
   };
-  width: number;
-  mimeType: string;
 };
 
 const useStyles = makeStyles(() => ({
@@ -42,18 +38,10 @@ export const DocumentDisplayer: React.FC<Props> = ({
   document,
   loaders,
   pages,
-  mimeType,
-  width,
 }) => {
-  const isPdf = mimeType === MimeType.Pdf;
   const classes = useStyles();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onImgLoad = (event: any) => {
-    loaders.onImgDocumentLoadSuccess(event.target.offsetHeight);
-  };
-
-  return isPdf ? (
+  return (
     <Box className={classes.DocumentContainer}>
       <Document
         file={document}
@@ -62,13 +50,5 @@ export const DocumentDisplayer: React.FC<Props> = ({
         {pages}
       </Document>
     </Box>
-  ) : (
-    <img
-      className={classes.ImageView}
-      onLoad={onImgLoad}
-      width={width}
-      alt="Document"
-      src={document}
-    />
   );
 };

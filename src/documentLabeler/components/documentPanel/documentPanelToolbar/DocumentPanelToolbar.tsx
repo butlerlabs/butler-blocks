@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useDocumentLabeler } from 'documentLabeler/DocumentLabelerProvider';
 import { useBBConfiguration } from 'documentLabeler/context/BBConfigurationProvider';
 
@@ -16,6 +16,11 @@ import {
 } from '@material-ui/icons';
 
 import clsx from 'clsx';
+
+type Props = {
+  onZoomIn?: (event: React.MouseEventHandler<HTMLButtonElement>) => void;
+  onZoomOut?: (event: React.MouseEventHandler<HTMLButtonElement>) => void;
+};
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -72,11 +77,13 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-function DocumentPanelToolbar() {
+const DocumentPanelToolbar: React.FC<Props> = (props) => {
+  const { onZoomIn, onZoomOut } = props;
+
   const classes = useStyles();
   const { showToolbar, toolbarProps } = useBBConfiguration();
   const { state, dispatch } = useDocumentLabeler();
-  const { showPdf, pdfScale } = state.localState;
+  const { showPdf } = state.localState;
 
   const handleChangeShowHidePdf = useCallback(
     (_, checked: boolean) => {
@@ -94,6 +101,7 @@ function DocumentPanelToolbar() {
     dispatch({
       type: 'increasePdfScale',
     });
+    onZoomIn && onZoomIn(event);
   }, []);
 
   const handleDecreaseScale = useCallback((event) => {
@@ -101,68 +109,66 @@ function DocumentPanelToolbar() {
     dispatch({
       type: 'decreasePdfScale',
     });
+    onZoomOut && onZoomOut(event);
   }, []);
-
-  console.log(
-    'parseFloat(pdfScale.toFixed(1))',
-    parseFloat(pdfScale.toFixed(1)),
-  );
 
   if (showToolbar) {
     return (
       <Box className={clsx(classes.Root, 'DocumentPanelToolbar__root')}>
-        <Box
-          className={clsx(
-            classes.ZoomContainer,
-            'DocumentPanelToolbar__zoomContainer',
-          )}
-        >
-          <span className={classes.ZoomTitle}>Zoom: </span>
+        {showPdf && (
           <Box
             className={clsx(
-              classes.ZoomButtonsContainer,
-              'DocumentPanelToolbar__zoomButtons',
+              classes.ZoomContainer,
+              'DocumentPanelToolbar__zoomContainer',
             )}
           >
-            <ButtonGroup
-              orientation="vertical"
-              color="primary"
-              disableRipple
-              aria-label="vertical outlined primary button group"
+            <span className={classes.ZoomTitle}>Zoom: </span>
+            <Box
+              className={clsx(
+                classes.ZoomButtonsContainer,
+                'DocumentPanelToolbar__zoomButtons',
+              )}
             >
-              <Button
+              <ButtonGroup
+                orientation="vertical"
+                color="primary"
                 disableRipple
-                className={clsx(
-                  'DocumentPanelToolbar__zoomButton',
-                  classes.ZoomButton,
-                )}
-                onClick={handleIncreaseScale}
+                aria-label="vertical outlined primary button group"
               >
-                <ArrowDropUpIcon
+                <Button
+                  disableRipple
                   className={clsx(
-                    classes.ZoomIcon,
-                    'DocumentPanelToolbar__zoomIcon DocumentPanelToolbar__zoomUpIcon',
+                    'DocumentPanelToolbar__zoomButton',
+                    classes.ZoomButton,
                   )}
-                />
-              </Button>
-              <Button
-                disableRipple
-                onClick={handleDecreaseScale}
-                className={clsx(
-                  'DocumentPanelToolbar__zoomButton',
-                  classes.ZoomButton,
-                )}
-              >
-                <ArrowDropDownIcon
+                  onClick={handleIncreaseScale}
+                >
+                  <ArrowDropUpIcon
+                    className={clsx(
+                      classes.ZoomIcon,
+                      'DocumentPanelToolbar__zoomIcon DocumentPanelToolbar__zoomUpIcon',
+                    )}
+                  />
+                </Button>
+                <Button
+                  disableRipple
+                  onClick={handleDecreaseScale}
                   className={clsx(
-                    classes.ZoomIcon,
-                    'DocumentPanelToolbar__zoomIcon DocumentPanelToolbar__zoomDownIcon',
+                    'DocumentPanelToolbar__zoomButton',
+                    classes.ZoomButton,
                   )}
-                />
-              </Button>
-            </ButtonGroup>
+                >
+                  <ArrowDropDownIcon
+                    className={clsx(
+                      classes.ZoomIcon,
+                      'DocumentPanelToolbar__zoomIcon DocumentPanelToolbar__zoomDownIcon',
+                    )}
+                  />
+                </Button>
+              </ButtonGroup>
+            </Box>
           </Box>
-        </Box>
+        )}
         <Box>
           <FormControlLabel
             className={classes.ShowHidePdf}
@@ -182,6 +188,6 @@ function DocumentPanelToolbar() {
   }
 
   return <div />;
-}
+};
 
 export { DocumentPanelToolbar };

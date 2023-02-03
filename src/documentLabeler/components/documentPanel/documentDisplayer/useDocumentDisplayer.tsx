@@ -16,7 +16,6 @@ export type DocumentDisplayerState = {
   loaders: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onPdfDocumentLoadSuccess: (pdf: any) => void;
-    onImgDocumentLoadSuccess: (pageHeight: number) => void;
   };
   documentIsVisible: boolean;
 };
@@ -44,11 +43,6 @@ export const useDocumentDisplayer = (
 ): DocumentDisplayerState => {
   const isPdf = mimeType === MimeType.Pdf;
 
-  // State for image rendering
-  const [renderedImgHeight, setRenderedImageHeight] = React.useState(
-    size.height,
-  );
-
   // State for PDF rendering
   // - pages: array of Page components for the PDF
   // - renderedHeights: map of page index to rendered height
@@ -56,6 +50,7 @@ export const useDocumentDisplayer = (
   const [renderedHeights, setRenderedHeights] = React.useState<number[]>([]);
 
   const { state } = useDocumentLabeler();
+  const { renderedImgHeight } = state.localState;
 
   // When a new document is loaded, we clear out the existing pages and page heights
   // To ensure that the newly rendered pages generate correctly
@@ -147,12 +142,6 @@ export const useDocumentDisplayer = (
     return newPages;
   }, [numPages, docUri, state.localState.pdfScale]);
 
-  // When the image is rendered successfully, render the height
-  // so that the blocks are rendered correctly
-  const onImgDocumentLoadSuccess = (height: number): void => {
-    setRenderedImageHeight(height);
-  };
-
   // Tells the consumer of this hook when the document is readily viewable
   const documentIsVisible =
     (isPdf && pages.length > 0 && renderedHeights.length === pages.length) ||
@@ -163,7 +152,6 @@ export const useDocumentDisplayer = (
     pageHeights,
     loaders: {
       onPdfDocumentLoadSuccess,
-      onImgDocumentLoadSuccess,
     },
     documentIsVisible,
   };

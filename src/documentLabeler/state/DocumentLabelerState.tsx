@@ -60,6 +60,7 @@ export type DocumentLabelerLocalState = {
   pdfScale: number;
   zoomMaxScale: number;
   zoomMinScale: number;
+  renderedImgHeight: number;
 };
 
 // Internal State, used to maintain local state within the Document Labeler
@@ -98,6 +99,8 @@ const generateInitialState = (
       pdfScale: 1,
       zoomMaxScale,
       zoomMinScale,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      renderedImgHeight: null as any,
     },
   };
 };

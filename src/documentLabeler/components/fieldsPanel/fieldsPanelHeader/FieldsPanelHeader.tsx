@@ -1,13 +1,14 @@
 import React from 'react';
-import { Box, Button, makeStyles, Theme } from '@material-ui/core';
 import { useDocumentLabeler } from 'documentLabeler/DocumentLabelerProvider';
-import { DocumentLabelerState } from 'documentLabeler/state/DocumentLabelerState';
-import { DocumentPanelToolbar } from 'documentLabeler/components/documentPanel/documentPanelToolbar/DocumentPanelToolbar';
 import { useBBConfiguration } from 'documentLabeler/context/BBConfigurationProvider';
 
-const useStyles = makeStyles((theme: Theme) => ({
+import { Box, Button, makeStyles, Theme } from '@material-ui/core';
+import { DocumentLabelerState } from 'documentLabeler/state/DocumentLabelerState';
+import { DocumentPanelToolbar } from 'documentLabeler/components/documentPanel/documentPanelToolbar/DocumentPanelToolbar';
+
+const useStyles = makeStyles<Theme, { showPdf: boolean }>((theme) => ({
   Root: {
-    padding: theme.spacing(2),
+    padding: ({ showPdf }) => (showPdf ? theme.spacing(2) : 0),
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -27,12 +28,13 @@ const SAVE = 'Save';
  * and the save button which dispatches the onSaveCallback action
  */
 export const FieldsPanelHeader: React.FC = () => {
-  const classes = useStyles();
-
   const { saveActionButtonText, displayOnly, hideSaveButton, onSaveCallback } =
     useBBConfiguration();
 
   const { state } = useDocumentLabeler();
+  const { showPdf } = state.localState;
+
+  const classes = useStyles({ showPdf });
 
   const onSaveClick = () =>
     onSaveCallback(
@@ -43,7 +45,7 @@ export const FieldsPanelHeader: React.FC = () => {
 
   return (
     <Box className={classes.Root}>
-      <DocumentPanelToolbar />
+      {!showPdf && <DocumentPanelToolbar />}
       {shouldShowSaveButton && (
         <Button
           variant="contained"

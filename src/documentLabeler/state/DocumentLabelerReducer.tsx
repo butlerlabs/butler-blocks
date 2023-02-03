@@ -11,6 +11,7 @@ import {
   SetPdfScale,
   IncreasePdfScale,
   DecreasePdfScale,
+  SetImageHeight,
 } from 'documentLabeler/state/BlockReducerUtils';
 import { DocumentLabelerInternalState } from 'documentLabeler/state/DocumentLabelerState';
 import {
@@ -41,7 +42,8 @@ type DocumentLabelerDispatchAction =
   | SetShowHidePdf
   | SetPdfScale
   | IncreasePdfScale
-  | DecreasePdfScale;
+  | DecreasePdfScale
+  | SetImageHeight;
 
 export type DocumentLabelerDispatch = (
   action: DocumentLabelerDispatchAction,
@@ -94,8 +96,9 @@ export const documentLabelerReducer = (
       };
     }
     case 'increasePdfScale': {
-      const { pdfScale, zoomMaxScale } = state.localState;
+      const { pdfScale, zoomMaxScale, renderedImgHeight } = state.localState;
       const newPdfScale = pdfScale + 0.1;
+      const newImageHeight = renderedImgHeight + 25;
 
       if (newPdfScale >= zoomMaxScale) {
         return state;
@@ -104,14 +107,17 @@ export const documentLabelerReducer = (
         ...state,
         localState: {
           ...state.localState,
+          renderedImgHeight: newImageHeight,
           pdfScale: newPdfScale,
         },
       };
     }
 
     case 'decreasePdfScale': {
-      const { pdfScale, zoomMinScale } = state.localState;
+      const { pdfScale, zoomMinScale, renderedImgHeight } = state.localState;
       const newPdfScale = pdfScale - 0.1;
+      const newImageHeight = renderedImgHeight - 25;
+
       if (newPdfScale <= zoomMinScale) {
         return state;
       }
@@ -120,6 +126,17 @@ export const documentLabelerReducer = (
         localState: {
           ...state.localState,
           pdfScale: newPdfScale,
+          renderedImgHeight: newImageHeight,
+        },
+      };
+    }
+
+    case 'setImageHeight': {
+      return {
+        ...state,
+        localState: {
+          ...state.localState,
+          renderedImgHeight: action.payload,
         },
       };
     }

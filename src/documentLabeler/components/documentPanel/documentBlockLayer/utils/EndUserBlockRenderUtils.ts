@@ -80,7 +80,7 @@ const toMinMax = (rect: RectCoords): MinMaxRect => {
  */
 const getBlockRenderCoords = (
   boundingBox: BoundingBoxDto,
-  docPageHeights: Array<number>,
+  docPageHeights: number[],
   docRenderWidth: number,
 ): DomRectangle => {
   // Height of page the block belongs on.
