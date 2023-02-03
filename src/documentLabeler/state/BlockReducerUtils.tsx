@@ -191,6 +191,11 @@ export type DecreasePdfScale = {
   type: 'decreasePdfScale';
 };
 
+export type SetImageHeight = {
+  type: 'setImageHeight';
+  payload: number;
+};
+
 const removeBlockFromTableCell = (
   state: DocumentLabelerInternalState,
   action: RemoveBlockFromFieldAction,

@@ -36,8 +36,8 @@ const convertEventCoordsToRefSpace = (
     : ({ height: 0, width: 0, x: 0, y: 0 } as DOMRect);
 
   return {
-    x: evt.clientX - refCoords.x + 90,
-    y: evt.clientY - refCoords.y + 90,
+    x: evt.clientX - refCoords.x,
+    y: evt.clientY - refCoords.y,
   };
 };
 

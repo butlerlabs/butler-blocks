@@ -99,12 +99,7 @@ const DocumentPanelInternal = withSize({
           {!isPdf && (
             <DocumentImageDisplayer
               document={state.docInfo.tempDocUrl}
-              loaders={docDisplayerState.loaders}
               width={width}
-              ref={imageTransformComponentRef}
-              onTransformed={() => {
-                console.log('onTransformed');
-              }}
             />
           )}
         </DocumentContainer>
