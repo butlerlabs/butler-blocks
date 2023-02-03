@@ -15,8 +15,6 @@ import { withSize, SizeMeProps } from 'react-sizeme';
 import clsx from 'clsx';
 import { MimeType } from 'common/types/DocumentLabelerTypes';
 
-import type { ReactZoomPanPinchRef } from 'react-zoom-pan-pinch';
-
 const useStyles = makeStyles((theme: Theme) => ({
   Root: {
     flex: 1,
@@ -53,8 +51,6 @@ const DocumentPanelInternal = withSize({
 })(({ size }: Props) => {
   const classes = useStyles();
 
-  const imageTransformComponentRef = useRef<ReactZoomPanPinchRef>(null);
-
   const { state } = useDocumentLabeler();
 
   const width = size?.width ?? 0;
@@ -68,20 +64,9 @@ const DocumentPanelInternal = withSize({
 
   const isPdf = state.docInfo.mimeType === MimeType.Pdf;
 
-  const handleZoomInImage = useCallback(() => {
-    imageTransformComponentRef.current?.zoomIn(0.3);
-  }, []);
-
-  const handleZoomOutImage = useCallback(() => {
-    imageTransformComponentRef.current?.zoomOut(0.3);
-  }, []);
-
   return (
     <Box className={classes.Root}>
-      <DocumentPanelToolbar
-        onZoomIn={handleZoomInImage}
-        onZoomOut={handleZoomOutImage}
-      />
+      <DocumentPanelToolbar />
 
       <Box className={classes.DocumentContainer} data-testid="document-labeler">
         <DocumentContainer className={classes.PreviewCard}>
