@@ -2,9 +2,12 @@ import React from 'react';
 import { useDocumentLabeler } from 'documentLabeler/DocumentLabelerProvider';
 import { useBBConfiguration } from 'documentLabeler/context/BBConfigurationProvider';
 
-import { Box, Button, makeStyles, Theme } from '@material-ui/core';
+import { Box, makeStyles, Theme } from '@material-ui/core';
 import { DocumentLabelerState } from 'documentLabeler/state/DocumentLabelerState';
 import { DocumentPanelToolbar } from 'documentLabeler/components/documentPanel/documentPanelToolbar/DocumentPanelToolbar';
+import { Button } from 'common/button/Button';
+
+import type { ButtonProps } from 'common/button/Button';
 
 const useStyles = makeStyles<Theme, { showPdf: boolean }>((theme) => ({
   Root: {
@@ -28,8 +31,13 @@ const SAVE = 'Save';
  * and the save button which dispatches the onSaveCallback action
  */
 export const FieldsPanelHeader: React.FC = () => {
-  const { saveActionButtonText, displayOnly, hideSaveButton, onSaveCallback } =
-    useBBConfiguration();
+  const {
+    saveActionButtonText,
+    displayOnly,
+    hideSaveButton,
+    saveActionButtonProps,
+    onSaveCallback,
+  } = useBBConfiguration();
 
   const { state } = useDocumentLabeler();
   const { showPdf } = state.localState;
@@ -53,6 +61,7 @@ export const FieldsPanelHeader: React.FC = () => {
           className={classes.Button}
           onClick={onSaveClick}
           disableElevation
+          {...(saveActionButtonProps as ButtonProps)}
         >
           {saveActionButtonText || SAVE}
         </Button>

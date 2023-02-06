@@ -2,17 +2,12 @@ import React, { useCallback } from 'react';
 import { useDocumentLabeler } from 'documentLabeler/DocumentLabelerProvider';
 import { useBBConfiguration } from 'documentLabeler/context/BBConfigurationProvider';
 
+import { Box, makeStyles, Button, ButtonGroup } from '@material-ui/core';
 import {
-  Box,
-  makeStyles,
-  FormControlLabel,
-  Checkbox,
-  Button,
-  ButtonGroup,
-} from '@material-ui/core';
-import {
-  ArrowDropUp as ArrowDropUpIcon,
-  ArrowDropDown as ArrowDropDownIcon,
+  ArrowDropUp,
+  ArrowDropDown,
+  ArrowDownward,
+  ArrowUpward,
 } from '@material-ui/icons';
 
 import clsx from 'clsx';
@@ -28,7 +23,23 @@ const useStyles = makeStyles((theme) => {
       width: '100%',
       display: 'flex',
       alignItems: 'center',
-      padding: theme.spacing(0, 1),
+      padding: theme.spacing(1.5),
+    },
+    Box: {
+      position: 'relative',
+      '&:not(:last-child)': {
+        marginRight: theme.spacing(1.5),
+        paddingRight: theme.spacing(1.5),
+        '&:after': {
+          position: 'absolute',
+          content: "''",
+          // top: 16,
+          right: 0,
+          width: 2.5,
+          height: 18,
+          backgroundColor: '#e5e5e5',
+        },
+      },
     },
     ZoomContainer: {
       display: 'flex',
@@ -65,8 +76,10 @@ const useStyles = makeStyles((theme) => {
       },
     },
     ShowHidePdf: {
-      marginTop: theme.spacing(0.5),
-      marginLeft: theme.spacing(0.5),
+      display: 'flex',
+      alignItems: 'center',
+      marginTop: 4,
+      cursor: 'pointer',
     },
     ShowHidePdfLabel: {
       fontFamily: 'auto',
@@ -74,6 +87,26 @@ const useStyles = makeStyles((theme) => {
       letterSpacing: 0,
     },
     ZoomIcon: {},
+    ZoomCurrentValue: {
+      marginLeft: theme.spacing(1),
+      marginTop: theme.spacing(0.5),
+    },
+    ShowHideCheckbox: {
+      '&:hover': {
+        backgroundColor: 'transparent !important',
+      },
+    },
+    ShowHideLabel: {},
+    ShowHideIcon: {
+      marginLeft: theme.spacing(1),
+      width: 16,
+      height: 16,
+      color: theme.palette.common.black,
+      borderWidth: 1,
+      borderStyle: 'solid',
+      borderColor: theme.palette.common.black,
+      borderRadius: '50%',
+    },
   };
 });
 
@@ -83,18 +116,15 @@ const DocumentPanelToolbar: React.FC<Props> = (props) => {
   const classes = useStyles();
   const { showToolbar, toolbarProps } = useBBConfiguration();
   const { state, dispatch } = useDocumentLabeler();
-  const { showPdf } = state.localState;
+  const { showPdf, pdfScale } = state.localState;
 
-  const handleChangeShowHidePdf = useCallback(
-    (_, checked: boolean) => {
-      dispatch({
-        type: 'setShowHidePdf',
-        payload: checked,
-      });
-      toolbarProps?.onToggleShowPdf && toolbarProps.onToggleShowPdf(checked);
-    },
-    [toolbarProps],
-  );
+  const handleChangeShowHidePdf = useCallback(() => {
+    dispatch({
+      type: 'setShowHidePdf',
+      payload: !showPdf,
+    });
+    toolbarProps?.onToggleShowPdf && toolbarProps.onToggleShowPdf(!showPdf);
+  }, [toolbarProps, showPdf]);
 
   const handleIncreaseScale = useCallback((event) => {
     event.stopPropagation();
@@ -112,17 +142,40 @@ const DocumentPanelToolbar: React.FC<Props> = (props) => {
     onZoomOut && onZoomOut(event);
   }, []);
 
+  const renderShowHideLabelAndIcon = useCallback(() => {
+    const label = showPdf ? 'Hide Document' : 'Show Document';
+    const Icon = showPdf ? ArrowUpward : ArrowDownward;
+
+    return (
+      <>
+        <span className={classes.ShowHideLabel}>{label}</span>
+        <Icon className={classes.ShowHideIcon} />
+      </>
+    );
+  }, []);
+
   if (showToolbar) {
     return (
       <Box className={clsx(classes.Root, 'DocumentPanelToolbar__root')}>
+        <Box
+          className={clsx(classes.Box, classes.ShowHidePdf)}
+          onClick={handleChangeShowHidePdf}
+        >
+          {renderShowHideLabelAndIcon()}
+        </Box>
+
         {showPdf && (
           <Box
             className={clsx(
               classes.ZoomContainer,
+              classes.Box,
               'DocumentPanelToolbar__zoomContainer',
             )}
           >
-            <span className={classes.ZoomTitle}>Zoom: </span>
+            <span className={classes.ZoomTitle}>Zoom</span>
+            <span className={classes.ZoomCurrentValue}>
+              {pdfScale.toFixed(1)}
+            </span>
             <Box
               className={clsx(
                 classes.ZoomButtonsContainer,
@@ -143,7 +196,7 @@ const DocumentPanelToolbar: React.FC<Props> = (props) => {
                   )}
                   onClick={handleIncreaseScale}
                 >
-                  <ArrowDropUpIcon
+                  <ArrowDropUp
                     className={clsx(
                       classes.ZoomIcon,
                       'DocumentPanelToolbar__zoomIcon DocumentPanelToolbar__zoomUpIcon',
@@ -158,7 +211,7 @@ const DocumentPanelToolbar: React.FC<Props> = (props) => {
                     classes.ZoomButton,
                   )}
                 >
-                  <ArrowDropDownIcon
+                  <ArrowDropDown
                     className={clsx(
                       classes.ZoomIcon,
                       'DocumentPanelToolbar__zoomIcon DocumentPanelToolbar__zoomDownIcon',
@@ -169,20 +222,6 @@ const DocumentPanelToolbar: React.FC<Props> = (props) => {
             </Box>
           </Box>
         )}
-        <Box>
-          <FormControlLabel
-            className={classes.ShowHidePdf}
-            labelPlacement="end"
-            color="secondary"
-            control={<Checkbox />}
-            label="Show / Hide PDF"
-            classes={{
-              label: classes.ShowHidePdfLabel,
-            }}
-            checked={showPdf}
-            onChange={handleChangeShowHidePdf}
-          />
-        </Box>
       </Box>
     );
   }

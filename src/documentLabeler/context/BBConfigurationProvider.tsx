@@ -1,5 +1,7 @@
-import { DocumentLabelerOutputDataDto } from 'common/types/DocumentLabelerTypes';
 import React from 'react';
+import { DocumentLabelerOutputDataDto } from 'common/types/DocumentLabelerTypes';
+
+import type { ButtonProps } from 'common/button/Button';
 
 const SAVE = 'Save';
 
@@ -7,6 +9,7 @@ export type BBConfigurations = {
   displayOnly?: boolean;
   hideSaveButton?: boolean;
   saveActionButtonText?: string;
+  saveActionButtonProps?: ButtonProps;
   fieldDisplayNameFormatter?: (fieldName: string) => string;
   onLabelUpdate?: (docInfo: DocumentLabelerOutputDataDto) => void;
   onSaveCallback: (data: DocumentLabelerOutputDataDto) => void;
