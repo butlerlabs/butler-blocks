@@ -8,6 +8,8 @@ import {
   BBConfigurations,
 } from 'documentLabeler/context/BBConfigurationProvider';
 
+import { useEffect } from 'react';
+
 type CreateDocLabelerFn = (
   id: string,
   data: DocumentLabelerData,
@@ -28,6 +30,10 @@ const createDocLabeler = (
   if (!docLabelerContainer) {
     throw new Error(`Could not find container element with id ${id}`);
   }
+
+  useEffect(() => {
+    console.log('config.saveActionButtonProps', config.saveActionButtonProps);
+  }, [config.saveActionButtonProps]);
 
   ReactDOM.render(
     <BBConfigurationProvider config={config}>
