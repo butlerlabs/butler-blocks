@@ -47,27 +47,35 @@ export const documentLabelerReducer = (
   state: DocumentLabelerInternalState,
   action: DocumentLabelerDispatchAction,
 ): DocumentLabelerInternalState => {
+  const updatedState: DocumentLabelerInternalState = {
+    ...state,
+    localState: {
+      ...state.localState,
+      haveLabelsChanged: action.type !== 'setActiveField',
+    },
+  };
+
   switch (action.type) {
     case 'setActiveField':
-      return ActiveFieldReducerUtils.setActiveField(state, action);
+      return ActiveFieldReducerUtils.setActiveField(updatedState, action);
     case 'addBlocksToActiveField':
-      return BlockReducerUtils.addBlockToActiveField(state, action);
+      return BlockReducerUtils.addBlockToActiveField(updatedState, action);
     case 'removeBlockFromField':
-      return BlockReducerUtils.removeBlockFromField(state, action);
+      return BlockReducerUtils.removeBlockFromField(updatedState, action);
     case 'addRegionToActiveField':
-      return RegionReducerUtils.addRegionToActiveField(state, action);
+      return RegionReducerUtils.addRegionToActiveField(updatedState, action);
     case 'clearRegionFromField':
-      return RegionReducerUtils.clearRegionFromField(state, action);
+      return RegionReducerUtils.clearRegionFromField(updatedState, action);
     case 'removeAllBlocksFromField':
-      return FieldReducerUtils.removeAllBlocksFromField(state, action);
+      return FieldReducerUtils.removeAllBlocksFromField(updatedState, action);
     case 'setFieldTextOverride':
-      return FieldReducerUtils.setTextFieldOverride(state, action);
+      return FieldReducerUtils.setTextFieldOverride(updatedState, action);
     case 'setTableCellTextOverride':
-      return FieldReducerUtils.setTableCellTextOverride(state, action);
+      return FieldReducerUtils.setTableCellTextOverride(updatedState, action);
     case 'addRowToTable':
-      return FieldReducerUtils.addRowToTable(state, action);
+      return FieldReducerUtils.addRowToTable(updatedState, action);
     case 'removeRowFromTable':
-      return FieldReducerUtils.removeRowFromTable(state, action);
+      return FieldReducerUtils.removeRowFromTable(updatedState, action);
     default:
       throw new TypesafeUnreachableError(action);
   }

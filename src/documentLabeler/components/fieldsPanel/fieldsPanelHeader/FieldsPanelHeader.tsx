@@ -35,6 +35,7 @@ export const FieldsPanelHeader: React.FC = () => {
   const onSaveClick = () =>
     onSaveCallback(
       DocumentLabelerState.convertInternalStateToOutputData(state),
+      !!state.localState.haveLabelsChanged,
     );
 
   const shouldShowSaveButton = !hideSaveButton && !displayOnly;

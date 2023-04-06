@@ -9,7 +9,10 @@ export type BBConfigurations = {
   saveActionButtonText?: string;
   fieldDisplayNameFormatter?: (fieldName: string) => string;
   onLabelUpdate?: (docInfo: DocumentLabelerOutputDataDto) => void;
-  onSaveCallback: (data: DocumentLabelerOutputDataDto) => void;
+  onSaveCallback: (
+    data: DocumentLabelerOutputDataDto,
+    hasChanged: boolean,
+  ) => void;
 };
 
 type Props = {
