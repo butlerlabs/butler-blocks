@@ -54,6 +54,7 @@ export type DocumentLabelerLocalState = {
   activeField?: ActiveField;
   selectionType: LabelingSelectionType;
   rootRef: HTMLDivElement | null;
+  haveLabelsChanged?: boolean;
 };
 
 // Internal State, used to maintain local state within the Document Labeler

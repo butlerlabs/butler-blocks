@@ -105,8 +105,10 @@ const submitLabels = async (trainingDocumentLabels) => {
 
 // This function defines what action to take when the user clicks
 // the save button in the document labeler
-const onSaveCallback = (docInfo) => {
+const onSaveCallback = (docInfo, hasChanged) => {
+  if (hasChanged) {
     submitLabels(docInfo.trainingDocumentLabels);
+  }
 };
 
 // Step 5: Initialize your Document Labeler!
